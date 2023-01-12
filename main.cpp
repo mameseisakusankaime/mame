@@ -2,7 +2,7 @@
 
 SceneTitle sceneTitle;
 SceneGame sceneGame;
-
+ 
 Scene* scene_tbl[] =
 {
 	&sceneTitle,
@@ -19,7 +19,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	GameLib::init(L"ゲーム作成", 1280, 720);
 
 	// ゲーム初期設定
-	setScene(SCENE_TITLE);
+	setScene(SCENE::TITLE);
 
 	// メインループ
 	while (GameLib::gameLoop())
