@@ -31,8 +31,8 @@ void Title::update()
         GameLib::setBlendMode(Blender::BS_ALPHA);   // 通常のアルファ処理
         state_++;                                    // 初期化処理の終了
 
-        /*fallthrough*/                             // 意図的にbreak;を記述していない
 
+        /*fallthrough*/                             // 意図的にbreak;を記述していない
     case 1:
         //////// 通常時の処理 ////////
 

@@ -55,13 +55,13 @@ void Game::update()
 
         GameLib::setBlendMode(Blender::BS_ALPHA);   // 通常のアルファ処理
 
-
         state_++;    // 初期化処理の終了
         /*fallthrough*/
     case 1:
         //////// 通常時の処理 ////////
 
         // オブジェクトの更新
+
 
         timer_++;
 
