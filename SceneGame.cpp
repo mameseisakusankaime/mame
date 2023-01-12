@@ -19,7 +19,7 @@ void SceneGame::update()
     case 0:
         GameLib::setBlendMode(Blender::BS_ALPHA);
 
-        data = sprite_load(L"./Data/Images/enemy.png");
+        data = sprite_load(L"./Data/Images/back.png");
 
         ++state;
         break;

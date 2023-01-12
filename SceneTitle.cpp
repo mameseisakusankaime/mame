@@ -1,7 +1,5 @@
 #include "all.h"
 
-//test
-
 using namespace GameLib::input;
 
 void SceneTitle::init()
@@ -21,7 +19,7 @@ void SceneTitle::update()
     case 0:
         GameLib::setBlendMode(Blender::BS_ALPHA);
 
-        data = sprite_load(L"./Data/Images/00.png");
+        data = sprite_load(L"./Data/Images/title.png");
 
         ++state;
         break;
