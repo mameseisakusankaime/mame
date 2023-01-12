@@ -1,12 +1,19 @@
 #pragma once
+//******************************************************************************
+//
+//
+//      all.h
+//
+//
+//******************************************************************************
 
-#include "../GameLib/game_lib.h"
-#include "../GameLib/input_manager.h"
-#include "../GameLib/obj2d_data.h"
-#include "../GameLib/depth_stencil.h"
-
+//システムやライブラリのヘッダーファイルは上の方へ
+#include "common.h"
 
 #include "Scene.h"
 #include "SceneTitle.h"
 #include "SceneGame.h"
-#include "SceneClear.h"
+
+using namespace GameLib;
+
+void setScene(int scene);

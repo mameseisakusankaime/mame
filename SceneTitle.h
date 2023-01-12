@@ -1,34 +1,14 @@
 #pragma once
+#include "Scene.h"
+#include "common.h"
 
-//******************************************************************************
-//
-//
-//      タイトルシーン
-//
-//
-//******************************************************************************
-
-//==============================================================================
-//
-//      Titleクラス
-//
-//==============================================================================
-
-class Title : public Scene
+class SceneTitle :public Scene
 {
-private:
-	static Title instance_;
-
 public:
-	static Title* instance() { return &instance_; }
-
-	void update() override;
-	void draw() override;
-
-private:
-	Title() {}
-	Title(const Title&) = delete;
+    GameLib::Sprite* data;
+public:
+    void init()override;
+    void deinit()override;
+    void update()override;
+    void draw()override;
 };
-
-//******************************************************************************
-

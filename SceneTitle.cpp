@@ -1,60 +1,46 @@
-//******************************************************************************
-//
-//
-//      タイトル
-//
-//
-//******************************************************************************
-
-//------< インクルード >----------------------------------------------------------
 #include "all.h"
 
-//------< using >---------------------------------------------------------------
-using namespace GameLib;
+using namespace GameLib::input;
 
-//------< 変数 >----------------------------------------------------------------
-Title Title::instance_;
-
-//--------------------------------------------------------------
-//  更新処理
-//--------------------------------------------------------------
-void Title::update()
+void SceneTitle::init()
 {
-    using namespace input;
+    state = 0;
+}
 
-    switch (state_)
+void SceneTitle::deinit()
+{
+    safe_delete(data);
+}
+
+void SceneTitle::update()
+{
+    switch (state)
     {
     case 0:
-        //////// 初期設定 ////////
+        GameLib::setBlendMode(Blender::BS_ALPHA);
 
+<<<<<<< HEAD
         timer_ = 0;                                  // タイマーを初期化
         GameLib::setBlendMode(Blender::BS_ALPHA);   // 通常のアルファ処理
         state_++;                                    // 初期化処理の終了
 
 
         /*fallthrough*/                             // 意図的にbreak;を記述していない
+=======
+        data = sprite_load(L"./Data/Images/00.png");
+
+        ++state;
+        break;
+>>>>>>> cbe528e29ab2de972c20ff34cdbc92dd8b1cd8a4
     case 1:
-        //////// 通常時の処理 ////////
-
-
-        //if (TRG(0) & PAD_START)             // PAD_TRG1が押されたら
-        //    changeScene(Game::instance());  // ゲームシーンに切り替え
-
-
-        timer_++;                            // タイマーを足す
+        if (TRG(0) & PAD_START)setScene(SCENE::GAME);
         break;
     }
 }
 
-//--------------------------------------------------------------
-//  描画処理
-//--------------------------------------------------------------
-void Title::draw()
+void SceneTitle::draw()
 {
-    // 画面クリア
-    GameLib::clear(VECTOR4(0.2f, 0.3f, 1.0f, 1));
-    
+    GameLib::clear(0, 0, 0);
 
+    sprite_render(data, 0, 0);
 }
-
-//******************************************************************************
