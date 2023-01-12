@@ -1,5 +1,7 @@
 #include "all.h"
 
+//test
+
 using namespace GameLib::input;
 
 void SceneTitle::init()
