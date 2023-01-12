@@ -1,4 +1,5 @@
 #pragma once
+<<<<<<< HEAD
 //******************************************************************************
 //
 //
@@ -20,3 +21,5 @@
 #include "SceneGame.h"
 
 using namespace GameLib;
+=======
+>>>>>>> f27f2d22d2f22a679c54ef9cb6aa2ff1c2bc980a
