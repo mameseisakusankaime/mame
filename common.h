@@ -1,9 +1,9 @@
 #pragma once
 
-enum
+enum SCENE
 {
-    SCENE_TITLE,
-    SCENE_GAME,
+    TITLE,
+    GAME,
 };
 
 void setScene(int scene);
