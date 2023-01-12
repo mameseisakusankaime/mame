@@ -14,20 +14,20 @@
 //
 //==============================================================================
 
-class Title : public Scene
+class Clear : public Scene
 {
 private:
-	static Title instance_;
+	static Clear instance_;
 
 public:
-	static Title* instance() { return &instance_; }
+	static Clear* instance() { return &instance_; }
 
 	void update() override;
 	void draw() override;
 
 private:
-	Title() {}
-	Title(const Title&) = delete;
+	Clear() {}
+	Clear(const Clear&) = delete;
 };
 
 //******************************************************************************
