@@ -1,6 +1,7 @@
 #include "all.h"
 using namespace GameLib::input;
 
+
 void SceneTitle::init()
 {
     state = 0;
