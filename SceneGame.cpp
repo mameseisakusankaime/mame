@@ -30,16 +30,32 @@ void SceneGame::update()
         // プレイヤー初期設定
         player.init();
 
+<<<<<<< HEAD
+        state_++;    // 初期化処理の終了
+        /*fallthrough*/
+    case 1:
+        //////// 通常時の処理 ////////
+
+        // オブジェクトの更新
+
+
+        timer_++;
+
+=======
         ++state;
         //break;
     case 1:
         if (TRG(0) & PAD_START)setScene(SCENE::TITLE);
+<<<<<<< HEAD
 
         // 背景更新
         back.update();
         // プレイヤー更新処理
         player.update();
 
+=======
+>>>>>>> cbe528e29ab2de972c20ff34cdbc92dd8b1cd8a4
+>>>>>>> f5afa223287260088b258565cfa4fee4d7adaf38
         break;
     }
 }
