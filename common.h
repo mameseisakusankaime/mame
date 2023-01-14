@@ -12,3 +12,12 @@ enum SCENE
     TITLE,
     GAME,
 };
+
+// ‰¼‚Ì–¼‘O
+enum DATA
+{
+    MARU,
+    SIKAKU,
+    HOSI,
+    SANKAKU
+};

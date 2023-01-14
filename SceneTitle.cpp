@@ -17,23 +17,10 @@ void SceneTitle::update()
     case 0:
         GameLib::setBlendMode(Blender::BS_ALPHA);
 
-<<<<<<< HEAD
         data = sprite_load(L"./Data/Images/title.png");
-=======
-<<<<<<< HEAD
-        timer_ = 0;                                  // タイマーを初期化
-        GameLib::setBlendMode(Blender::BS_ALPHA);   // 通常のアルファ処理
-        state_++;                                    // 初期化処理の終了
-
-
-        /*fallthrough*/                             // 意図的にbreak;を記述していない
-=======
-        data = sprite_load(L"./Data/Images/00.png");
->>>>>>> f5afa223287260088b258565cfa4fee4d7adaf38
 
         ++state;
-        break;
->>>>>>> cbe528e29ab2de972c20ff34cdbc92dd8b1cd8a4
+        //break;
     case 1:
         if (TRG(0) & PAD_START)setScene(SCENE::GAME);
         break;

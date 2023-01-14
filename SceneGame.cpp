@@ -1,7 +1,6 @@
 #include "all.h"
 
 Back back;
-Player player;
 
 void SceneGame::init()
 {
@@ -15,7 +14,9 @@ void SceneGame::deinit()
     // ”wŒiI—¹ˆ—
     back.deinit();
     // ƒvƒŒƒCƒ„[I—¹ˆ—
-    player.deinit();
+    Player::getInstance()->deinit();
+    // “GI—¹ˆ—
+    Enemy::getInstance()->deinit();
 }
 
 void SceneGame::update()
@@ -28,34 +29,22 @@ void SceneGame::update()
         // ”wŒi‰Šúİ’è
         back.init();
         // ƒvƒŒƒCƒ„[‰Šúİ’è
-        player.init();
+        Player::getInstance()->init();
+        // “G‰Šúİ’è
+        Enemy::getInstance()->init();
 
-<<<<<<< HEAD
-        state_++;    // ‰Šú‰»ˆ—‚ÌI—¹
-        /*fallthrough*/
-    case 1:
-        //////// ’Êí‚Ìˆ— ////////
-
-        // ƒIƒuƒWƒFƒNƒg‚ÌXV
-
-
-        timer_++;
-
-=======
         ++state;
         //break;
     case 1:
         if (TRG(0) & PAD_START)setScene(SCENE::TITLE);
-<<<<<<< HEAD
 
         // ”wŒiXV
         back.update();
         // ƒvƒŒƒCƒ„[XVˆ—
-        player.update();
+        Player::getInstance()->update();
+        // “GXVˆ—
+        Enemy::getInstance()->update();
 
-=======
->>>>>>> cbe528e29ab2de972c20ff34cdbc92dd8b1cd8a4
->>>>>>> f5afa223287260088b258565cfa4fee4d7adaf38
         break;
     }
 }
@@ -67,5 +56,8 @@ void SceneGame::draw()
     // ”wŒi•`‰æ
     back.draw();
     // ƒvƒŒƒCƒ„[•`‰æˆ—
-    player.draw();
+    Player::getInstance()->draw();
+    // “G•`‰æˆ—
+    Enemy::getInstance()->draw();
+
 }
