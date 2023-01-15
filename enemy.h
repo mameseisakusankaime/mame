@@ -1,8 +1,6 @@
 #pragma once
 #include "OBJ2D.h"
 
-
-
 class Enemy:public OBJ2DManager
 {
 public:
@@ -28,4 +26,4 @@ public:
     }
 };
 
-void eupdate(OBJ2D* obj);
+void enemy_walk(OBJ2D* obj);

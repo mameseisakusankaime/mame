@@ -21,3 +21,11 @@ enum DATA
     HOSI,
     SANKAKU
 };
+
+enum DIR
+{
+    UP,
+    DOWN,
+    LEFT,
+    RIGHT,
+};

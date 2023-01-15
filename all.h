@@ -19,6 +19,7 @@
 #include "back.h"
 #include "player.h"
 #include "enemy.h"
+#include "gage.h"
 
 using namespace GameLib;
 

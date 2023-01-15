@@ -40,13 +40,17 @@ void player(OBJ2D* obj)
     switch (obj->state)
     {
     case 0:
+        //obj->data = sprite_load(L"./Data/Images/player1.png");
         obj->data = sprite_load(L"./Data/Images/player.png");
-        obj->data = sprite_load(L"./Data/Images/data.png");
+        //obj->data = sprite_load(L"./Data/Images/data.png");
         obj->pos = { 200,200 };
-        obj->scale = { 1,1 };
+        obj->scale = { 0.5f,0.5f };
         obj->texPos = { 0,0 };
         obj->texSize = { 256,256 };
+        obj->pivot = { 128,128 };
         obj->type = DATA::MARU;
+        obj->radius = 45;
+        obj->hp = 5;
 
         Player::maru = sprite_load(L"./Data/Images/0.png");
         Player::sikaku = sprite_load(L"./Data/Images/1.png");
@@ -59,8 +63,8 @@ void player(OBJ2D* obj)
         // ˆÚ“®
         //if (STATE(0) & PAD_UP)obj.pos.y -= 5;
         //if (STATE(0) & PAD_DOWN)obj.pos.y += 5;
-        if (STATE(0) & PAD_LEFT)obj->pos.x -= 5;
-        if (STATE(0) & PAD_RIGHT)obj->pos.x += 5;
+        if (STATE(0) & PAD_LEFT)obj->pos.x -= 3;
+        if (STATE(0) & PAD_RIGHT)obj->pos.x += 3;
 
         // ‰æ‘œƒf[ƒ^
         //if (STATE(0) & PAD_UP)      setSpr(0);
@@ -75,7 +79,7 @@ void player(OBJ2D* obj)
         //if (STATE(0) & PAD_RIGHT)   setData(3);
 
         obj->pos.y += 5;
-        if (obj->pos.y >= 300)obj->pos.y = 300;
+        if (obj->pos.y >= 450)obj->pos.y = 450;
 
         if (TRG(0) & PAD_L1)
         {
@@ -85,6 +89,7 @@ void player(OBJ2D* obj)
         break;
     }
 }
+
 
 void Player::setData(int data)
 {

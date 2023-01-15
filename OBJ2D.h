@@ -16,11 +16,20 @@ public:
     VECTOR2 scale;              // 大きさ
     VECTOR2 texPos;             // 元画像位置
     VECTOR2 texSize;            // 元画像サイズ
+    VECTOR2 pivot;              // 基準点
     int angle;                  // 角度
+
+    VECTOR2 offset;
+    float radius;
 
     int timer;                  // タイマー
 
     MOVER mover;   // 関数ポインタ（移動処理）
+
+    int hp;         // 体力
+    float foundRadius;     // 検知する円
+
+    int dataNum;
 
 public:
     OBJ2D() { init(); }

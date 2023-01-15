@@ -39,14 +39,24 @@ void OBJ2D::init()
 {
 	state = 0;
 	type = 0;
+	
 	data = nullptr;
 	pos = {};
 	scale = {};
 	texPos = {};
 	texSize = {};
+	pivot = {};
 	angle = 0;
+
+	offset = {};
+	radius = 0;
+
 	timer = 0;
 	mover = nullptr;
+
+	hp = 0;
+
+	dataNum = 0;
 }
 
 void OBJ2D::deinit()
@@ -61,5 +71,5 @@ void OBJ2D::update()
 
 void OBJ2D::draw()
 {
-	sprite_render(data, pos.x, pos.y, scale.x, scale.y, texPos.x, texPos.y, texSize.x, texSize.y);
+	sprite_render(data, pos.x, pos.y, scale.x, scale.y, texPos.x, texPos.y, texSize.x, texSize.y, pivot.x, pivot.y);
 }

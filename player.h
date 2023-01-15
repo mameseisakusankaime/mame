@@ -18,6 +18,8 @@ public:
 
     void init()override;
 
+    
+
     void setData(int data); // 画像位置設定（画像データ位置） 
     void setSpr(int data);  // 画像設定
 
