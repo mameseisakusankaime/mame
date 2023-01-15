@@ -3,9 +3,9 @@
 
 static const VECTOR2 enemy_position[] =
 {
-    {500,100},
-    {700,100},
+    {600,100},
     {900,100},
+    {1200,100},
 };
 
 class Enemy:public OBJ2DManager

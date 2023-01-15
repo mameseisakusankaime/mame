@@ -243,33 +243,33 @@ void judge()
         }
     }
 
-    //for (int i = 0; i < 10; ++i)
-    //{
-    //    for (int j = 0; j < 10; ++j)
-    //    {
-    //        if (i == j)continue;
-    //        if (hitCheck(enemy[i], enemy[j], 0))
-    //        {
-    //            // ¡‚Ì‹——£
-    //            float dist = enemy[i]->pos.x - enemy[j]->pos.x;
-    //            // ‚Ç‚Á‚¿‚É‚¢‚é‚©
-    //            bool right;
-    //            if (dist < 0)
-    //            {
-    //                dist *= -1;
-    //                right = true;
-    //            }
-    //            else
-    //            {
-    //                right = false;
-    //            }
-    //            // —£‚µ‚½‚¢‹——£
-    //            float len = enemy[i]->radius + enemy[j]->radius;
-    //            if (dist < len)
-    //                enemy[j]->pos.x = right ? enemy[i]->pos.x + len : enemy[i]->pos.x - len;
-    //        }
-    //    }
-    //}
+    for (int i = 0; i < 10; ++i)
+    {
+        for (int j = 0; j < 10; ++j)
+        {
+            if (i == j)continue;
+            if (hitCheck(enemy[i], enemy[j], 0))
+            {
+                // ¡‚Ì‹——£
+                float dist = enemy[i]->pos.x - enemy[j]->pos.x;
+                // ‚Ç‚Á‚¿‚É‚¢‚é‚©
+                bool right;
+                if (dist < 0)
+                {
+                    dist *= -1;
+                    right = true;
+                }
+                else
+                {
+                    right = false;
+                }
+                // —£‚µ‚½‚¢‹——£
+                float len = enemy[i]->radius + enemy[j]->radius;
+                if (dist < len)
+                    enemy[j]->pos.x = right ? enemy[i]->pos.x + len : enemy[i]->pos.x - len;
+            }
+        }
+    }
 
     /*for (int i = 0; i < ENEMY_MAX; ++i)
     {
