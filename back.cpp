@@ -24,7 +24,7 @@ void Back::update()
         //break;
     case 1:
         //obj.pos.x -= 5;
-        if (obj.pos.x <= -1280)obj.pos.x += 1280;
+        if (obj.pos.x <= -1280)obj.pos.x += 1280;//loop
 
         break;
     }

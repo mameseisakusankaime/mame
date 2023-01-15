@@ -8,8 +8,7 @@ using namespace GameLib;
 
 bool enemy_erase(OBJ2D* obj)
 {
-    bool erase = obj->hp <= 0 ? true : false;
-    return erase;
+    return (obj->hp <= 0 ? true : false);
 }
 
 void Enemy::init()
@@ -34,7 +33,7 @@ void Enemy::init()
 // ちょっと考える
 void enemy_walk(OBJ2D* obj)
 {
-    OBJ2D player = Player::getInstance()->obj_w[0]; //プレイヤー
+    OBJ2D& player = Player::getInstance()->obj_w[0]; //プレイヤー
     int move = 2;   // 移動速度
     
 
@@ -71,7 +70,7 @@ void enemy_walk(OBJ2D* obj)
         }
 
         // 見つける
-        if (hitCheck(&player, obj, 1))
+        if (hitCheck(&player, obj, HITCHECK::PLAndENEScope))
             if (player.pos.x < obj->pos.x)obj->state = 4;
 
         break;
@@ -85,7 +84,7 @@ void enemy_walk(OBJ2D* obj)
         }
 
         // 見つける
-        if (hitCheck(&player, obj, 1))
+        if (hitCheck(&player, obj, HITCHECK::PLAndENEScope))
             if (player.pos.x > obj->pos.x)obj->state = 4;
 
         break;

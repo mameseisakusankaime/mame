@@ -30,6 +30,8 @@ public:
         static Player instance;
         return &instance;
     }
+private:
+    Player() {};//マネージャーの複数生成禁止
 };
 
 void player(OBJ2D* obj);

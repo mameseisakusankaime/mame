@@ -61,6 +61,7 @@ void SceneGame::update()
 
         judge();
 
+        //攻撃
         if (TRG(0) & PAD_R1)
         {
             player_attack();
@@ -186,21 +187,21 @@ bool hitCheck(OBJ2D* obj1, OBJ2D* obj2,int num)
 {
     switch (num)
     {
-    case 0: 
+    case HITCHECK::PLAndENE: 
         // プレイヤーと敵
         return hitCheckCircle(
             obj1->pos + obj1->offset, obj1->radius,
             obj2->pos + obj2->offset, obj2->radius
         );
         break;
-    case 1:
+    case HITCHECK::PLAndENEScope:
         // プレイヤーと敵範囲
         return hitCheckCircle(
             obj1->pos + obj1->offset, obj1->radius,
             obj2->pos + obj2->offset, obj2->foundRadius
         );
         break;
-    case 2:
+    case HITCHECK::PLScopeAndENE:
         // プレイヤー範囲と敵
         return hitCheckCircle(
             obj1->pos + obj1->offset, obj1->foundRadius,
@@ -287,7 +288,7 @@ void judge()
 void player_attack()
 {
     OBJ2D* player = &Player::getInstance()->obj_w[0];
-    OBJ2D* enemy[10];
+    OBJ2D* enemy[Enemy::OBJ_MAX];
     int num = 0;
     for (auto& obj : enemy)
     {
@@ -295,11 +296,11 @@ void player_attack()
         ++num;
     }
 
-    for (int i = 0; i < 10; ++i)
+    for (int i = 0; i < Enemy::OBJ_MAX; ++i)
     {
         if (enemy[i]->mover == nullptr)continue;
 
-        if (hitCheck(player, enemy[i], 2))
+        if (hitCheck(player, enemy[i], HITCHECK::PLScopeAndENE))
         {
             enemy[i]->hp -= 1;
         }

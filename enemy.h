@@ -1,14 +1,18 @@
 #pragma once
 #include "OBJ2D.h"
 
-static const VECTOR2 enemy_position[] =
+const VECTOR2 enemy_position[] =
 {
     {600,100},
     {900,100},
     {1200,100},
 };
 
-class Enemy:public OBJ2DManager
+/// <summary>
+/// 敵管理クラス
+/// </summary>
+class Enemy:
+    public OBJ2DManager
 {
 public:
     static const int OBJ_MAX = 10;
@@ -31,6 +35,8 @@ public:
         static Enemy instance;
         return &instance;
     }
+private:
+    Enemy() {};//マネージャーの複数生成禁止
 };
 
 // 消去

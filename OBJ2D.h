@@ -38,7 +38,7 @@ public:
 
     bool invincible;   // 無敵時間(true発動中)
     int invincibleTimer;    // 無敵時間
-    int flashingTimer;
+    int flashingTimer;      //点滅時間
 
     // アニメーション関係
     int anime;

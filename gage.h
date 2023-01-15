@@ -1,6 +1,9 @@
 #pragma once
 #include "OBJ2D.h"
 
+/// <summary>
+/// ゲージ管理クラス
+/// </summary>
 class Gage :public OBJ2DManager
 {
 public:
