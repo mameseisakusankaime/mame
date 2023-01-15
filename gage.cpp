@@ -7,7 +7,7 @@ void Gage::init()
 {
     OBJ2DManager::init();
 
-    obj_w[0].mover = gage;
+    obj_w[0].mover = gage; 
 }
 
 void gage(OBJ2D* obj)

@@ -24,5 +24,5 @@
 #include "find.h"
 
 using namespace GameLib;
-
+ 
 void setScene(int scene);

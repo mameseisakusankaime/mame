@@ -11,7 +11,7 @@ void SceneOver::deinit()
 }
 
 void SceneOver::update()
-{
+{ 
     switch (state)
     {
     case 0:

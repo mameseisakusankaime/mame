@@ -19,7 +19,7 @@ void find(OBJ2D* obj)
     case 0:
         obj->data = sprite_load(L"./Data/Images/find.png");
         obj->pos = { enemy.pos.x,enemy.pos.y - 100 };
-        obj->scale = { 0.5f,0.5f };
+        obj->scale = { 0.5f,0.5f }; 
         obj->texPos = { 0,0 };
         obj->texSize = { 256,256 };
         obj->pivot = { 128,128 };

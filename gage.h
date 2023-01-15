@@ -13,7 +13,7 @@ public:
 
     void init()override;
 
-    static Gage* getInstance()
+    static Gage* getInstance() 
     {
         static Gage instance;
         return &instance;

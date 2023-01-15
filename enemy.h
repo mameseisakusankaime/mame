@@ -20,7 +20,7 @@ public:
     OBJ2D* begin() { return obj_w; }
     OBJ2D* end() { return obj_w + OBJ_MAX; }
 
-    void init();
+    void init(); 
 
 
     //void setData(int data); // 画像位置設定（画像データ位置） 

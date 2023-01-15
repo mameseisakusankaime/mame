@@ -27,7 +27,7 @@ void SceneTitle::update()
     }
 }
 
-void SceneTitle::draw()
+void SceneTitle::draw() 
 {
     GameLib::clear(0, 0, 0);
 

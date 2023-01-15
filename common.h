@@ -9,7 +9,7 @@ using namespace GameLib::input;
 
 enum SCENE
 {
-    TITLE,
+    TITLE, 
     GAME,
     OVER,
     CLEAR,

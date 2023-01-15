@@ -3,7 +3,7 @@
 class Scene
 {
 public:
-    int state;
+    int state; 
 public:
     Scene() { state = 0; }
     virtual void init() = 0;

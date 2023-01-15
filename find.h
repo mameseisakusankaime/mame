@@ -16,7 +16,7 @@ public:
     static Find* getInstance()
     {
         static Find instance;
-        return &instance;
+        return &instance; 
     }
 };
 

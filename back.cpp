@@ -13,7 +13,7 @@ void Back::deinit()
 }
 
 void Back::update()
-{
+{  
     switch (obj.state)
     {
     case 0:

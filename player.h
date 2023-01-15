@@ -6,7 +6,7 @@ class Player :public OBJ2DManager
 public:
     static const int OBJ_MAX = 1;
     OBJ2D	obj_w[OBJ_MAX];
-
+     
 
 
     static GameLib::Sprite* maru;

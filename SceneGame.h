@@ -9,7 +9,7 @@ public:
     void init()override;
     void deinit()override;
     void update()override;
-    void draw()override;
+    void draw()override; 
 };
 
 void anime(OBJ2D* obj, int total, int flame, bool loop, int type);

@@ -4,7 +4,7 @@
 class OBJ2D;
 typedef void(*MOVER)(OBJ2D* obj);
 typedef bool(*ERASER)(OBJ2D* obj);
-
+ 
 class OBJ2D
 {
 public:

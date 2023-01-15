@@ -46,7 +46,7 @@ void player(OBJ2D* obj)
         //obj->data = sprite_load(L"./Data/Images/data.png");
         obj->pos = { 200,200 };
         obj->scale = { 0.5f,0.5f };
-        obj->texPos = { 0,0 };
+        obj->texPos = { 0,0 };  
         obj->texSize = { 256,256 };
         obj->pivot = { 128,128 };
         obj->type = DATA::MARU;

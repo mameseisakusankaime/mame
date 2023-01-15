@@ -4,7 +4,7 @@
 class Back
 {
 public:
-    OBJ2D obj;
+    OBJ2D obj; 
 
 public:
     void init();
