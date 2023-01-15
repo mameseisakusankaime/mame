@@ -1,6 +1,13 @@
 #pragma once
 #include "OBJ2D.h"
 
+static const VECTOR2 enemy_position[] =
+{
+    {500,100},
+    {700,100},
+    {900,100},
+};
+
 class Enemy:public OBJ2DManager
 {
 public:
@@ -25,5 +32,8 @@ public:
         return &instance;
     }
 };
+
+// è¡ãé
+bool enemy_erase(OBJ2D* obj);
 
 void enemy_walk(OBJ2D* obj);

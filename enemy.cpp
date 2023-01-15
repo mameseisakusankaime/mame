@@ -2,8 +2,15 @@
 #include "common.h"
 #include "SceneGame.h"
 #include "player.h"
+#include "find.h"
 
 using namespace GameLib;
+
+bool enemy_erase(OBJ2D* obj)
+{
+    bool erase = obj->hp <= 0 ? true : false;
+    return erase;
+}
 
 void Enemy::init()
 {
@@ -15,8 +22,10 @@ void Enemy::init()
         item.dataNum = num;
         num++;
     }
-
-    Enemy::getInstance()->searchSet(enemy_walk, obj_w[0].pos);
+    
+    Enemy::getInstance()->searchSet(enemy_walk, enemy_position[0]);
+    Enemy::getInstance()->searchSet(enemy_walk, enemy_position[1]);
+    Enemy::getInstance()->searchSet(enemy_walk, enemy_position[2]);
 }
 
 
@@ -33,7 +42,7 @@ void enemy_walk(OBJ2D* obj)
     case 0:
         // 初期設定
         obj->data = sprite_load(L"./Data/Images/enemy.png");
-        obj->pos = { 900,200 };
+        //obj->pos = { 900,200 };
         obj->scale = { 1,1 };
         obj->texPos = { 0,0 };
         obj->texSize = { 256,256 };
@@ -41,7 +50,8 @@ void enemy_walk(OBJ2D* obj)
         obj->type = DATA::SANKAKU;
         obj->radius = 40;
         obj->hp = 2;
-        obj->foundRadius = 180;
+        obj->foundRadius = 200;
+        obj->eraser = enemy_erase;
 
         static const float posX = obj->pos.x;
 
@@ -59,9 +69,9 @@ void enemy_walk(OBJ2D* obj)
             if (obj->scale.x > 0)obj->scale.x *= -1;
         }
 
-        // mitukaru
+        // 見つける
         if (hitCheck(&player, obj, 1))
-            obj->state = 4;
+            if (player.pos.x < obj->pos.x)obj->state = 4;
 
         break;
     case 3:
@@ -73,15 +83,56 @@ void enemy_walk(OBJ2D* obj)
             if (obj->scale.x < 0)obj->scale.x *= -1;
         }
 
+        // 見つける
         if (hitCheck(&player, obj, 1))
-            obj->state = 4;
+            if (player.pos.x > obj->pos.x)obj->state = 4;
 
         break;
     case 4:
+        Find::getInstance()->init();
+        ++obj->state;
+        break;
+    case 5:
+        // プレイヤーの方向に向かって進む
         if (player.pos.x > obj->pos.x)
+        {
             obj->pos.x += move;
+            // 画像を進行方向へ向ける
+            if (obj->scale.x > 0)obj->scale.x *= -1;
+        }
         if (player.pos.x < obj->pos.x)
+        {
             obj->pos.x -= move;
+            // 画像を進行方向へ向ける
+            if (obj->scale.x < 0)obj->scale.x *= -1;
+        }
+
+
+        // 食べてるみたいで面白い
+        //// プレイヤーと敵の距離
+        //float dist = player.pos.x - obj->pos.x;    
+        //if (dist < 0)dist *= -1;
+        //// プレイヤーと敵の離しておきたい距離
+        //float len = player.radius + obj->radius;
+        //if (dist < len)obj->pos.x = player.pos.x + obj->radius;
+        
+        // プレイヤーと敵の距離
+        float dist = player.pos.x - obj->pos.x;
+        // 敵がどっちにいるか(右だとtrue)
+        bool right;
+        if (dist < 0)
+        {
+            dist *= -1;
+            right = true;
+        }
+        else
+        {
+            right = false;
+        }
+        // プレイヤーと敵の離しておきたい距離
+        float len = player.radius + obj->radius;
+        if (dist < len)
+            obj->pos.x = right ? player.pos.x + len : player.pos.x - len;
 
         break;
     }

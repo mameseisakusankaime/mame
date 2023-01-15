@@ -3,6 +3,7 @@
 
 class OBJ2D;
 typedef void(*MOVER)(OBJ2D* obj);
+typedef bool(*ERASER)(OBJ2D* obj);
 
 class OBJ2D
 {
@@ -18,6 +19,8 @@ public:
     VECTOR2 texSize;            // 元画像サイズ
     VECTOR2 pivot;              // 基準点
     int angle;                  // 角度
+    VECTOR4 color;                // 色
+
 
     VECTOR2 offset;
     float radius;
@@ -26,15 +29,29 @@ public:
 
     MOVER mover;   // 関数ポインタ（移動処理）
 
+    ERASER eraser;
+
     int hp;         // 体力
     float foundRadius;     // 検知する円
 
     int dataNum;
 
+    bool invincible;   // 無敵時間(true発動中)
+    int invincibleTimer;    // 無敵時間
+    int flashingTimer;
+
+    // アニメーション関係
+    int anime;
+    int animeTimer;
+    bool one;
+    bool end;
+
+
 public:
     OBJ2D() { init(); }
     void init();
     void deinit();
+    void clear();
     void update();
     void draw();
 };

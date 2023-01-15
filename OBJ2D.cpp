@@ -47,16 +47,29 @@ void OBJ2D::init()
 	texSize = {};
 	pivot = {};
 	angle = 0;
+	color = { 1.0f ,1.0f ,1.0f ,1.0f };
 
 	offset = {};
 	radius = 0;
 
 	timer = 0;
 	mover = nullptr;
+	eraser = nullptr;
 
 	hp = 0;
 
 	dataNum = 0;
+
+	// 無敵時間
+	invincible = false;
+	invincibleTimer = 0;
+	flashingTimer = 0;
+
+	// アニメーション関係
+	anime = 0;
+	animeTimer = 0;
+	one = false;
+	end = false;
 }
 
 void OBJ2D::deinit()
@@ -64,12 +77,21 @@ void OBJ2D::deinit()
 	safe_delete(data);
 }
 
+void OBJ2D::clear()
+{
+	init();
+}
+
 void OBJ2D::update()
 {
 	if (mover)mover(this);
+
+	// 消去チェック
+	if (eraser && eraser(this)) { clear(); }
+
 }
 
 void OBJ2D::draw()
 {
-	sprite_render(data, pos.x, pos.y, scale.x, scale.y, texPos.x, texPos.y, texSize.x, texSize.y, pivot.x, pivot.y);
+	sprite_render(data, pos.x, pos.y, scale.x, scale.y, texPos.x, texPos.y, texSize.x, texSize.y, pivot.x, pivot.y, angle, color.x, color.y, color.z, color.w);
 }

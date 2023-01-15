@@ -7,6 +7,8 @@ public:
     static const int OBJ_MAX = 1;
     OBJ2D	obj_w[OBJ_MAX];
 
+
+
     static GameLib::Sprite* maru;
     static GameLib::Sprite* sikaku;
     static GameLib::Sprite* hosi;

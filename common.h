@@ -11,6 +11,8 @@ enum SCENE
 {
     TITLE,
     GAME,
+    OVER,
+    CLEAR,
 };
 
 // ‰¼‚Ì–¼‘O
@@ -29,3 +31,4 @@ enum DIR
     LEFT,
     RIGHT,
 };
+

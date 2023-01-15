@@ -2,6 +2,8 @@
 
 Back back;
 
+
+
 void SceneGame::init()
 {
     state = 0;
@@ -19,6 +21,8 @@ void SceneGame::deinit()
     Enemy::getInstance()->deinit();
     // げーじ
     Gage::getInstance()->deinit();
+    //
+    Find::getInstance()->deinit();
 }
 
 void SceneGame::update()
@@ -36,11 +40,13 @@ void SceneGame::update()
         Enemy::getInstance()->init();
         //ゲージ
         Gage::getInstance()->init();
+        // 
+        //Find::getInstance()->init();
 
         ++state;
         //break;
     case 1:
-        if (TRG(0) & PAD_START)setScene(SCENE::TITLE);
+        //if (TRG(0) & PAD_START)setScene(SCENE::TITLE);
 
         // 背景更新
         back.update();
@@ -50,12 +56,28 @@ void SceneGame::update()
         Enemy::getInstance()->update();
         //ゲージ
         Gage::getInstance()->update();
+        //
+        Find::getInstance()->update();
 
         judge();
 
+        if (TRG(0) & PAD_R1)
+        {
+            player_attack();
+        }
+
+
         if (TRG(0) & PAD_L1)
         {
-            Enemy::getInstance()->obj_w[0].hp = Enemy::getInstance()->obj_w[0].hp <= 1 ? 2 : 1;
+            
+            if (Enemy::getInstance()->obj_w[0].mover == 0)
+            {
+                Enemy::getInstance()->searchSet(enemy_walk, enemy_position[0]);
+            }
+            else
+            {
+                Enemy::getInstance()->obj_w[0].hp = Enemy::getInstance()->obj_w[0].hp <= 1 ? 2 : 0;
+            }
         }
 
         break;
@@ -72,17 +94,73 @@ void SceneGame::draw()
     Enemy::getInstance()->draw();
     // ゲージ
     Gage::getInstance()->draw();
+    // 
+    Find::getInstance()->draw();
 
     // プレイヤー描画処理
     Player::getInstance()->draw();
 
     OBJ2D* plat = &Player::getInstance()->obj_w[0];
 
-    primitive::circle(plat->pos, 40.0f, VECTOR2(1, 1), 0.0f, VECTOR4(0, 1, 0, 0.2f));
+    primitive::circle(plat->pos, plat->radius, VECTOR2(1, 1), 0.0f, VECTOR4(0, 1, 0, 0.2f));
+    primitive::circle(plat->pos, plat->foundRadius, VECTOR2(1, 1), 0.0f, VECTOR4(0, 0, 1, 0.2f));
        
     OBJ2D* elat = &Enemy::getInstance()->obj_w[0];
     
     primitive::circle(elat->pos, elat->foundRadius, VECTOR2(1, 1), 0.0f, VECTOR4(0, 0, 1, 0.4f));
+
+}
+
+/// <summary>
+/// アニメーション関数
+/// </summary>
+/// <param name="obj">キャラクター</param>
+/// <param name="total">画像枚数</param>
+/// <param name="flame">フレーム</param>
+/// <param name="loop">ループするか</param>
+/// <param name="type">効果音のタイプ(通常０でいい)</param>
+void anime(OBJ2D* obj, int total, int flame, bool loop, int type)
+{
+    switch (obj->state)
+    {
+    case 0:
+        obj->anime = obj->animeTimer = 0;
+        obj->end = false;
+        obj->one = false;
+        //if (type == 0)
+        //    GameLib::sound::play(type, 0);
+
+        ++obj->state;
+    case 1:
+        if (loop)
+        {
+            obj->anime = obj->animeTimer / flame;
+            if (obj->anime >= total)
+            {
+                obj->anime = 0;
+                obj->animeTimer = 0;
+            }
+            obj->texPos.x = obj->anime * obj->texSize.x;
+            ++obj->animeTimer;
+        }
+        //else
+        //{
+        //    if (obj->open)
+        //    {
+        //        obj->anime = obj->animeTimer / flame;
+        //        if (obj->anime >= total - 1)obj->one = true;
+        //        if (obj->anime >= total)
+        //        {
+        //            obj->anime = total - 1;
+        //            obj->end = true;
+        //            return;
+        //        }
+        //        obj->texPos.x = obj->anime * obj->texSize.x;
+        //        ++obj->animeTimer;
+        //    }
+        //}
+        break;
+    }
 
 }
 
@@ -108,16 +186,25 @@ bool hitCheck(OBJ2D* obj1, OBJ2D* obj2,int num)
 {
     switch (num)
     {
-    case 0:
+    case 0: 
+        // プレイヤーと敵
         return hitCheckCircle(
             obj1->pos + obj1->offset, obj1->radius,
             obj2->pos + obj2->offset, obj2->radius
         );
         break;
     case 1:
+        // プレイヤーと敵範囲
         return hitCheckCircle(
             obj1->pos + obj1->offset, obj1->radius,
             obj2->pos + obj2->offset, obj2->foundRadius
+        );
+        break;
+    case 2:
+        // プレイヤー範囲と敵
+        return hitCheckCircle(
+            obj1->pos + obj1->offset, obj1->foundRadius,
+            obj2->pos + obj2->offset, obj2->radius
         );
         break;
     }
@@ -128,26 +215,61 @@ bool hitCheck(OBJ2D* obj1, OBJ2D* obj2,int num)
 //--------------------------------------
 void judge()
 {
-    OBJ2D player = Player::getInstance()->obj_w[0];
+    OBJ2D* player = &Player::getInstance()->obj_w[0];
     
     
-    OBJ2D enemy[10];
+    OBJ2D* enemy[10];
     int num = 0;
     for (auto& obj : enemy)
     {
-        obj = Enemy::getInstance()->obj_w[num];
+        obj = &Enemy::getInstance()->obj_w[num];
         ++num;
     }
 
     for (int i = 0; i < 10; ++i)
     {
-        if (enemy[i].mover == nullptr)continue;
+        if (enemy[i]->mover == nullptr)continue;
 
-        if (hitCheck(&player, &enemy[i],0))
+        if (hitCheck(player, enemy[i],0))
         {
             debug::setString("hit!!");
+
+            if (player->invincible)continue;
+
+            player->hp -= 1;
+            player->invincible = true;
+
+            if (player->hp <= 0)setScene(SCENE::OVER);
         }
     }
+
+    //for (int i = 0; i < 10; ++i)
+    //{
+    //    for (int j = 0; j < 10; ++j)
+    //    {
+    //        if (i == j)continue;
+    //        if (hitCheck(enemy[i], enemy[j], 0))
+    //        {
+    //            // 今の距離
+    //            float dist = enemy[i]->pos.x - enemy[j]->pos.x;
+    //            // どっちにいるか
+    //            bool right;
+    //            if (dist < 0)
+    //            {
+    //                dist *= -1;
+    //                right = true;
+    //            }
+    //            else
+    //            {
+    //                right = false;
+    //            }
+    //            // 離したい距離
+    //            float len = enemy[i]->radius + enemy[j]->radius;
+    //            if (dist < len)
+    //                enemy[j]->pos.x = right ? enemy[i]->pos.x + len : enemy[i]->pos.x - len;
+    //        }
+    //    }
+    //}
 
     /*for (int i = 0; i < ENEMY_MAX; ++i)
     {
@@ -159,6 +281,28 @@ void judge()
             game_reset();
         }
     }*/
+}
+
+void player_attack()
+{
+    OBJ2D* player = &Player::getInstance()->obj_w[0];
+    OBJ2D* enemy[10];
+    int num = 0;
+    for (auto& obj : enemy)
+    {
+        obj = &Enemy::getInstance()->obj_w[num];
+        ++num;
+    }
+
+    for (int i = 0; i < 10; ++i)
+    {
+        if (enemy[i]->mover == nullptr)continue;
+
+        if (hitCheck(player, enemy[i], 2))
+        {
+            enemy[i]->hp -= 1;
+        }
+    }
 }
 
 //// 壁との当たり判定

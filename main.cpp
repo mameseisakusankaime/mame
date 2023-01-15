@@ -11,10 +11,12 @@
 
 SceneTitle sceneTitle;
 SceneGame sceneGame;
+SceneOver sceneOver;
 
 Scene* scene_tbl[] = {
     &sceneTitle,
-    &sceneGame
+    &sceneGame,
+    &sceneOver,
 };
 
 Scene* pScene;

@@ -15,11 +15,13 @@
 #include "Scene.h"
 #include "SceneTitle.h"
 #include "SceneGame.h"
+#include "SceneOver.h"
 
 #include "back.h"
 #include "player.h"
 #include "enemy.h"
 #include "gage.h"
+#include "find.h"
 
 using namespace GameLib;
 

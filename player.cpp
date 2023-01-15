@@ -1,6 +1,7 @@
 #include "player.h"
 #include "common.h"
 #include "enemy.h"
+#include "SceneGame.h"
 using namespace GameLib;
 
 // 画像データテーブル
@@ -50,7 +51,9 @@ void player(OBJ2D* obj)
         obj->pivot = { 128,128 };
         obj->type = DATA::MARU;
         obj->radius = 45;
+        obj->foundRadius = 140;
         obj->hp = 5;
+        //obj->eraser = enemy_erase;
 
         Player::maru = sprite_load(L"./Data/Images/0.png");
         Player::sikaku = sprite_load(L"./Data/Images/1.png");
@@ -63,8 +66,19 @@ void player(OBJ2D* obj)
         // 移動
         //if (STATE(0) & PAD_UP)obj.pos.y -= 5;
         //if (STATE(0) & PAD_DOWN)obj.pos.y += 5;
-        if (STATE(0) & PAD_LEFT)obj->pos.x -= 3;
-        if (STATE(0) & PAD_RIGHT)obj->pos.x += 3;
+        switch (STATE(0) & (PAD_LEFT | PAD_RIGHT))
+        {
+        case PAD_LEFT:
+            anime(obj, 2, 15, true, 0);
+            obj->pos.x -= 3;
+            if (obj->scale.x > 0)obj->scale.x *= -1;
+            break;
+        case PAD_RIGHT:
+            anime(obj, 2, 15, true, 0);
+            obj->pos.x += 3;
+            if (obj->scale.x < 0)obj->scale.x *= -1;
+            break;
+        }
 
         // 画像データ
         //if (STATE(0) & PAD_UP)      setSpr(0);
@@ -85,6 +99,31 @@ void player(OBJ2D* obj)
         {
             //setData(Enemy::getInstance()->obj_w.type);
         }
+
+        // 無敵時間(発動中)
+        if (obj->invincible)
+        {
+            ++obj->invincibleTimer;
+            ++obj->flashingTimer;
+            if (obj->flashingTimer / 5 == 1)
+            {
+                obj->color.w = obj->color.w == 1 ? 0 : 1;
+                obj->flashingTimer = 0;
+            }
+        }
+        // 無敵時間終了
+        if (obj->invincibleTimer >= 60)
+        {
+            obj->invincible = false;
+            obj->invincibleTimer = 0;
+            obj->color.w = 1;
+        }
+        
+
+#ifdef _DEBUG
+        debug::setString("player.hp%d", obj->hp);
+        //debug::setString("obj->flashingTimer")
+#endif
 
         break;
     }
