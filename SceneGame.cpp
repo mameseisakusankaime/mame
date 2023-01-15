@@ -48,6 +48,12 @@ void SceneGame::update()
     case 1:
         //if (TRG(0) & PAD_START)setScene(SCENE::TITLE);
 
+#ifdef _DEBUG
+        debug::setString("0%d", Enemy::getInstance()->obj_w[0].state);
+        debug::setString("1%d", Enemy::getInstance()->obj_w[1].state);
+        debug::setString("2%d", Enemy::getInstance()->obj_w[2].state);
+#endif
+
         // 背景更新
         back.update();
         // プレイヤー更新処理
@@ -66,6 +72,8 @@ void SceneGame::update()
             player_attack();
         }
 
+        if (Player::getInstance()->obj_w[0].attack)
+            anime(&Player::getInstance()->obj_w[0], 13, 2, false, 0);
 
         if (TRG(0) & PAD_L1)
         {
@@ -121,16 +129,17 @@ void SceneGame::draw()
 /// <param name="type">効果音のタイプ(通常０でいい)</param>
 void anime(OBJ2D* obj, int total, int flame, bool loop, int type)
 {
-    switch (obj->state)
+    switch (obj->animeState)
     {
     case 0:
+        obj->texPos.x = 0;
         obj->anime = obj->animeTimer = 0;
         obj->end = false;
         obj->one = false;
         //if (type == 0)
         //    GameLib::sound::play(type, 0);
 
-        ++obj->state;
+        ++obj->animeState;
     case 1:
         if (loop)
         {
@@ -143,22 +152,64 @@ void anime(OBJ2D* obj, int total, int flame, bool loop, int type)
             obj->texPos.x = obj->anime * obj->texSize.x;
             ++obj->animeTimer;
         }
-        //else
-        //{
-        //    if (obj->open)
-        //    {
-        //        obj->anime = obj->animeTimer / flame;
-        //        if (obj->anime >= total - 1)obj->one = true;
-        //        if (obj->anime >= total)
-        //        {
-        //            obj->anime = total - 1;
-        //            obj->end = true;
-        //            return;
-        //        }
-        //        obj->texPos.x = obj->anime * obj->texSize.x;
-        //        ++obj->animeTimer;
-        //    }
-        //}
+        else
+        {
+            if (obj->attack)
+            {
+                // 攻撃開始
+                if(!obj->one)obj->texPos.y = 512;
+
+                // 攻撃アニメ
+                obj->anime = obj->animeTimer / flame;
+                if (obj->anime >= total - 1)obj->one = true;
+                if (obj->anime >= total)
+                {
+                    obj->anime = total - 1;
+                    obj->end = true;
+                    return;
+                }
+                obj->texPos.x = obj->anime * obj->texSize.x;
+
+                // 攻撃終了
+                if (obj->one)
+                {
+                    obj->anime = obj->animeTimer = 0;
+                    obj->end = false;
+                    obj->one = false;
+                    ++obj->animeState;
+                }
+
+                ++obj->animeTimer;
+            }
+        }
+        break;
+    case 2:
+        // 引っ込めるの開始
+        obj->texPos.y = 512 * 2;
+
+        // 引っ込めるアニメ
+        obj->anime = obj->animeTimer / flame;
+        if (obj->anime >= total - 1)obj->one = true;
+        if (obj->anime >= total)
+        {
+            obj->anime = total - 1;
+            obj->end = true;
+            return;
+        }
+        obj->texPos.x = obj->anime * obj->texSize.x;
+
+        // ひっこめ終了
+        if (obj->one)
+        {
+            obj->texPos = {};
+            obj->anime = obj->animeTimer = 0;
+            obj->end = false;
+            obj->one = false;
+            obj->attack = false;
+            obj->animeState = 0;
+        }
+
+        ++obj->animeTimer;
         break;
     }
 
@@ -304,6 +355,8 @@ void player_attack()
             enemy[i]->hp -= 1;
         }
     }
+    player->attack = true;
+    //if(TRG(0)&PAD_START)player->animeState = 0;
 }
 
 //// 壁との当たり判定

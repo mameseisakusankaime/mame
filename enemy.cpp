@@ -21,8 +21,7 @@ void Enemy::init()
     {
         item.dataNum = num;
         num++;
-    }
-    
+    }    
 
     Enemy::getInstance()->searchSet(enemy_walk, enemy_position[0]);
     Enemy::getInstance()->searchSet(enemy_walk, enemy_position[1]);
@@ -54,7 +53,7 @@ void enemy_walk(OBJ2D* obj)
         obj->foundRadius = 200;
         obj->eraser = enemy_erase;
 
-        static const float posX = obj->pos.x;
+        obj->ReferencePosition = obj->pos.x;
 
         ++obj->state;
         //break;
@@ -64,7 +63,7 @@ void enemy_walk(OBJ2D* obj)
     case 2:
         // ¶‚Éi‚Þ
         obj->pos.x -= move;
-        if (obj->pos.x <= posX - 100)
+        if (obj->pos.x <= obj->ReferencePosition - 100)
         {
             obj->state = 3;
             if (obj->scale.x > 0)obj->scale.x *= -1;
@@ -78,7 +77,7 @@ void enemy_walk(OBJ2D* obj)
     case 3:
         // ‰E‚Éi‚Þ
         obj->pos.x += move;
-        if (obj->pos.x >= posX + 100)
+        if (obj->pos.x >= obj->ReferencePosition + 100)
         {
             obj->state = 2;
             if (obj->scale.x < 0)obj->scale.x *= -1;
