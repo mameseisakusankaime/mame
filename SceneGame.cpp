@@ -271,6 +271,7 @@ void judge()
         }
     }
 
+
     /*for (int i = 0; i < ENEMY_MAX; ++i)
     {
         if (!enemy[i].moveAlg)              continue;
@@ -280,7 +281,7 @@ void judge()
         {
             game_reset();
         }
-    }*/
+    }*/ 
 }
 
 void player_attack()
