@@ -1,6 +1,15 @@
 #pragma once
 #include "Scene.h"
 
+//hitChaeckä÷êîÇÃédól
+enum HITCHECK
+{
+    PLAndENE = 0,
+    PLAndENEScope,
+    PLScopeAndENE,
+
+};
+
 class SceneGame :public Scene
 {
 public:

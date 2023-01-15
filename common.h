@@ -31,11 +31,4 @@ enum DIR
     LEFT,
     RIGHT,
 };
-enum HITCHECK
-{
-    PLAndENE=0,
-    PLAndENEScope,
-    PLScopeAndENE,
-
-};
 
