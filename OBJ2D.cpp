@@ -26,7 +26,7 @@ OBJ2D* OBJ2DManager::searchSet(MOVER mover, const VECTOR2& pos)
 {
 	for (auto& item : *this) {
 		if (item.mover == 0) {
-			//item.clear();
+			item.clear();
 			item.mover = mover;
 			item.pos = pos;
 			return &item;
