@@ -32,13 +32,8 @@ void Enemy::init()
 // ちょっと考える
 void enemy_walk(OBJ2D* obj)
 {
-<<<<<<< HEAD
-    OBJ2D& player = Player::getInstance()->obj_w[0]; //プレイヤー
-    int move = 2;   // 移動速度
-=======
     OBJ2D player = Player::getInstance()->obj_w[0]; //プレイヤー
     int move = 1;   // 移動速度
->>>>>>> 7824c92d46d721b07c24d0e0547160973cdf3472
     
 
     switch (obj->state)

@@ -354,13 +354,9 @@ void player_attack()
 
         if (hitCheck(player, &enemy, HITCHECK::PLScopeAndENE))
         {
-<<<<<<< HEAD
-            enemy.hp -= 1;
-=======
-            enemy[i]->half = true;
+            enemy.half = true;
             //enemy[i]->hp -= 1;
             //enemy[i]->invincible = true;
->>>>>>> 7824c92d46d721b07c24d0e0547160973cdf3472
         }
     }
 
