@@ -25,7 +25,7 @@ void OBJ2DManager::draw()
 OBJ2D* OBJ2DManager::searchSet(MOVER mover, const VECTOR2& pos)
 {
 	for (auto& item : *this) {
-		if (item.mover == 0) {
+		if (!item.mover) {
 			item.clear();
 			item.mover = mover;
 			item.pos = pos;

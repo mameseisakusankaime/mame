@@ -7,7 +7,16 @@ void Gage::init()
 {
     OBJ2DManager::init();//Šî’êƒNƒ‰ƒX‚Ìinit
 
+    int num = 0;
+    for (auto& item : obj_w)
+    {
+        item.dataNum = num;
+        num++;
+    }
+
     obj_w[0].mover = gage; 
+    obj_w[1].mover = gage; 
+    obj_w[2].mover = gage; 
 }
 
 /// <summary>

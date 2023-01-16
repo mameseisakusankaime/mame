@@ -21,8 +21,10 @@ void SceneGame::deinit()
     Enemy::getInstance()->deinit();
     // ‚°[‚¶
     Gage::getInstance()->deinit();
-    //
+    // !ƒ}[ƒN
     Find::getInstance()->deinit();
+    // ƒMƒ~ƒbƒN
+    Gimmick::getInstance()->deinit();
 }
 
 void SceneGame::update()
@@ -42,6 +44,7 @@ void SceneGame::update()
         Gage::getInstance()->init();
         // 
         //Find::getInstance()->init();
+        Gimmick::getInstance()->init();
 
         ++state;
         //break;
@@ -64,6 +67,8 @@ void SceneGame::update()
         Gage::getInstance()->update();
         //
         Find::getInstance()->update();
+        //ƒMƒ~ƒbƒN
+        Gimmick::getInstance();
 
         judge();
 
@@ -79,7 +84,7 @@ void SceneGame::update()
         if (TRG(0) & PAD_L1)
         {
             
-            if (Enemy::getInstance()->obj_w[0].mover == 0)
+            if (!Enemy::getInstance()->obj_w[0].mover)
             {
                 Enemy::getInstance()->searchSet(enemy_walk, enemy_position[0]);
             }
@@ -99,6 +104,10 @@ void SceneGame::draw()
 
     // ”wŒi•`‰æ
     back.draw();
+
+    //ƒMƒ~ƒbƒN
+    Gimmick::getInstance()->draw();
+
     // “G•`‰æˆ—
     Enemy::getInstance()->draw();
     // ƒQ[ƒW
@@ -109,12 +118,12 @@ void SceneGame::draw()
     // ƒvƒŒƒCƒ„[•`‰æˆ—
     Player::getInstance()->draw();
 
-    OBJ2D* plat = &Player::getInstance()->obj_w[0];
+    OBJ2D* plat = Player::getInstance()->begin();
 
     //primitive::circle(plat->pos, plat->radius, VECTOR2(1, 1), 0.0f, VECTOR4(0, 1, 0, 0.2f));
     //primitive::circle(plat->pos, plat->foundRadius, VECTOR2(1, 1), 0.0f, VECTOR4(0, 0, 1, 0.2f));
        
-    OBJ2D* elat = &Enemy::getInstance()->obj_w[0];
+    OBJ2D* elat = Enemy::getInstance()->begin();
     
     //primitive::circle(elat->pos, elat->foundRadius, VECTOR2(1, 1), 0.0f, VECTOR4(0, 0, 1, 0.4f));
 
@@ -277,20 +286,11 @@ void judge()
 {
     OBJ2D* player = &Player::getInstance()->obj_w[0];
     
-    
-    OBJ2D* enemy[10];
-    int num = 0;
-    for (auto& obj : enemy)
+    for (auto&& enemy : *Enemy::getInstance())
     {
-        obj = &Enemy::getInstance()->obj_w[num];
-        ++num;
-    }
+        if (!enemy.mover)continue;
 
-    for (int i = 0; i < 10; ++i)
-    {
-        if (enemy[i]->mover == nullptr)continue;
-
-        if (hitCheck(player, enemy[i],0))
+        if (hitCheck(player, &enemy, 0))
         {
             debug::setString("hit!!");
 
@@ -303,34 +303,30 @@ void judge()
         }
     }
 
-    for (int i = 0; i < 10; ++i)
+    for (auto&& enemy1 : *Enemy::getInstance())
     {
-        for (int j = 0; j < 10; ++j)
+        for (auto&& enemy2 : *Enemy::getInstance())
         {
-            if (i == j)continue;
-            if (hitCheck(enemy[i], enemy[j], 0))
+            if (&enemy1 == &enemy2)continue;
+
+            if (hitCheck(&enemy1, &enemy2, HITCHECK::PLAndENE))
             {
                 // ¡‚Ì‹——£
-                float dist = enemy[i]->pos.x - enemy[j]->pos.x;
+                float dist = enemy1.pos.x - enemy2.pos.x;
                 // ‚Ç‚Á‚¿‚É‚¢‚é‚©
-                bool right;
+                bool right = false;
                 if (dist < 0)
                 {
                     dist *= -1;
                     right = true;
                 }
-                else
-                {
-                    right = false;
-                }
                 // —£‚µ‚½‚¢‹——£
-                float len = enemy[i]->radius + enemy[j]->radius;
+                float len = enemy1.radius + enemy2.radius;
                 if (dist < len)
-                    enemy[j]->pos.x = right ? enemy[i]->pos.x + len : enemy[i]->pos.x - len;
+                    enemy2.pos.x = right ? enemy2.pos.x + len : enemy1.pos.x - len;
             }
         }
     }
-
 
     /*for (int i = 0; i < ENEMY_MAX; ++i)
     {

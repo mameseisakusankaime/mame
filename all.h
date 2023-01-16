@@ -22,6 +22,7 @@
 #include "enemy.h"
 #include "gage.h"
 #include "find.h"
+#include "gimmick.h"
 
 using namespace GameLib;
  

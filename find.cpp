@@ -7,7 +7,16 @@ void Find::init()
 {
     OBJ2DManager::init();
 
-    obj_w[0].mover = find;
+    int num = 0;
+    for (auto& item : obj_w)
+    {
+        item.dataNum = num;
+        num++;
+    }
+
+    //obj_w[0].mover = find;
+    //obj_w[1].mover = find;
+    //obj_w[2].mover = find;
 }
 
 void find(OBJ2D* obj)
@@ -18,7 +27,7 @@ void find(OBJ2D* obj)
     {
     case 0:
         obj->data = sprite_load(L"./Data/Images/find.png");
-        obj->pos = { enemy.pos.x,enemy.pos.y - 100 };
+        //obj->pos = { enemy.pos.x,enemy.pos.y - 100 };
         obj->scale = { 0.5f,0.5f }; 
         obj->texPos = { 0,0 };
         obj->texSize = { 256,256 };
@@ -30,7 +39,7 @@ void find(OBJ2D* obj)
         //break;
     case 1:
 
-        obj->pos = { enemy.pos.x,enemy.pos.y - 100 };
+        //obj->pos = { enemy.pos.x,enemy.pos.y - 100 };
 
         if (obj->timer >= 60)
         {

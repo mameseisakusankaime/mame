@@ -44,3 +44,4 @@ private:
 bool enemy_erase(OBJ2D* obj);
 
 void enemy_walk(OBJ2D* obj);
+void enemy_punch(OBJ2D* obj);

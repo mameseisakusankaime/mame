@@ -1,6 +1,9 @@
 #pragma once
 #include "OBJ2D.h"
 
+/// <summary>
+/// !É}Å[ÉN
+/// </summary>
 class Find :public OBJ2DManager
 {
 public:

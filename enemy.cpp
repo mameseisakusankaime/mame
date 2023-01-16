@@ -26,8 +26,6 @@ void Enemy::init()
     Enemy::getInstance()->searchSet(enemy_walk, enemy_position[1]);
     Enemy::getInstance()->searchSet(enemy_walk, enemy_position[2]);
 }
-
-
  
 // ‚¿‚å‚Á‚Æl‚¦‚é
 void enemy_walk(OBJ2D* obj)
@@ -54,8 +52,8 @@ void enemy_walk(OBJ2D* obj)
 
         static const float posX = obj->pos.x;       //‰ŠúˆÊ’u
         obj->ReferencePosition = obj->pos.x;
-
-
+        // ‰Šúİ’è
+        Find::getInstance()->init();
         ++obj->state;
         //break;
     case 1:
@@ -90,7 +88,9 @@ void enemy_walk(OBJ2D* obj)
 
         break;
     case 4:
-        Find::getInstance()->init();
+
+        Find::getInstance()->searchSet(find, VECTOR2(obj->pos.x, obj->pos.y - 100));
+
         ++obj->state;
         break;
     case 5:
