@@ -137,6 +137,13 @@ void enemy_walk(OBJ2D* obj)
         break;
     }
 
+    if (player.half && obj->half)
+    {
+        obj->half = false;
+        obj->hp -= 1;
+        obj->invincible = true;
+    }
+
     // –³“GŽžŠÔ(”­“®’†)
     if (obj->invincible)
     {

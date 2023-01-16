@@ -174,11 +174,16 @@ void anime(OBJ2D* obj, int total, int flame, bool loop, int type)
                 // UŒ‚I—¹
                 if (obj->one)
                 {
+
                     obj->anime = obj->animeTimer = 0;
                     obj->end = false;
                     obj->one = false;
                     obj->half = true;
                     ++obj->animeState;
+
+                    // 
+                    //enemy->hp -= 1;
+                    //enemy->invincible = true;
                 }
 
                 ++obj->animeTimer;
@@ -355,8 +360,9 @@ void player_attack()
 
         if (hitCheck(player, enemy[i], 2))
         {
-            enemy[i]->hp -= 1;
-            enemy[i]->invincible = true;
+            enemy[i]->half = true;
+            //enemy[i]->hp -= 1;
+            //enemy[i]->invincible = true;
         }
     }
     player->attack = true;
