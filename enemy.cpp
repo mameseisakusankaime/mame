@@ -52,11 +52,9 @@ void enemy_walk(OBJ2D* obj)
         obj->foundRadius = 200;
         obj->eraser = enemy_erase;
 
-<<<<<<< HEAD
         static const float posX = obj->pos.x;       //‰ŠúˆÊ’u
-=======
         obj->ReferencePosition = obj->pos.x;
->>>>>>> 3f4223541ab07183a6bcef2853125a0493445881
+
 
         ++obj->state;
         //break;
@@ -142,5 +140,5 @@ void enemy_walk(OBJ2D* obj)
 
     // d—Í
     obj->pos.y += 5;
-    if (obj->pos.y >= 450)obj->pos.y = 450;
+    if (obj->pos.y >= 450)obj->pos.y = 450;     //’n–Ê
 }

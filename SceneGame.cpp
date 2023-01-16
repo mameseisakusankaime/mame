@@ -68,7 +68,7 @@ void SceneGame::update()
         judge();
 
         //UŒ‚
-        if (TRG(0) & PAD_R1)
+        if (TRG(0) & PAD_R1)//Rƒ{ƒ^ƒ“
         {
             player_attack();
         }
@@ -339,23 +339,17 @@ void judge()
 void player_attack()
 {
     OBJ2D* player = &Player::getInstance()->obj_w[0];
-    OBJ2D* enemy[Enemy::OBJ_MAX];
-    int num = 0;
-    for (auto& obj : enemy)
-    {
-        obj = &Enemy::getInstance()->obj_w[num];
-        ++num;
-    }
 
-    for (int i = 0; i < Enemy::OBJ_MAX; ++i)
+    for (auto&& enemy : *Enemy::getInstance())
     {
-        if (enemy[i]->mover == nullptr)continue;
+        if (!enemy.mover)continue;
 
-        if (hitCheck(player, enemy[i], HITCHECK::PLScopeAndENE))
+        if (hitCheck(player, &enemy, HITCHECK::PLScopeAndENE))
         {
-            enemy[i]->hp -= 1;
+            enemy.hp -= 1;
         }
     }
+
     player->attack = true;
     //if(TRG(0)&PAD_START)player->animeState = 0;
 }
