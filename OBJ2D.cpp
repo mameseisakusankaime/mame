@@ -66,10 +66,15 @@ void OBJ2D::init()
 	flashingTimer = 0;
 
 	// アニメーション関係
+	animeState = 0;
 	anime = 0;
 	animeTimer = 0;
 	one = false;
 	end = false;
+	attack = false;
+	
+
+	ReferencePosition = 0;
 }
 
 void OBJ2D::deinit()

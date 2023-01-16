@@ -20,7 +20,7 @@ public:
     VECTOR2 pivot;              // 基準点
     int angle;                  // 角度
     VECTOR4 color;                // 色
-
+    
 
     VECTOR2 offset;
     float radius;
@@ -41,10 +41,15 @@ public:
     int flashingTimer;      //点滅時間
 
     // アニメーション関係
+    int animeState;
     int anime;
     int animeTimer;
     bool one;
     bool end;
+    bool attack;
+    
+
+    float ReferencePosition;    // 動きの基準位置
 
 
 public:

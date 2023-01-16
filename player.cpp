@@ -47,8 +47,8 @@ void player(OBJ2D* obj)
         obj->pos = { 200,200 };
         obj->scale = { 0.5f,0.5f };
         obj->texPos = { 0,0 };  
-        obj->texSize = { 256,256 };
-        obj->pivot = { 128,128 };
+        obj->texSize = { 512,512 };
+        obj->pivot = { 128,384 };
         obj->type = DATA::MARU;
         obj->radius = 45;
         obj->foundRadius = 140;
@@ -66,19 +66,25 @@ void player(OBJ2D* obj)
         // ˆÚ“®
         //if (STATE(0) & PAD_UP)obj.pos.y -= 5;
         //if (STATE(0) & PAD_DOWN)obj.pos.y += 5;
-        switch (STATE(0) & (PAD_LEFT | PAD_RIGHT))
-        {
-        case PAD_LEFT:
-            anime(obj, 2, 15, true, 0);
-            obj->pos.x -= 3;
-            if (obj->scale.x > 0)obj->scale.x *= -1;
-            break;
-        case PAD_RIGHT:
-            anime(obj, 2, 15, true, 0);
-            obj->pos.x += 3;
-            if (obj->scale.x < 0)obj->scale.x *= -1;
-            break;
-        }
+        //if (!obj->attack)
+        //{
+            switch (STATE(0) & (PAD_LEFT | PAD_RIGHT))
+            {
+            case PAD_LEFT:
+                if(!obj->attack)anime(obj, 2, 15, true, 0);
+                obj->pos.x -= 3;
+                if (obj->scale.x > 0)obj->scale.x *= -1;
+                break;
+            case PAD_RIGHT:
+                if (!obj->attack)anime(obj, 2, 15, true, 0);
+                obj->pos.x += 3;
+                if (obj->scale.x < 0)obj->scale.x *= -1;
+                break;
+            }
+        //}
+
+        debug::setString("x%f", obj->texPos.x);
+        debug::setString("y%f", obj->texPos.y);
 
         // ‰æ‘œƒf[ƒ^
         //if (STATE(0) & PAD_UP)      setSpr(0);
