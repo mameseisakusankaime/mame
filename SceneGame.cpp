@@ -69,11 +69,11 @@ void SceneGame::update()
 
         if (TRG(0) & PAD_R1)
         {
-            player_attack();
+            if(!Player::getInstance()->obj_w[0].attack)player_attack();
         }
 
-        if (Player::getInstance()->obj_w[0].attack)
-            anime(&Player::getInstance()->obj_w[0], 13, 2, false, 0);
+        //if (Player::getInstance()->obj_w[0].attack)
+        //    anime(&Player::getInstance()->obj_w[0], 13, 2, false, 0);
 
         if (TRG(0) & PAD_L1)
         {
@@ -110,12 +110,12 @@ void SceneGame::draw()
 
     OBJ2D* plat = &Player::getInstance()->obj_w[0];
 
-    primitive::circle(plat->pos, plat->radius, VECTOR2(1, 1), 0.0f, VECTOR4(0, 1, 0, 0.2f));
-    primitive::circle(plat->pos, plat->foundRadius, VECTOR2(1, 1), 0.0f, VECTOR4(0, 0, 1, 0.2f));
+    //primitive::circle(plat->pos, plat->radius, VECTOR2(1, 1), 0.0f, VECTOR4(0, 1, 0, 0.2f));
+    //primitive::circle(plat->pos, plat->foundRadius, VECTOR2(1, 1), 0.0f, VECTOR4(0, 0, 1, 0.2f));
        
     OBJ2D* elat = &Enemy::getInstance()->obj_w[0];
     
-    primitive::circle(elat->pos, elat->foundRadius, VECTOR2(1, 1), 0.0f, VECTOR4(0, 0, 1, 0.4f));
+    //primitive::circle(elat->pos, elat->foundRadius, VECTOR2(1, 1), 0.0f, VECTOR4(0, 0, 1, 0.4f));
 
 }
 
@@ -136,6 +136,7 @@ void anime(OBJ2D* obj, int total, int flame, bool loop, int type)
         obj->anime = obj->animeTimer = 0;
         obj->end = false;
         obj->one = false;
+        obj->half = false;
         //if (type == 0)
         //    GameLib::sound::play(type, 0);
 
@@ -165,7 +166,7 @@ void anime(OBJ2D* obj, int total, int flame, bool loop, int type)
                 if (obj->anime >= total)
                 {
                     obj->anime = total - 1;
-                    obj->end = true;
+                    //obj->end = true;
                     return;
                 }
                 obj->texPos.x = obj->anime * obj->texSize.x;
@@ -176,6 +177,7 @@ void anime(OBJ2D* obj, int total, int flame, bool loop, int type)
                     obj->anime = obj->animeTimer = 0;
                     obj->end = false;
                     obj->one = false;
+                    obj->half = true;
                     ++obj->animeState;
                 }
 
@@ -203,10 +205,11 @@ void anime(OBJ2D* obj, int total, int flame, bool loop, int type)
         {
             obj->texPos = {};
             obj->anime = obj->animeTimer = 0;
-            obj->end = false;
+            obj->end = true;
             obj->one = false;
             obj->attack = false;
-            obj->animeState = 0;
+            obj->half = false;
+            //obj->animeState = 0;
         }
 
         ++obj->animeTimer;
@@ -353,6 +356,7 @@ void player_attack()
         if (hitCheck(player, enemy[i], 2))
         {
             enemy[i]->hp -= 1;
+            enemy[i]->invincible = true;
         }
     }
     player->attack = true;

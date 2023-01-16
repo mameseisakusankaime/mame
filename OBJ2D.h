@@ -47,6 +47,7 @@ public:
     bool one;
     bool end;
     bool attack;
+    bool half;
     
 
     float ReferencePosition;    // “®‚«‚ÌŠî€ˆÊ’u

@@ -72,7 +72,7 @@ void OBJ2D::init()
 	one = false;
 	end = false;
 	attack = false;
-	
+	half = false;
 
 	ReferencePosition = 0;
 }
