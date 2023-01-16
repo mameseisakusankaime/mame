@@ -23,9 +23,9 @@ void Enemy::init()
         num++;
     }    
 
-    Enemy::getInstance()->searchSet(enemy_walk, enemy_position[0]);
-    Enemy::getInstance()->searchSet(enemy_walk, enemy_position[1]);
-    Enemy::getInstance()->searchSet(enemy_walk, enemy_position[2]);
+    //Enemy::getInstance()->searchSet(enemy_walk, enemy_position[0]);
+    //Enemy::getInstance()->searchSet(enemy_walk, enemy_position[1]);
+    //Enemy::getInstance()->searchSet(enemy_walk, enemy_position[2]);
 }
 
 
@@ -34,7 +34,7 @@ void Enemy::init()
 void enemy_walk(OBJ2D* obj)
 {
     OBJ2D player = Player::getInstance()->obj_w[0]; //プレイヤー
-    int move = 1;   // 移動速度
+    float move = 0.5f;   // 移動速度
     
 
     switch (obj->state)
@@ -42,11 +42,12 @@ void enemy_walk(OBJ2D* obj)
     case 0:
         // 初期設定
         obj->data = sprite_load(L"./Data/Images/enemy.png");
+        //obj->data = sprite_load(L"./Data/Images/enemy.png");
         //obj->pos = { 900,200 };
-        obj->scale = { 1,1 };
+        obj->scale = { 0.5f,0.5f };
         obj->texPos = { 0,0 };
-        obj->texSize = { 256,256 };
-        obj->pivot = { 128,128 };
+        obj->texSize = { 512,512 };
+        obj->pivot = { 128,384 };
         obj->type = DATA::SANKAKU;
         obj->radius = 40;
         obj->hp = 1;
@@ -72,6 +73,8 @@ void enemy_walk(OBJ2D* obj)
             if (obj->scale.x > 0)obj->scale.x *= -1;
         }
 
+        anime(obj, 2, 15, true, 0);
+
         // 見つける
         if (hitCheck(&player, obj, 1))
             if (player.pos.x < obj->pos.x)obj->state = 4;
@@ -85,6 +88,8 @@ void enemy_walk(OBJ2D* obj)
             obj->state = 2;
             if (obj->scale.x < 0)obj->scale.x *= -1;
         }
+
+        anime(obj, 2, 15, true, 0);
 
         // 見つける
         if (hitCheck(&player, obj, 1))
@@ -112,6 +117,7 @@ void enemy_walk(OBJ2D* obj)
             if (obj->scale.x < 0)obj->scale.x *= -1;
         }
 
+        anime(obj, 2, 15, true, 0);
 
         // 食べてるみたいで面白い
         //// プレイヤーと敵の距離

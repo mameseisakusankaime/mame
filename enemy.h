@@ -4,9 +4,9 @@
 static const VECTOR2 enemy_position[] =
 {
     // walk‚Íx‚ð100ŠJ‚¯‚éŽ–
-    {600,100},
-    {700,100},
-    {800,100},
+    {600,500},
+    {700,500},
+    {800,500},
 };
 
 class Enemy:public OBJ2DManager

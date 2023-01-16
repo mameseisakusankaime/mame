@@ -4,7 +4,8 @@
 class Back
 {
 public:
-    OBJ2D obj; 
+    static const int OBJ_MAX = 8;
+    OBJ2D obj[OBJ_MAX];
 
 public:
     void init();
