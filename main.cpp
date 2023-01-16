@@ -26,7 +26,7 @@ Scene* pNext;
 //  WinMain（エントリポイント）
 //--------------------------------------------------------------
 int APIENTRY wWinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPWSTR, _In_ int)
-{
+ {
     GameLib::init(L"最強すらすら", 1280, 720, true);
 
     setScene(SCENE::TITLE);

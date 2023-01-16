@@ -51,7 +51,7 @@ void player(OBJ2D* obj)
         obj->pivot = { 128,384 };
         obj->type = DATA::MARU;
         obj->radius = 45;
-        obj->foundRadius = 140;
+        obj->foundRadius = 160;
         obj->hp = 5;
         //obj->eraser = enemy_erase;
 
@@ -64,6 +64,7 @@ void player(OBJ2D* obj)
         //break;
     case 1:
         // ˆÚ“®
+        
         //if (STATE(0) & PAD_UP)obj.pos.y -= 5;
         //if (STATE(0) & PAD_DOWN)obj.pos.y += 5;
         //if (!obj->attack)
@@ -101,30 +102,16 @@ void player(OBJ2D* obj)
         obj->pos.y += 5;
         if (obj->pos.y >= 450)obj->pos.y = 450;
 
-        if (TRG(0) & PAD_L1)
-        {
-            //setData(Enemy::getInstance()->obj_w.type);
-        }
+        //if (TRG(0) & PAD_L1)
+        //{
+        //    //setData(Enemy::getInstance()->obj_w.type);
+        //}
 
-        // –³“GŠÔ(”­“®’†)
-        if (obj->invincible)
-        {
-            ++obj->invincibleTimer;
-            ++obj->flashingTimer;
-            if (obj->flashingTimer / 5 == 1)
-            {
-                obj->color.w = obj->color.w == 1 ? 0 : 1;
-                obj->flashingTimer = 0;
-            }
-        }
-        // –³“GŠÔI—¹
-        if (obj->invincibleTimer >= 60)
-        {
-            obj->invincible = false;
-            obj->invincibleTimer = 0;
-            obj->color.w = 1;
-        }
+
         
+        // UŒ‚ƒtƒF[ƒY‚ÉˆÚ“®
+        if (obj->attack)
+            obj->state = 2;
 
 #ifdef _DEBUG
         debug::setString("player.hp%d", obj->hp);
@@ -132,7 +119,50 @@ void player(OBJ2D* obj)
 #endif
 
         break;
+    case 2:
+        // UŒ‚‰Šú‰»
+        obj->animeState = 0;
+
+        ++obj->state;
+        break;
+    case 3:
+        // UŒ‚ˆ—
+
+        anime(obj, 13, 3, false, 0);
+
+        if (obj->end)
+        { 
+            obj->texPos.x = 0;
+            obj->state = 1;
+            obj->end = false;
+            obj->animeState = 0;
+        }
+
+
+        break;
     }
+
+    // –³“GŠÔ(”­“®’†)
+    if (obj->invincible)
+    {
+        ++obj->invincibleTimer;
+        ++obj->flashingTimer;
+        if (obj->flashingTimer / 5 == 1)
+        {
+            obj->color.w = obj->color.w == 1 ? 0 : 1;
+            obj->flashingTimer = 0;
+        }
+    }
+    // –³“GŠÔI—¹
+    if (obj->invincibleTimer >= 60)
+    {
+        obj->invincible = false;
+        obj->invincibleTimer = 0;
+        obj->color.w = 1;
+    }
+#ifdef _DEBUG
+    debug::setString("state%d", obj->state);
+#endif 
 }
 
 

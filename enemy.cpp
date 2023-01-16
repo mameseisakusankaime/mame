@@ -32,8 +32,13 @@ void Enemy::init()
 // ちょっと考える
 void enemy_walk(OBJ2D* obj)
 {
+<<<<<<< HEAD
     OBJ2D& player = Player::getInstance()->obj_w[0]; //プレイヤー
     int move = 2;   // 移動速度
+=======
+    OBJ2D player = Player::getInstance()->obj_w[0]; //プレイヤー
+    int move = 1;   // 移動速度
+>>>>>>> 7824c92d46d721b07c24d0e0547160973cdf3472
     
 
     switch (obj->state)
@@ -48,7 +53,7 @@ void enemy_walk(OBJ2D* obj)
         obj->pivot = { 128,128 };
         obj->type = DATA::SANKAKU;
         obj->radius = 40;
-        obj->hp = 2;
+        obj->hp = 1;
         obj->foundRadius = 200;
         obj->eraser = enemy_erase;
 
@@ -136,6 +141,32 @@ void enemy_walk(OBJ2D* obj)
             obj->pos.x = right ? player.pos.x + len : player.pos.x - len;
 
         break;
+    }
+
+    if (player.half && obj->half)
+    {
+        obj->half = false;
+        obj->hp -= 1;
+        obj->invincible = true;
+    }
+
+    // 無敵時間(発動中)
+    if (obj->invincible)
+    {
+        ++obj->invincibleTimer;
+        ++obj->flashingTimer;
+        if (obj->flashingTimer / 5 == 1)
+        {
+            obj->color.w = obj->color.w == 1 ? 0 : 1;
+            obj->flashingTimer = 0;
+        }
+    }
+    // 無敵時間終了
+    if (obj->invincibleTimer >= 60)
+    {
+        obj->invincible = false;
+        obj->invincibleTimer = 0;
+        obj->color.w = 1;
     }
 
     // 重力
