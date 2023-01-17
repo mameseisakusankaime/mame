@@ -28,4 +28,5 @@ private:
 
 };
 
-void gimmick_1(OBJ2D* obj);
+void gimmick_Blok(OBJ2D* obj);
+void gimmick_Button(OBJ2D* obj);

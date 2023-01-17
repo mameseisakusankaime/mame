@@ -44,6 +44,7 @@ void SceneGame::update()
         Gage::getInstance()->init();
         // 
         //Find::getInstance()->init();
+        //ƒMƒ~ƒbƒN
         Gimmick::getInstance()->init();
 
         ++state;
@@ -238,9 +239,9 @@ void anime(OBJ2D* obj, int total, int flame, bool loop, int type)
 //--------------------------------------
 bool hitCheckCircle(VECTOR2 pos1, float r1, VECTOR2 pos2, float r2)
 {
-    float dx = pos2.x - pos1.x;
-    float dy = pos2.y - pos1.y;
-    float r = r1 + r2;
+    const float dx = pos2.x - pos1.x;
+    const float dy = pos2.y - pos1.y;
+    const float r = r1 + r2;
 
     if (dx * dx + dy * dy <= r * r)
         return true;
@@ -286,11 +287,12 @@ void judge()
 {
     OBJ2D* player = &Player::getInstance()->obj_w[0];
     
+    //player‚Æenemy‚Ì”»’è
     for (auto&& enemy : *Enemy::getInstance())
     {
         if (!enemy.mover)continue;
 
-        if (hitCheck(player, &enemy, 0))
+        if (hitCheck(player, &enemy, HITCHECK::PLAndENE))
         {
             debug::setString("hit!!");
 
@@ -303,6 +305,7 @@ void judge()
         }
     }
 
+    //enemy“¯Žm‚Ì“–‚½‚è”»’è
     for (auto&& enemy1 : *Enemy::getInstance())
     {
         for (auto&& enemy2 : *Enemy::getInstance())
@@ -323,7 +326,7 @@ void judge()
                 // —£‚µ‚½‚¢‹——£
                 float len = enemy1.radius + enemy2.radius;
                 if (dist < len)
-                    enemy2.pos.x = right ? enemy2.pos.x + len : enemy1.pos.x - len;
+                    enemy2.pos.x = right ? enemy1.pos.x + len : enemy1.pos.x - len;
             }
         }
     }
@@ -342,7 +345,7 @@ void judge()
 
 void player_attack()
 {
-    OBJ2D* player = &Player::getInstance()->obj_w[0];
+    OBJ2D* player = Player::getInstance()->begin();
 
     for (auto&& enemy : *Enemy::getInstance())
     {
@@ -351,8 +354,8 @@ void player_attack()
         if (hitCheck(player, &enemy, HITCHECK::PLScopeAndENE))
         {
             enemy.half = true;
-            //enemy[i]->hp -= 1;
-            //enemy[i]->invincible = true;
+            //enemy.hp -= 1;
+            //enemy.invincible = true;
         }
     }
 

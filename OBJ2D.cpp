@@ -75,6 +75,8 @@ void OBJ2D::init()
 	half = false;
 
 	ReferencePosition = 0;
+
+	size = {};
 }
 
 void OBJ2D::deinit()

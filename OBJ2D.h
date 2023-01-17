@@ -52,6 +52,9 @@ public:
 
     float ReferencePosition;    // “®‚«‚ÌŠî€ˆÊ’u
 
+    VECTOR2 size;               //“–‚½‚è”»’è‚Ì‘å‚«‚³‚Ì”¼•ª
+
+
 
 public:
     OBJ2D() { init(); }
