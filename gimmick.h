@@ -10,6 +10,7 @@ public:
 	virtual OBJ2D* begin()override { return &obj_w[0]; }
 	virtual OBJ2D* end()override { return &obj_w[OBJ_MAX]; }
 	virtual ~Gimmick() {};
+	void init()override;
 
 	/// <summary>
 	/// singleton
@@ -27,6 +28,8 @@ private:
 	Gimmick operator=(const Gimmick&) = delete;//‘ã“ü‹ÖŽ~
 
 };
+
+bool gimmick_erase(OBJ2D* obj);
 
 void gimmick_Blok(OBJ2D* obj);
 void gimmick_Button(OBJ2D* obj);

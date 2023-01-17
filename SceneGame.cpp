@@ -2,10 +2,11 @@
 
 Back back;
 
+
+
 void SceneGame::init()
 {
     state = 0;
-    timer = 0;
 }
 
 void SceneGame::deinit()
@@ -94,16 +95,6 @@ void SceneGame::update()
             }
         }
 
-       
-        if (timer == 0)
-            Enemy::getInstance()->searchSet(enemy_walk, enemy_position[0]);
-        if (timer == 10)
-            Enemy::getInstance()->searchSet(enemy_walk, enemy_position[1]);
-        if (timer == 20)
-            Enemy::getInstance()->searchSet(enemy_walk, enemy_position[2]);
-
-        ++timer;
-
         break;
     }
 }
@@ -111,8 +102,6 @@ void SceneGame::update()
 void SceneGame::draw()
 {
     GameLib::clear(1, 1, 1);
-
-
 
     // ”wŒi•`‰æ
     back.draw();
@@ -138,11 +127,6 @@ void SceneGame::draw()
     OBJ2D* elat = Enemy::getInstance()->begin();
     
     //primitive::circle(elat->pos, elat->foundRadius, VECTOR2(1, 1), 0.0f, VECTOR4(0, 0, 1, 0.4f));
-
-    if (timer < 60)
-    {
-        GameLib::clear(1, 1, 1);
-    }
 
 }
 
@@ -266,6 +250,26 @@ bool hitCheckCircle(VECTOR2 pos1, float r1, VECTOR2 pos2, float r2)
 }
 
 //--------------------------------------
+//  ŽlŠp‚ÆŽlŠp‚Ì‚ ‚½‚è”»’è
+//--------------------------------------
+bool hitCheckBox(   float b1top,float B1left,float b1right,float b1bottom,
+                    float b2top,float b2left,float b2right,float b2bottom)
+{
+    if (    B1left < b2right
+        ||  b1right > b2left
+        ||  b1top < b2bottom
+        ||  b1bottom > b2top)return false;
+
+    return true;
+}
+
+bool hitCheckBox(VECTOR2 pos1, VECTOR2 size1, VECTOR2 pos2, VECTOR2 size2)
+{
+    return hitCheckBox(pos1.y - size1.y * 0.5f, pos1.x - size1.x * 0.5f, pos1.x + size1.x * 0.5f, pos1.y + size1.y * 0.5f,
+                        pos2.y - size2.y * 0.5f, pos1.x - size2.x * 0.5f, pos2.x + size2.x * 0.5f, pos2.y + size2.y * 0.5f);
+}
+
+//--------------------------------------
 //  OBJ2D“¯Žm‚Ì‚ ‚½‚è”»’è
 //--------------------------------------
 bool hitCheck(OBJ2D* obj1, OBJ2D* obj2,int num)
@@ -369,22 +373,9 @@ void player_attack()
 
         if (hitCheck(player, &enemy, HITCHECK::PLScopeAndENE))
         {
-<<<<<<< HEAD
             enemy.half = true;
             //enemy.hp -= 1;
             //enemy.invincible = true;
-=======
-            // ƒvƒŒƒCƒ„[‚Æ“G‚Ì‹——£
-            float dist = player->pos.x - enemy[i]->pos.x;
-            bool right;
-            if (dist < 0)right = true;
-            else right = false;
-
-            if (right && player->scale.x > 0 || !right && player->scale.x < 0)
-                enemy[i]->half = true;
-            //enemy[i]->hp -= 1;
-            //enemy[i]->invincible = true;
->>>>>>> eb9ce23fc445ccc888d36b5ca156ae3d8fac84d8
         }
     }
 
