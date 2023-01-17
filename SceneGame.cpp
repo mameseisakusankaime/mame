@@ -2,11 +2,10 @@
 
 Back back;
 
-
-
 void SceneGame::init()
 {
     state = 0;
+    timer = 0;
 }
 
 void SceneGame::deinit()
@@ -95,6 +94,16 @@ void SceneGame::update()
             }
         }
 
+       
+        if (timer == 0)
+            Enemy::getInstance()->searchSet(enemy_walk, enemy_position[0]);
+        if (timer == 10)
+            Enemy::getInstance()->searchSet(enemy_walk, enemy_position[1]);
+        if (timer == 20)
+            Enemy::getInstance()->searchSet(enemy_walk, enemy_position[2]);
+
+        ++timer;
+
         break;
     }
 }
@@ -102,6 +111,8 @@ void SceneGame::update()
 void SceneGame::draw()
 {
     GameLib::clear(1, 1, 1);
+
+
 
     // ”wŒi•`‰æ
     back.draw();
@@ -127,6 +138,11 @@ void SceneGame::draw()
     OBJ2D* elat = Enemy::getInstance()->begin();
     
     //primitive::circle(elat->pos, elat->foundRadius, VECTOR2(1, 1), 0.0f, VECTOR4(0, 0, 1, 0.4f));
+
+    if (timer < 60)
+    {
+        GameLib::clear(1, 1, 1);
+    }
 
 }
 
@@ -353,9 +369,22 @@ void player_attack()
 
         if (hitCheck(player, &enemy, HITCHECK::PLScopeAndENE))
         {
+<<<<<<< HEAD
             enemy.half = true;
             //enemy.hp -= 1;
             //enemy.invincible = true;
+=======
+            // ƒvƒŒƒCƒ„[‚Æ“G‚Ì‹——£
+            float dist = player->pos.x - enemy[i]->pos.x;
+            bool right;
+            if (dist < 0)right = true;
+            else right = false;
+
+            if (right && player->scale.x > 0 || !right && player->scale.x < 0)
+                enemy[i]->half = true;
+            //enemy[i]->hp -= 1;
+            //enemy[i]->invincible = true;
+>>>>>>> eb9ce23fc445ccc888d36b5ca156ae3d8fac84d8
         }
     }
 

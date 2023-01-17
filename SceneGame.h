@@ -14,6 +14,7 @@ class SceneGame :public Scene
 {
 public:
     GameLib::Sprite* data;
+    int timer;
 public:
     void init()override;
     void deinit()override;
