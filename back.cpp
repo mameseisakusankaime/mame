@@ -26,14 +26,6 @@ void Back::update()
         {
         case 0:
             obj[i].scale = { 1,1 };
-
-<<<<<<< HEAD
-        ++obj.state;
-        //break;
-    case 1:
-        //obj.pos.x -= 5;
-        if (obj.pos.x <= -1280)obj.pos.x += 1280;//loop
-=======
             if (i == 0 || i == 1)
             {
                 obj[i].data = sprite_load(L"./Data/Images/back.png");
@@ -55,7 +47,6 @@ void Back::update()
                 obj[i].data = sprite_load(L"./Data/Images/back3.png");
             }
             obj[i].pos = {};
->>>>>>> eb9ce23fc445ccc888d36b5ca156ae3d8fac84d8
 
             if (i == 1 || i == 3 || i == 5 || i == 7)
             {
