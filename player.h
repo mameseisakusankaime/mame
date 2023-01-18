@@ -6,13 +6,11 @@ class Player :public OBJ2DManager
 public:
     static const int OBJ_MAX = 1;
     OBJ2D	obj_w[OBJ_MAX];
-     
 
-
-    static GameLib::Sprite* maru;
-    static GameLib::Sprite* sikaku;
-    static GameLib::Sprite* hosi;
-    static GameLib::Sprite* sankaku;
+    //static GameLib::Sprite* maru;
+    //static GameLib::Sprite* sikaku;
+    //static GameLib::Sprite* hosi;
+    //static GameLib::Sprite* sankaku;
 
 public:
     OBJ2D* begin() { return obj_w; }

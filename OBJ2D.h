@@ -51,7 +51,7 @@ public:
     
 
     float ReferencePosition;    // 動きの基準位置
-
+    float holdPosX; // 一個前のポジション
 
 public:
     OBJ2D() { init(); }

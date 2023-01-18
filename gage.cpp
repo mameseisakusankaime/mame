@@ -17,6 +17,8 @@ void Gage::init()
     obj_w[0].mover = gage; 
     obj_w[1].mover = gage; 
     obj_w[2].mover = gage; 
+    obj_w[3].mover = gage; 
+    obj_w[4].mover = gage; 
 }
 
 void gage(OBJ2D* obj)

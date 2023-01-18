@@ -1,7 +1,5 @@
 #include "all.h"
 
-Back back;
-
 void SceneGame::init()
 {
     state = 0;
@@ -13,7 +11,7 @@ void SceneGame::deinit()
     safe_delete(data);
 
     // îwåièIóπèàóù
-    back.deinit();
+    Back::getInstance()->deinit();
     // ÉvÉåÉCÉÑÅ[èIóπèàóù
     Player::getInstance()->deinit();
     // ìGèIóπèàóù
@@ -31,8 +29,22 @@ void SceneGame::update()
     case 0:
         GameLib::setBlendMode(Blender::BS_ALPHA);
 
+        // âÊëúì«Ç›çûÇ›
+        sprLoad = sprite_load(L"./Data/Images/loading_back.png");
+        sprWord = sprite_load(L"./Data/Images/loading_character.png");
+
         // îwåièâä˙ê›íË
-        back.init();
+        Back::getInstance()->init();
+
+        Back::getInstance()->searchSet(back_update0, VECTOR2(0,0));
+        Back::getInstance()->searchSet(back_update0, VECTOR2(5120,0));
+        Back::getInstance()->searchSet(back_update1, VECTOR2(0,0));
+        Back::getInstance()->searchSet(back_update1, VECTOR2(5120,0));
+        Back::getInstance()->searchSet(back_update2, VECTOR2(0,0));
+        Back::getInstance()->searchSet(back_update2, VECTOR2(5120,0));
+        Back::getInstance()->searchSet(back_update3, VECTOR2(0,0));
+        Back::getInstance()->searchSet(back_update3, VECTOR2(5120,0));
+
         // ÉvÉåÉCÉÑÅ[èâä˙ê›íË
         Player::getInstance()->init();
         // ìGèâä˙ê›íË
@@ -54,11 +66,11 @@ void SceneGame::update()
 #endif
 
         // îwåiçXêV
-        back.update();
-        // ÉvÉåÉCÉÑÅ[çXêVèàóù
-        Player::getInstance()->update();
+        Back::getInstance()->update();
         // ìGçXêVèàóù
         Enemy::getInstance()->update();
+        // ÉvÉåÉCÉÑÅ[çXêVèàóù
+        Player::getInstance()->update();
         //ÉQÅ[ÉW
         Gage::getInstance()->update();
         //
@@ -90,10 +102,14 @@ void SceneGame::update()
        
         if (timer == 0)
             Enemy::getInstance()->searchSet(enemy_walk, enemy_position[0]);
-        if (timer == 10)
+        if (timer == 2)
             Enemy::getInstance()->searchSet(enemy_walk, enemy_position[1]);
-        if (timer == 20)
+        if (timer == 4)
             Enemy::getInstance()->searchSet(enemy_walk, enemy_position[2]);
+        if (timer == 10)
+            Enemy::getInstance()->searchSet(enemy_walk, enemy_position[3]);
+        if (timer == 20)
+            Enemy::getInstance()->searchSet(enemy_walk, enemy_position[4]);
 
         ++timer;
 
@@ -108,7 +124,7 @@ void SceneGame::draw()
 
 
     // îwåiï`âÊ
-    back.draw();
+    Back::getInstance()->draw();
     // ìGï`âÊèàóù
     Enemy::getInstance()->draw();
     // ÉQÅ[ÉW
@@ -130,7 +146,8 @@ void SceneGame::draw()
 
     if (timer < 60)
     {
-        GameLib::clear(1, 1, 1);
+        sprite_render(sprLoad, 0, 0);
+        sprite_render(sprWord, 0, 0);
     }
 
 }

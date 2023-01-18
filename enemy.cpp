@@ -34,8 +34,14 @@ void Enemy::init()
 void enemy_walk(OBJ2D* obj)
 {
     OBJ2D player = Player::getInstance()->obj_w[0]; //プレイヤー
+    OBJ2D* find_obj[10];
+    for (int i = 0; i < 10; ++i)
+    {
+        find_obj[i] = &Find::getInstance()->obj_w[i];
+    }
+
     float move = 0.5f;   // 移動速度
-    
+    float dist;
 
     switch (obj->state)
     {
@@ -63,6 +69,8 @@ void enemy_walk(OBJ2D* obj)
         //break;
     case 1:
         if (obj->pos.y >= 450)++obj->state;
+
+        obj->holdPosX = player.pos.x;
         break;
     case 2:
         // 左に進む
@@ -73,7 +81,19 @@ void enemy_walk(OBJ2D* obj)
             if (obj->scale.x > 0)obj->scale.x *= -1;
         }
 
+        // 背景スクロールに合わせる
+        dist = obj->holdPosX;
+        obj->holdPosX = player.pos.x;
+        if (dist != obj->holdPosX)
+        {
+            obj->pos.x += (dist - obj->holdPosX) * 3.0f;
+            obj->ReferencePosition += (dist - obj->holdPosX) * 3.0f;
+        }
+
+        // アニメーション
         anime(obj, 2, 15, true, 0);
+
+        dist_len(obj, &player);
 
         // 見つける
         if (hitCheck(&player, obj, 1))
@@ -89,7 +109,19 @@ void enemy_walk(OBJ2D* obj)
             if (obj->scale.x < 0)obj->scale.x *= -1;
         }
 
+        // 背景スクロールに合わせる
+        dist = obj->holdPosX;
+        obj->holdPosX = player.pos.x;
+        if (dist != obj->holdPosX)
+        {
+            obj->pos.x += (dist - obj->holdPosX) * 3.0f;
+            obj->ReferencePosition += (dist - obj->holdPosX) * 3.0f;
+        }
+
+        // アニメーション
         anime(obj, 2, 15, true, 0);
+
+        dist_len(obj, &player);
 
         // 見つける
         if (hitCheck(&player, obj, 1))
@@ -117,6 +149,16 @@ void enemy_walk(OBJ2D* obj)
             if (obj->scale.x < 0)obj->scale.x *= -1;
         }
 
+        // 背景スクロールに合わせる
+        dist = obj->holdPosX;
+        obj->holdPosX = player.pos.x;
+        if (dist != obj->holdPosX)
+        {
+            obj->pos.x += (dist - obj->holdPosX) * 3.0f;
+            obj->ReferencePosition += (dist - obj->holdPosX) * 3.0f;
+        }
+
+        // アニメーション
         anime(obj, 2, 15, true, 0);
 
         // 食べてるみたいで面白い
@@ -127,27 +169,18 @@ void enemy_walk(OBJ2D* obj)
         //float len = player.radius + obj->radius;
         //if (dist < len)obj->pos.x = player.pos.x + obj->radius;
         
-        // プレイヤーと敵の距離
-        float dist = player.pos.x - obj->pos.x;
-        // 敵がどっちにいるか(右だとtrue)
-        bool right;
-        if (dist < 0)
-        {
-            dist *= -1;
-            right = true;
-        }
-        else
-        {
-            right = false;
-        }
-        // プレイヤーと敵の離しておきたい距離
-        float len = player.radius + obj->radius;
-        if (dist < len)
-            obj->pos.x = right ? player.pos.x + len : player.pos.x - len;
+        dist_len(obj, &player);
 
         break;
     }
 
+
+
+    
+    
+    
+
+    //
     if (player.half && obj->half)
     {
         obj->half = false;
@@ -177,4 +210,27 @@ void enemy_walk(OBJ2D* obj)
     // 重力
     obj->pos.y += 5;
     if (obj->pos.y >= 450)obj->pos.y = 450;
+}
+
+
+void dist_len(OBJ2D* obj,OBJ2D* player)
+{        
+    // プレイヤーと敵の距離
+    float dist = player->pos.x - obj->pos.x;
+    // 敵がどっちにいるか(右だとtrue)
+    bool right;
+    if (dist < 0)
+    {
+        dist *= -1;
+        right = true;
+    }
+    else
+    {
+        right = false;
+    }
+    // プレイヤーと敵の離しておきたい距離
+    float len = player->radius + obj->radius;
+    if (dist < len)
+        obj->pos.x = right ? player->pos.x + len : player->pos.x - len;
+
 }

@@ -2,16 +2,17 @@
 #include "common.h"
 #include "enemy.h"
 #include "SceneGame.h"
+#include "back.h"
 using namespace GameLib;
 
 // 画像データテーブル
-GameLib::Sprite** data_tbl[] =
-{
-    &Player::maru,
-    &Player::sikaku,
-    &Player::hosi,
-    &Player::sankaku,
-};
+//GameLib::Sprite** data_tbl[] =
+//{
+//    &Player::maru,
+//    &Player::sikaku,
+//    &Player::hosi,
+//    &Player::sankaku,
+//};
 
 // 画像位置テーブル
 float data_pos[][2] =
@@ -23,10 +24,10 @@ float data_pos[][2] =
 };
 
 // 画像データ
-GameLib::Sprite* Player::maru = nullptr;
-GameLib::Sprite* Player::sikaku = nullptr;
-GameLib::Sprite* Player::hosi = nullptr;
-GameLib::Sprite* Player::sankaku = nullptr;
+//GameLib::Sprite* Player::maru = nullptr;
+//GameLib::Sprite* Player::sikaku = nullptr;
+//GameLib::Sprite* Player::hosi = nullptr;
+//GameLib::Sprite* Player::sankaku = nullptr;
 
 void Player::init()
 {
@@ -55,10 +56,13 @@ void player(OBJ2D* obj)
         obj->hp = 5;
         //obj->eraser = enemy_erase;
 
-        Player::maru = sprite_load(L"./Data/Images/0.png");
-        Player::sikaku = sprite_load(L"./Data/Images/1.png");
-        Player::hosi = sprite_load(L"./Data/Images/2.png");
-        Player::sankaku = sprite_load(L"./Data/Images/3.png");
+        //Player::maru = sprite_load(L"./Data/Images/0.png");
+        //Player::sikaku = sprite_load(L"./Data/Images/1.png");
+        //Player::hosi = sprite_load(L"./Data/Images/2.png");
+        //Player::sankaku = sprite_load(L"./Data/Images/3.png");
+
+        // back 
+        
 
         ++obj->state;
         //break;
@@ -72,13 +76,15 @@ void player(OBJ2D* obj)
             switch (STATE(0) & (PAD_LEFT | PAD_RIGHT))
             {
             case PAD_LEFT:
+                // プレイヤーの移動
                 if(!obj->attack)anime(obj, 2, 15, true, 0);
-                obj->pos.x -= 3;
+                obj->pos.x -= 1;
                 if (obj->scale.x > 0)obj->scale.x *= -1;
                 break;
             case PAD_RIGHT:
+                // プレイヤーの移動
                 if (!obj->attack)anime(obj, 2, 15, true, 0);
-                obj->pos.x += 3;
+                obj->pos.x += 1;
                 if (obj->scale.x < 0)obj->scale.x *= -1;
                 break;
             }
@@ -142,6 +148,9 @@ void player(OBJ2D* obj)
         break;
     }
 
+    if (obj->pos.x < obj->pivot.x / 2)obj->pos.x = obj->pivot.x / 2;
+    if (obj->pos.x > 1280 - obj->pivot.x / 2)obj->pos.x = 1280 - obj->pivot.x / 2;
+
     // 無敵時間(発動中)
     if (obj->invincible)
     {
@@ -174,5 +183,5 @@ void Player::setData(int data)
 
 void Player::setSpr(int data)
 {
-    obj_w[0].data = *data_tbl[data];
+    //obj_w[0].data = *data_tbl[data];
 }

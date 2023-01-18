@@ -5,6 +5,9 @@ class SceneGame :public Scene
 {
 public:
     GameLib::Sprite* data;
+    GameLib::Sprite* sprLoad;
+    GameLib::Sprite* sprWord;
+
     int timer;
 public:
     void init()override;
