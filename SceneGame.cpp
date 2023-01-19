@@ -1,8 +1,5 @@
 #include "all.h"
 
-Back back;
-
-
 
 void SceneGame::init()
 {
@@ -14,7 +11,7 @@ void SceneGame::deinit()
     safe_delete(data);
 
     // ”wŒiI—¹ˆ—
-    back.deinit();
+    Back::getInstance()->deinit();
     // ƒvƒŒƒCƒ„[I—¹ˆ—
     Player::getInstance()->deinit();
     // “GI—¹ˆ—
@@ -34,8 +31,22 @@ void SceneGame::update()
     case 0:
         GameLib::setBlendMode(Blender::BS_ALPHA);
 
+        // ‰æ‘œ“Ç‚Ýž‚Ý
+        sprLoad = sprite_load(L"./Data/Images/loading_back.png");
+        sprWord = sprite_load(L"./Data/Images/loading_character.png");
+
         // ”wŒi‰ŠúÝ’è
-        back.init();
+        Back::getInstance()->init();
+
+        Back::getInstance()->searchSet(back_update0, VECTOR2(0,0));
+        Back::getInstance()->searchSet(back_update0, VECTOR2(5120,0));
+        Back::getInstance()->searchSet(back_update1, VECTOR2(0,0));
+        Back::getInstance()->searchSet(back_update1, VECTOR2(5120,0));
+        Back::getInstance()->searchSet(back_update2, VECTOR2(0,0));
+        Back::getInstance()->searchSet(back_update2, VECTOR2(5120,0));
+        Back::getInstance()->searchSet(back_update3, VECTOR2(0,0));
+        Back::getInstance()->searchSet(back_update3, VECTOR2(5120,0));
+
         // ƒvƒŒƒCƒ„[‰ŠúÝ’è
         Player::getInstance()->init();
         // “G‰ŠúÝ’è
@@ -59,17 +70,17 @@ void SceneGame::update()
 #endif
 
         // ”wŒiXV
-        back.update();
-        // ƒvƒŒƒCƒ„[XVˆ—
-        Player::getInstance()->update();
+        Back::getInstance()->update();
         // “GXVˆ—
         Enemy::getInstance()->update();
+        // ƒvƒŒƒCƒ„[XVˆ—
+        Player::getInstance()->update();
         //ƒQ[ƒW
         Gage::getInstance()->update();
         //
         Find::getInstance()->update();
         //ƒMƒ~ƒbƒN
-        Gimmick::getInstance();
+        Gimmick::getInstance()->update();
 
         judge();
 
@@ -94,7 +105,19 @@ void SceneGame::update()
                 Enemy::getInstance()->obj_w[0].hp = Enemy::getInstance()->obj_w[0].hp <= 1 ? 2 : 0;
             }
         }
+       
+        if (timer == 0)
+            Enemy::getInstance()->searchSet(enemy_walk, enemy_position[0]);
+        if (timer == 2)
+            Enemy::getInstance()->searchSet(enemy_walk, enemy_position[1]);
+        if (timer == 4)
+            Enemy::getInstance()->searchSet(enemy_walk, enemy_position[2]);
+        if (timer == 10)
+            Enemy::getInstance()->searchSet(enemy_walk, enemy_position[3]);
+        if (timer == 20)
+            Enemy::getInstance()->searchSet(enemy_walk, enemy_position[4]);
 
+        ++timer;
         break;
     }
 }
@@ -104,11 +127,9 @@ void SceneGame::draw()
     GameLib::clear(1, 1, 1);
 
     // ”wŒi•`‰æ
-    back.draw();
-
+    Back::getInstance()->draw();
     //ƒMƒ~ƒbƒN
     Gimmick::getInstance()->draw();
-
     // “G•`‰æˆ—
     Enemy::getInstance()->draw();
     // ƒQ[ƒW
@@ -128,6 +149,11 @@ void SceneGame::draw()
     
     //primitive::circle(elat->pos, elat->foundRadius, VECTOR2(1, 1), 0.0f, VECTOR4(0, 0, 1, 0.4f));
 
+    if (timer < 60)
+    {
+        sprite_render(sprLoad, 0, 0);
+        sprite_render(sprWord, 0, 0);
+    }
 }
 
 /// <summary>

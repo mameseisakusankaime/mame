@@ -1,5 +1,7 @@
 #include "back.h"
 #include "common.h"
+#include "player.h"
+#include "enemy.h"
 using namespace GameLib;
 
 const wchar_t* sprite_table[] = {
@@ -11,57 +13,130 @@ const wchar_t* sprite_table[] = {
 
 void Back::init()
 {
-    for (int i = 0; i < OBJ_MAX; ++i)
-    {
-        obj[i].state = 0;
-    }
+    OBJ2DManager::init();    
 }
 
-void Back::deinit()
-{
-    for (int i = 0; i < OBJ_MAX; ++i)
-    {
-        safe_delete(obj[i].data);
-    }
-}
 
-void Back::update()
+void back_update0(OBJ2D* obj)
 {
-    for (int i = 0; i < OBJ_MAX; ++i)
+    OBJ2D player = Player::getInstance()->obj_w[0];
+
+    switch (obj->state)
     {
-        switch (obj[i].state)
+    case 0:
+        obj->data = sprite_load(L"./Data/Images/back.png");
+        obj->scale = { 1,1 };
+        obj->texPos = { 0,0 };
+        obj->texSize = { 2560,720 };
+        obj->pivot = { 0,0 };
+
+        if (obj->pos.x != 0)obj->scale.x = -1;
+
+        ++obj->state;
+        //break;
+    case 1:
+
+        float dist = obj->holdPosX;
+        obj->holdPosX = player.pos.x;
+        if (dist != obj->holdPosX)
         {
-        case 0:
-            obj[i].scale = { 1,1 };
-            obj[i].data = sprite_load(sprite_table[i / 2]);
-            obj[i].pos = {};
+            obj->pos.x += (dist - obj->holdPosX) * 3;
+        }               
 
-            int t = i % 2;
-            if (t)//äÔêîÇÃéû
-            {
-                obj[i].pos = { 1280 * t,0 };
-                obj[i].scale.x = -1;
-            }
-
-            ++obj[i].state;
-            //break;
-        case 1:
-            //obj.pos.x -= 5;
-            //if (obj[i].pos.x <= -1280)obj[i].pos.x += 1280;
-
-
-
-            //obj[i].pos.x -= 5;
-
-            break;
-        }
+        break;
     }
 }
 
-void Back::draw()
+void back_update1(OBJ2D* obj)
 {
-    for (int i = 0; i < OBJ_MAX; ++i)
+    OBJ2D player = Player::getInstance()->obj_w[0];
+
+    switch (obj->state)
     {
-        sprite_render(obj[i].data, obj[i].pos.x, obj[i].pos.y, obj[i].scale.x, obj[i].scale.y);
+    case 0:
+        obj->data = sprite_load(L"./Data/Images/back1.png");
+        obj->scale = { 1,1 };
+        obj->texPos = { 0,0 };
+        obj->texSize = { 2560,720 };
+        obj->pivot = { 0,0 };
+
+        if (obj->pos.x != 0)obj->scale.x = -1;
+
+        ++obj->state;
+        //break;
+    case 1:
+        float dist = obj->holdPosX;
+        obj->holdPosX = player.pos.x;
+        if (dist != obj->holdPosX)
+        {
+            obj->pos.x += (dist - obj->holdPosX) * 3;
+        }
+
+
+
+        break;
     }
 }
+
+void back_update2(OBJ2D* obj)
+{
+    OBJ2D player = Player::getInstance()->obj_w[0];
+
+    switch (obj->state)
+    {
+    case 0:
+        obj->data = sprite_load(L"./Data/Images/back2.png");
+        obj->scale = { 1,1 };
+        obj->texPos = { 0,0 };
+        obj->texSize = { 2560,720 };
+        obj->pivot = { 0,0 };
+
+        if (obj->pos.x != 0)obj->scale.x = -1;
+
+        ++obj->state;
+        //break;
+    case 1:
+        float dist = obj->holdPosX;
+        obj->holdPosX = player.pos.x;
+        if (dist != obj->holdPosX)
+        {
+            obj->pos.x += (dist - obj->holdPosX) * 3;
+        }
+
+
+
+        break;
+    }
+}
+
+void back_update3(OBJ2D* obj)
+{
+    OBJ2D player = Player::getInstance()->obj_w[0];
+
+    switch (obj->state)
+    {
+    case 0:
+        obj->data = sprite_load(L"./Data/Images/back3.png");
+        obj->scale = { 1,1 };
+        obj->texPos = { 0,0 };
+        obj->texSize = { 2560,720 };
+        obj->pivot = { 0,0 };
+
+        if (obj->pos.x != 0)obj->scale.x = -1;
+
+        ++obj->state;
+        //break;
+    case 1:
+        float dist = obj->holdPosX;
+        obj->holdPosX = player.pos.x;
+        if (dist != obj->holdPosX)
+        {
+            obj->pos.x += (dist - obj->holdPosX) * 3;
+        }
+
+
+
+        break;
+    }
+}
+

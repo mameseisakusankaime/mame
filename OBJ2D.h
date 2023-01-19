@@ -53,8 +53,7 @@ public:
     float ReferencePosition;    // 動きの基準位置
 
     VECTOR2 size;               //当たり判定の大きさの半分
-
-
+    float holdPosX; // 一個前のポジション
 
 public:
     OBJ2D() { init(); }
