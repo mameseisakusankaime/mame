@@ -2,6 +2,13 @@
 #include "common.h"
 using namespace GameLib;
 
+const wchar_t* sprite_table[] = {
+    L"./Data/Images/back.png",
+    L"./Data/Images1/back.png",
+    L"./Data/Images2/back.png",
+    L"./Data/Images3/back.png",
+};
+
 void Back::init()
 {
     for (int i = 0; i < OBJ_MAX; ++i)
@@ -26,31 +33,13 @@ void Back::update()
         {
         case 0:
             obj[i].scale = { 1,1 };
-            if (i == 0 || i == 1)
-            {
-                obj[i].data = sprite_load(L"./Data/Images/back.png");
-                obj[i].data = sprite_load(L"./Data/Images/back.png");
-            }
-            if (i == 2 || i == 3)
-            {
-                obj[i].data = sprite_load(L"./Data/Images/back1.png");
-                obj[i].data = sprite_load(L"./Data/Images/back1.png");
-            }
-            if (i == 4 || i == 5)
-            {
-                obj[i].data = sprite_load(L"./Data/Images/back2.png");
-                obj[i].data = sprite_load(L"./Data/Images/back2.png");
-            }
-            if (i == 6 || i == 7)
-            {
-                obj[i].data = sprite_load(L"./Data/Images/back3.png");
-                obj[i].data = sprite_load(L"./Data/Images/back3.png");
-            }
+            obj[i].data = sprite_load(sprite_table[i / 2]);
             obj[i].pos = {};
 
-            if (i == 1 || i == 3 || i == 5 || i == 7)
+            int t = i % 2;
+            if (t)//Šï”‚ÌŽž
             {
-                obj[i].pos = { 1280,0 };
+                obj[i].pos = { 1280 * t,0 };
                 obj[i].scale.x = -1;
             }
 
