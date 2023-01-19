@@ -24,7 +24,7 @@ void gimmick_Blok(OBJ2D* obj)
     {
     case 0:
         obj->data = GameLib::sprite_load(L"./Data/Images/enemy.png");//HACK:テクスチャ変更
-        obj->pos = { 900,GRAVITY };
+        obj->pos = { 900,GROUND };
         obj->scale = { 1,1 };
         obj->texPos = { 0,0 };
         obj->texSize = { 256,256 };
@@ -53,7 +53,7 @@ void gimmick_Button(OBJ2D* obj)
     {
     case 0:
         obj->data = GameLib::sprite_load(L"./Data/Images/enemy.png");//HACK:テクスチャ変更
-        obj->pos = { 1000,GRAVITY };
+        obj->pos = { 1000,GROUND };
         obj->scale = { 1,1 };
         obj->texPos = { 0,0 };
         obj->texSize = { 256,256 };
