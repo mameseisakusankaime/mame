@@ -331,7 +331,7 @@ bool hitCheck(OBJ2D* obj1, OBJ2D* obj2,int num)
 //--------------------------------------
 void judge()
 {
-    OBJ2D* player = &Player::getInstance()->obj_w[0];
+    OBJ2D* player = Player::getInstance()->begin();
     
     //player‚Æenemy‚Ì”»’è
     for (auto&& enemy : *Enemy::getInstance())
@@ -402,6 +402,17 @@ void player_attack()
             enemy.half = true;
             //enemy.hp -= 1;
             //enemy.invincible = true;
+        }
+    }
+
+    for (auto&& gimmick : *Gimmick::getInstance())
+    {
+        if (!gimmick.mover)continue;
+        if (gimmick.mover != gimmick_Blok)continue;
+
+        if (hitCheck(player, &gimmick, HITCHECK::PLScopeAndENE))
+        {
+            gimmick.clear();
         }
     }
 

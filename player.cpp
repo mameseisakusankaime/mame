@@ -105,8 +105,7 @@ void player(OBJ2D* obj)
         //if (STATE(0) & PAD_LEFT)    setData(2);
         //if (STATE(0) & PAD_RIGHT)   setData(3);
 
-        obj->pos.y += 5;
-        if (obj->pos.y >= 450)obj->pos.y = 450;
+        gravity(obj);
 
         //if (TRG(0) & PAD_L1)
         //{

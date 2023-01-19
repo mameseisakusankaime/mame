@@ -4,13 +4,6 @@
 #include "enemy.h"
 using namespace GameLib;
 
-const wchar_t* sprite_table[] = {
-    L"./Data/Images/back.png",
-    L"./Data/Images1/back.png",
-    L"./Data/Images2/back.png",
-    L"./Data/Images3/back.png",
-};
-
 void Back::init()
 {
     OBJ2DManager::init();    

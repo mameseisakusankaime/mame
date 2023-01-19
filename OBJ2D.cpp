@@ -103,3 +103,8 @@ void OBJ2D::draw()
 {
 	sprite_render(data, pos.x, pos.y, scale.x, scale.y, texPos.x, texPos.y, texSize.x, texSize.y, pivot.x, pivot.y, angle, color.x, color.y, color.z, color.w);
 }
+
+void gravity(OBJ2D* obj) 
+{
+	obj->pos.y = (std::min)(obj->pos.y+GRAVITY, GROUND);
+}

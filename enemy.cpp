@@ -204,8 +204,8 @@ void enemy_walk(OBJ2D* obj)
     }
 
     // d—Í
-    obj->pos.y += 5;
-    if (obj->pos.y >= 450)obj->pos.y = 450;     //’n–Ê
+    gravity(obj);
+
 }
 
 

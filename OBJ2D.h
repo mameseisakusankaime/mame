@@ -1,6 +1,9 @@
 #pragma once
 #include "common.h"
 
+#define GROUND      (450.0f)
+#define GRAVITY     (5.0f)
+
 class OBJ2D;
 typedef void(*MOVER)(OBJ2D* obj);
 typedef bool(*ERASER)(OBJ2D* obj);
@@ -49,11 +52,12 @@ public:
     bool attack;
     bool half;
     
-
     float ReferencePosition;    // 動きの基準位置
 
     VECTOR2 size;               //当たり判定の大きさの半分
-    float holdPosX; // 一個前のポジション
+    bool flag[1];               //使用済みか
+
+    float holdPosX;             // 一個前のポジション
 
 public:
     OBJ2D() { init(); }
@@ -77,3 +81,5 @@ public:
 
     OBJ2D* searchSet(MOVER mover, const VECTOR2& pos);
 };
+
+void gravity(OBJ2D*);
