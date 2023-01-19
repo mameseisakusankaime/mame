@@ -22,7 +22,7 @@ void gimmick_Blok(OBJ2D* obj)
     switch (obj->state)
     {
     case 0:
-        obj->data = GameLib::sprite_load(L"./Data/Images/enemy.png");//TODO:テクスチャ変更
+        obj->data = GameLib::sprite_load(L"./Data/Images/enemy.png");//HACK:テクスチャ変更
         obj->pos = { 900,200 };
         obj->scale = { 1,1 };
         obj->texPos = { 0,0 };
@@ -34,7 +34,7 @@ void gimmick_Blok(OBJ2D* obj)
 
         //break;
     case 1:
-        if (hitCheckBox(player->pos, { player->radius,player->radius }, obj->pos, { obj->radius,obj->radius }))
+        if (hitCheckBox(player->pos, VECTOR2{ player->radius,player->radius }, obj->pos, { obj->radius,obj->radius }))
         {
 
         }

@@ -291,8 +291,8 @@ bool hitCheckBox(   float b1top,float B1left,float b1right,float b1bottom,
 
 bool hitCheckBox(VECTOR2 pos1, VECTOR2 size1, VECTOR2 pos2, VECTOR2 size2)
 {
-    return hitCheckBox(pos1.y - size1.y * 0.5f, pos1.x - size1.x * 0.5f, pos1.x + size1.x * 0.5f, pos1.y + size1.y * 0.5f,
-                        pos2.y - size2.y * 0.5f, pos1.x - size2.x * 0.5f, pos2.x + size2.x * 0.5f, pos2.y + size2.y * 0.5f);
+    return hitCheckBox( pos1.y - size1.y, pos1.x - size1.x, pos1.x + size1.x, pos1.y + size1.y,
+                        pos2.y - size2.y, pos1.x - size2.x, pos2.x + size2.x, pos2.y + size2.y);
 }
 
 //--------------------------------------

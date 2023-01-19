@@ -9,6 +9,7 @@
 
 //システムやライブラリのヘッダーファイルは上の方へ
 #include "common.h"
+#include "audio.h"
 
 #include "OBJ2D.h"
 
