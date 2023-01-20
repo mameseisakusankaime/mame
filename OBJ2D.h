@@ -1,6 +1,9 @@
 #pragma once
 #include "common.h"
 
+#define GROUND      (450.0f)
+#define GRAVITY     (5.0f)
+
 class OBJ2D;
 typedef void(*MOVER)(OBJ2D* obj);
 typedef bool(*ERASER)(OBJ2D* obj);
@@ -40,7 +43,7 @@ public:
 
     bool invincible;   // 無敵時間(true発動中)
     int invincibleTimer;    // 無敵時間
-    int flashingTimer;
+    int flashingTimer;      //点滅時間
 
     // アニメーション関係
     int animeState;
@@ -51,9 +54,12 @@ public:
     bool attack;
     bool half;
     
-
     float ReferencePosition;    // 動きの基準位置
-    float holdPosX; // 一個前のポジション
+
+    VECTOR2 size;               //当たり判定の大きさの半分
+    bool flag[1];               //使用済みか
+
+    float holdPosX;             // 一個前のポジション
 
 public:
     OBJ2D() { init(); }
@@ -77,3 +83,5 @@ public:
 
     OBJ2D* searchSet(MOVER mover, const VECTOR2& pos);
 };
+
+void gravity(OBJ2D*);

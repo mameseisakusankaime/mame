@@ -18,7 +18,7 @@ public:
 
 public:
     OBJ2D* begin() { return obj_w; }
-    OBJ2D* end() { return obj_w + OBJ_MAX; }
+    OBJ2D* end() { return obj_w + OBJ_MAX;}
 
     void init()override;
 
@@ -32,6 +32,8 @@ public:
         static Player instance;
         return &instance;
     }
+private:
+    Player() {};//マネージャーの複数生成禁止
 };
 
 void player(OBJ2D* obj);

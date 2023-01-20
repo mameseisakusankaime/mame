@@ -4,7 +4,6 @@
 #include "enemy.h"
 using namespace GameLib;
 
-
 void Back::init()
 {
     OBJ2DManager::init();    

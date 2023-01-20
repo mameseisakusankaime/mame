@@ -9,6 +9,7 @@
 
 //システムやライブラリのヘッダーファイルは上の方へ
 #include "common.h"
+#include "audio.h"
 
 #include "OBJ2D.h"
 
@@ -22,6 +23,7 @@
 #include "enemy.h"
 #include "gage.h"
 #include "find.h"
+#include "gimmick.h"
 
 using namespace GameLib;
  

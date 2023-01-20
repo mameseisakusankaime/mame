@@ -25,7 +25,7 @@ void OBJ2DManager::draw()
 OBJ2D* OBJ2DManager::searchSet(MOVER mover, const VECTOR2& pos)
 {
 	for (auto& item : *this) {
-		if (item.mover == 0) {
+		if (!item.mover) {
 			item.clear();
 			item.mover = mover;
 			item.pos = pos;
@@ -78,6 +78,8 @@ void OBJ2D::init()
 	half = false;
 
 	ReferencePosition = 0;
+
+	size = {};
 	holdPosX = 0;
 }
 
@@ -103,4 +105,9 @@ void OBJ2D::update()
 void OBJ2D::draw()
 {
 	sprite_render(data, pos.x, pos.y, scale.x, scale.y, texPos.x, texPos.y, texSize.x, texSize.y, pivot.x, pivot.y, angle, color.x, color.y, color.z, color.w);
+}
+
+void gravity(OBJ2D* obj) 
+{
+	obj->pos.y = (std::min)(obj->pos.y+GRAVITY, GROUND);
 }

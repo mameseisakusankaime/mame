@@ -8,8 +8,7 @@ using namespace GameLib;
 
 bool enemy_erase(OBJ2D* obj)
 {
-    bool erase = obj->hp <= 0 ? true : false;
-    return erase;
+    return (obj->hp <= 0 ? true : false);
 }
 
 void Enemy::init()
@@ -27,8 +26,6 @@ void Enemy::init()
     //Enemy::getInstance()->searchSet(enemy_walk, enemy_position[1]);
     //Enemy::getInstance()->searchSet(enemy_walk, enemy_position[2]);
 }
-
-
  
 // ‚½‚¾•à‚­‚¾‚¯‚Ì“G
 void enemy_walk(OBJ2D* obj)
@@ -61,11 +58,10 @@ void enemy_walk(OBJ2D* obj)
         obj->foundRadius = 200;
         obj->eraser = enemy_erase;
 
+        static const float posX = obj->pos.x;       //‰ŠúˆÊ’u
         obj->ReferencePosition = obj->pos.x;
-
         // ‰ŠúÝ’è
         Find::getInstance()->init();
-        
         ++obj->state;
         //break;
     case 1:
@@ -97,8 +93,9 @@ void enemy_walk(OBJ2D* obj)
         dist_len(obj, player);
 
         // Œ©‚Â‚¯‚é
-        if (hitCheck(player, obj, 1))
+        if (hitCheck(player, obj, HITCHECK::PLAndENEScope))
             if (player->pos.x < obj->pos.x)obj->state = 4;
+
 
         break;
     case 3:
@@ -125,8 +122,9 @@ void enemy_walk(OBJ2D* obj)
         dist_len(obj, player);
 
         // Œ©‚Â‚¯‚é
-        if (hitCheck(player, obj, 1))
+        if (hitCheck(player, obj, HITCHECK::PLAndENEScope))
             if (player->pos.x > obj->pos.x)obj->state = 4;
+
 
         break;
     case 4:
@@ -206,8 +204,8 @@ void enemy_walk(OBJ2D* obj)
     }
 
     // d—Í
-    obj->pos.y += 5;
-    if (obj->pos.y >= 450)obj->pos.y = 450;
+    gravity(obj);
+
 }
 
 // Œ©‚Â‚©‚é‚ÆUŒ‚‚µ‚Ä‚­‚é“G

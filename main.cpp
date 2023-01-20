@@ -34,9 +34,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPWSTR, _In_ int)
     pNext = nullptr;
     pScene->init();
 
+    audio_init();
+
     while (GameLib::gameLoop())
     {
         GameLib::input::update();
+        music::update();
 
         if (pNext)
         {
@@ -53,6 +56,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPWSTR, _In_ int)
 
         GameLib::present(1, 0);
     }
+
+    audio_deinit();
 
     GameLib::uninit();
 

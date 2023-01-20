@@ -5,7 +5,7 @@ using namespace GameLib;
 
 void Gage::init()
 {
-    OBJ2DManager::init();
+    OBJ2DManager::init();//基底クラスのinit
 
     int num = 0;
     for (auto& item : obj_w)
@@ -21,9 +21,13 @@ void Gage::init()
     obj_w[4].mover = gage; 
 }
 
+/// <summary>
+/// ゲージ
+/// </summary>
+/// <param name="obj"></param>
 void gage(OBJ2D* obj)
 {
-    OBJ2D enemy = Enemy::getInstance()->obj_w[obj->dataNum];
+    const OBJ2D& enemy = Enemy::getInstance()->obj_w[obj->dataNum];
     switch (obj->state)
     {
     case 0:
@@ -39,10 +43,11 @@ void gage(OBJ2D* obj)
     case 1:
         obj->pos = { enemy.pos.x,enemy.pos.y - 50 };
 
+        
         if (enemy.hp<=1)
-            obj->texPos = { 256,0 };
+            obj->texPos = { 256,0 };//黄色体力
         else
-            obj->texPos = { 0,0 };
+            obj->texPos = { 0,0 };//緑体力
         
 
         break;
