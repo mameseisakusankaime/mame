@@ -45,7 +45,7 @@ void gimmick_Blok(OBJ2D* obj)
     }
 }
 
-//TODO : gimmick    押すと敵が出てくるボタン
+//gimmick    押すと敵が出てくるボタン
 void gimmick_Button(OBJ2D* obj)
 {
     auto&& player = Player::getInstance()->begin();
