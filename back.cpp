@@ -33,7 +33,7 @@ void back_update0(OBJ2D* obj)
         obj->holdPosX = player.pos.x;
         if (dist != obj->holdPosX)
         {
-            obj->pos.x += (dist - obj->holdPosX) * 3;
+            obj->pos.x += (dist - obj->holdPosX) * 2;
         }               
 
         break;
@@ -62,7 +62,7 @@ void back_update1(OBJ2D* obj)
         obj->holdPosX = player.pos.x;
         if (dist != obj->holdPosX)
         {
-            obj->pos.x += (dist - obj->holdPosX) * 3;
+            obj->pos.x += (dist - obj->holdPosX) * 2;
         }
 
 
@@ -124,7 +124,7 @@ void back_update3(OBJ2D* obj)
         obj->holdPosX = player.pos.x;
         if (dist != obj->holdPosX)
         {
-            obj->pos.x += (dist - obj->holdPosX) * 3;
+            obj->pos.x += (dist - obj->holdPosX) * 5;
         }
 
 

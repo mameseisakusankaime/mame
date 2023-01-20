@@ -35,7 +35,9 @@ public:
     ERASER eraser;
 
     int hp;         // ‘Ì—Í
+    int attackState;
     float foundRadius;     // ŒŸ’m‚·‚é‰~
+    float attackRadius;     // UŒ‚”ÍˆÍ
 
     int dataNum;
 

@@ -7,7 +7,7 @@
 class Find :public OBJ2DManager
 {
 public:
-    static const int OBJ_MAX = 10;
+    static const int OBJ_MAX = 30;
     OBJ2D obj_w[OBJ_MAX];
 
 public:

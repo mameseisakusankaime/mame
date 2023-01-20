@@ -57,6 +57,9 @@ void OBJ2D::init()
 	eraser = nullptr;
 
 	hp = 0;
+	attackState = 0;
+	foundRadius = 0;
+	attackRadius = 0;
 
 	dataNum = 0;
 

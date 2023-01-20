@@ -18,10 +18,8 @@ enum SCENE
 // ‰¼‚Ì–¼‘O
 enum DATA
 {
-    MARU,
-    SIKAKU,
-    HOSI,
-    SANKAKU
+    WALK,
+    ATTACK,
 };
 
 enum DIR
@@ -32,3 +30,4 @@ enum DIR
     RIGHT,
 };
 
+void setScene(int scene);
