@@ -44,6 +44,7 @@ void SceneGame::update()
         Back::getInstance()->searchSet(back_update2, VECTOR2(5120,0));
         Back::getInstance()->searchSet(back_update3, VECTOR2(0,0));
         Back::getInstance()->searchSet(back_update3, VECTOR2(5120,0));
+        Back::getInstance()->searchSet(back_update3, VECTOR2(7680,0));
 
         // プレイヤー初期設定
         Player::getInstance()->init();
@@ -101,15 +102,15 @@ void SceneGame::update()
 
        
         if (timer == 0)
-            Enemy::getInstance()->searchSet(enemy_walk, enemy_position[0]);
+            Enemy::getInstance()->searchSet(enemy_attack, enemy_position[0]);
         if (timer == 2)
-            Enemy::getInstance()->searchSet(enemy_walk, enemy_position[1]);
+            Enemy::getInstance()->searchSet(enemy_attack, enemy_position[1]);
         if (timer == 4)
-            Enemy::getInstance()->searchSet(enemy_walk, enemy_position[2]);
+            Enemy::getInstance()->searchSet(enemy_attack, enemy_position[2]);
         if (timer == 10)
-            Enemy::getInstance()->searchSet(enemy_walk, enemy_position[3]);
+            Enemy::getInstance()->searchSet(enemy_attack, enemy_position[3]);
         if (timer == 20)
-            Enemy::getInstance()->searchSet(enemy_walk, enemy_position[4]);
+            Enemy::getInstance()->searchSet(enemy_attack, enemy_position[4]);
 
         ++timer;
 
@@ -137,12 +138,18 @@ void SceneGame::draw()
 
     OBJ2D* plat = &Player::getInstance()->obj_w[0];
 
+#ifdef _DEBUG
     //primitive::circle(plat->pos, plat->radius, VECTOR2(1, 1), 0.0f, VECTOR4(0, 1, 0, 0.2f));
     //primitive::circle(plat->pos, plat->foundRadius, VECTOR2(1, 1), 0.0f, VECTOR4(0, 0, 1, 0.2f));
+#endif
        
     OBJ2D* elat = &Enemy::getInstance()->obj_w[0];
     
+#ifdef _DEBUG
+    primitive::circle(elat->pos, elat->radius, VECTOR2(1, 1), 0.0f, VECTOR4(0, 0, 1, 0.4f));
     //primitive::circle(elat->pos, elat->foundRadius, VECTOR2(1, 1), 0.0f, VECTOR4(0, 0, 1, 0.4f));
+    //primitive::circle(elat->pos, elat->attackRadius, VECTOR2(1, 1), 0.0f, VECTOR4(1, 0, 0, 0.4f));
+#endif
 
     if (timer < 60)
     {
@@ -162,6 +169,10 @@ void SceneGame::draw()
 /// <param name="type">効果音のタイプ(通常０でいい)</param>
 void anime(OBJ2D* obj, int total, int flame, bool loop, int type)
 {
+    // type 0 player
+    // type 1 enemy_attack
+    // type 10 player_attack
+
     switch (obj->animeState)
     {
     case 0:
@@ -170,8 +181,7 @@ void anime(OBJ2D* obj, int total, int flame, bool loop, int type)
         obj->end = false;
         obj->one = false;
         obj->half = false;
-        //if (type == 0)
-        //    GameLib::sound::play(type, 0);
+        
 
         ++obj->animeState;
     case 1:
@@ -191,7 +201,14 @@ void anime(OBJ2D* obj, int total, int flame, bool loop, int type)
             if (obj->attack)
             {
                 // 攻撃開始
-                if(!obj->one)obj->texPos.y = 512;
+                if (!obj->one)
+                {
+                    if (type == 0|| type == 1)
+                        obj->texPos.y = 512;
+                    
+                    if (type == 10)
+                        obj->texPos.y = 2560.0f;
+                }
 
                 // 攻撃アニメ
                 obj->anime = obj->animeTimer / flame;
@@ -212,7 +229,11 @@ void anime(OBJ2D* obj, int total, int flame, bool loop, int type)
                     obj->end = false;
                     obj->one = false;
                     obj->half = true;
-                    ++obj->animeState;
+
+                    if (type != 1)
+                        ++obj->animeState;
+                    else
+                        obj->end = true;
 
                     // 
                     //enemy->hp -= 1;
@@ -221,11 +242,28 @@ void anime(OBJ2D* obj, int total, int flame, bool loop, int type)
 
                 ++obj->animeTimer;
             }
+            else
+            {
+                obj->anime = obj->animeTimer / flame;
+                if (obj->anime >= total - 1)obj->one = true;
+                if (obj->anime >= total)
+                {
+                    obj->anime = total - 1;
+                    //obj->end = true;
+                    return;
+                }
+                obj->texPos.x = obj->anime * obj->texSize.x;
+
+                ++obj->animeTimer;
+            }
         }
         break;
     case 2:
         // 引っ込めるの開始
-        obj->texPos.y = 512 * 2;
+        if (type == 0)
+            obj->texPos.y = 512 * 2;
+        if (type == 10)
+            obj->texPos.y = 3072.0f;
 
         // 引っ込めるアニメ
         obj->anime = obj->animeTimer / flame;
@@ -241,7 +279,12 @@ void anime(OBJ2D* obj, int total, int flame, bool loop, int type)
         // ひっこめ終了
         if (obj->one)
         {
-            obj->texPos = {};
+            // 画像位置を設定
+            if(type==0)
+                obj->texPos = {};
+            if (type == 10)
+                obj->texPos = { 0,2048.0f };
+            
             obj->anime = obj->animeTimer = 0;
             obj->end = true;
             obj->one = false;
@@ -297,6 +340,13 @@ bool hitCheck(OBJ2D* obj1, OBJ2D* obj2,int num)
         return hitCheckCircle(
             obj1->pos + obj1->offset, obj1->foundRadius,
             obj2->pos + obj2->offset, obj2->radius
+        );
+        break;
+    case 3:
+        // プレイヤーと敵の攻撃範囲
+        return hitCheckCircle(
+            obj1->pos + obj1->offset, obj1->radius,
+            obj2->pos + obj2->offset, obj2->attackRadius
         );
         break;
     }
@@ -401,6 +451,9 @@ void player_attack()
 
             if (right && player->scale.x > 0 || !right && player->scale.x < 0)
                 enemy[i]->half = true;
+
+            //player->type = enemy[i]->type;
+
             //enemy[i]->hp -= 1;
             //enemy[i]->invincible = true;
         }

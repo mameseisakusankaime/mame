@@ -14,7 +14,7 @@ static const VECTOR2 enemy_position[] =
 class Enemy:public OBJ2DManager
 {
 public:
-    static const int OBJ_MAX = 10;
+    static const int OBJ_MAX = 30;
     OBJ2D obj_w[OBJ_MAX];
 public:
     OBJ2D* begin() { return obj_w; }
@@ -37,5 +37,6 @@ public:
 bool enemy_erase(OBJ2D* obj);
 
 void enemy_walk(OBJ2D* obj);
+void enemy_attack(OBJ2D* obj);
 
 void dist_len(OBJ2D* obj, OBJ2D* player);

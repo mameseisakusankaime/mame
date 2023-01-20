@@ -36,9 +36,99 @@ void Player::init()
     obj_w[0].mover = player;
 }
 
+void Player::reduceHp()
+{
+    obj_w[0].hp -= 1;
+    obj_w[0].invincible = true;
+}
+
+void player_attack(OBJ2D* obj)
+{
+    Player* player = Player::getInstance();
+    switch (obj->state)
+    {
+    case 0:
+        obj->data = sprite_load(L"./Data/Images/player.png");
+        obj->pos = player->pos;
+        obj->hp = player->hp;
+
+        obj->scale = { 0.5f,0.5f };
+        obj->texPos = { 0,1536 };
+        obj->texSize = { 512,512 };
+        obj->pivot = { 128,384 };
+
+        obj->radius = 45;
+        obj->foundRadius = 170;
+
+        obj->animeState = 0;
+
+        obj->eraser = enemy_erase;
+
+        ++obj->state;
+        //break;
+    case 1:
+        obj->texPos.y = 1536.0f;
+        anime(obj, 6, 5, false, 0);
+
+        if (obj->one)
+        {
+            obj->state = 2;
+            obj->texPos = { 0,2048.0f };
+            obj->attack = false;
+        }
+
+        break;
+    case 2:
+        switch (STATE(0) & (PAD_LEFT | PAD_RIGHT))
+        {
+        case PAD_LEFT:
+            // プレイヤーの移動
+            if (!obj->attack)anime(obj, 2, 15, true, 0);
+            obj->pos.x -= 1;
+            if (obj->scale.x > 0)obj->scale.x *= -1;
+            break;
+        case PAD_RIGHT:
+            // プレイヤーの移動
+            if (!obj->attack)anime(obj, 2, 15, true, 0);
+            obj->pos.x += 1;
+            if (obj->scale.x < 0)obj->scale.x *= -1;
+            break;
+        }
+
+        // 吸い込み移動
+        if (obj->attack)
+            obj->state = 3;
+
+        break;
+    case 3:
+        // 吸い込み期化
+        obj->animeState = 0;
+
+        ++obj->state;
+        break;
+    case 4:
+        // 吸い込み処理
+
+        anime(obj, 13, 3, false, 10);
+
+        if (obj->end)
+        {
+            obj->texPos.x = 0;
+            obj->state = 2;
+            obj->end = false;
+            obj->animeState = 0;
+        }
+
+        break;
+    }
+
+    if (player->obj_w[0].hp <= 0)setScene(SCENE::OVER);
+}
 
 void player(OBJ2D* obj)
 {
+    Player* player = Player::getInstance();
+
     switch (obj->state)
     {
     case 0:
@@ -50,18 +140,13 @@ void player(OBJ2D* obj)
         obj->texPos = { 0,0 };  
         obj->texSize = { 512,512 };
         obj->pivot = { 128,384 };
-        obj->type = DATA::MARU;
+        //obj->type = DATA::MARU;
         obj->radius = 45;
-        obj->foundRadius = 160;
+        obj->foundRadius = 170;
         obj->hp = 5;
         //obj->eraser = enemy_erase;
 
-        //Player::maru = sprite_load(L"./Data/Images/0.png");
-        //Player::sikaku = sprite_load(L"./Data/Images/1.png");
-        //Player::hosi = sprite_load(L"./Data/Images/2.png");
-        //Player::sankaku = sprite_load(L"./Data/Images/3.png");
-
-        // back 
+        obj->eraser = enemy_erase;
         
 
         ++obj->state;
@@ -90,8 +175,11 @@ void player(OBJ2D* obj)
             }
         //}
 
+#ifdef _DEBUG
         debug::setString("x%f", obj->texPos.x);
         debug::setString("y%f", obj->texPos.y);
+        debug::setString("obj->type%f", obj->type);
+#endif
 
         // 画像データ
         //if (STATE(0) & PAD_UP)      setSpr(0);
@@ -113,7 +201,13 @@ void player(OBJ2D* obj)
         //    //setData(Enemy::getInstance()->obj_w.type);
         //}
 
-
+        if (obj->type == DATA::ATTACK)
+        {
+            player->pos = obj->pos;
+            player->hp = obj->hp;
+            obj->mover = player_attack;
+            return;
+        }
         
         // 攻撃フェーズに移動
         if (obj->attack)
@@ -145,6 +239,8 @@ void player(OBJ2D* obj)
         }
 
 
+
+
         break;
     }
 
@@ -172,6 +268,8 @@ void player(OBJ2D* obj)
 #ifdef _DEBUG
     debug::setString("state%d", obj->state);
 #endif 
+
+    if (player->obj_w[0].hp <= 0)setScene(SCENE::OVER);
 }
 
 
