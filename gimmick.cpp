@@ -36,11 +36,18 @@ void gimmick_Blok(OBJ2D* obj)
         obj->state++;
         //break;
     case 1:
-        if (hitCheckBox(player->pos,    VECTOR2{ player->radius,player->radius },
-                        obj->pos,       VECTOR2{ obj->radius,obj->radius }))
+        if (hitCheck(player,obj,HITCHECK::PLAndENE))
         {
             //player->pos = obj->pos - vec2Normalize(player->pos - obj->pos) * (player->radius + obj->radius);
             dist_len(player, obj);
+        }
+        for (auto&& enemy : *Enemy::getInstance())
+        {
+            if (!enemy.mover)continue;
+            if (hitCheck(&enemy, obj, HITCHECK::PLAndENE))
+            {
+                dist_len(&enemy, obj);
+            }
         }
     }
 }
@@ -67,10 +74,10 @@ void gimmick_Button(OBJ2D* obj)
     case 1:
         if (hitCheck(obj, player, HITCHECK::PLAndENE))
         {
-            Enemy::getInstance()->searchSet(enemy_walk, obj->pos - VECTOR2(100, 100));
-            Enemy::getInstance()->searchSet(enemy_walk, obj->pos - VECTOR2(200, 100));
-            Enemy::getInstance()->searchSet(enemy_walk, obj->pos - VECTOR2(-100, 100));
-            Enemy::getInstance()->searchSet(enemy_walk, obj->pos - VECTOR2(-200, 100));
+            Enemy::getInstance()->searchSet(enemy_walk, obj->pos + VECTOR2(100,  -100));
+            Enemy::getInstance()->searchSet(enemy_walk, obj->pos + VECTOR2(200,  -100));
+            Enemy::getInstance()->searchSet(enemy_walk, obj->pos + VECTOR2(-100, -100));
+            Enemy::getInstance()->searchSet(enemy_walk, obj->pos + VECTOR2(-200, -100));
 
             obj->clear();
             break;
