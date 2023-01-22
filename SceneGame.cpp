@@ -1,4 +1,15 @@
 #include "all.h"
+EnemySetdata enemySetdata[] = {
+    {enemy_attack,VECTOR2(600,500), 0},
+    {enemy_attack,VECTOR2(900,500), 2},
+    {enemy_attack,VECTOR2(1200,500), 4},
+    {enemy_attack,VECTOR2(2000,500),10},
+    {enemy_attack,VECTOR2(2500,500),20},
+
+    //I—¹ƒtƒ‰ƒO
+    {nullptr,VECTOR2(-1,-1),-1},
+};
+
 
 void SceneGame::init()
 {
@@ -25,6 +36,7 @@ void SceneGame::deinit()
 
 void SceneGame::update()
 {
+    static EnemySetdata* pEnemydata = enemySetdata;
     switch (state)
     {
     case 0:
@@ -119,24 +131,19 @@ void SceneGame::update()
             
             if (!Enemy::getInstance()->obj_w[0].mover)
             {
-                Enemy::getInstance()->searchSet(enemy_walk, enemy_position[0]);
+                Enemy::getInstance()->searchSet(enemy_walk, enemySetdata[0].pos);
             }
             else
             {
                 Enemy::getInstance()->obj_w[0].hp = Enemy::getInstance()->obj_w[0].hp <= 1 ? 2 : 0;
             }
         }
-       
-        if (timer == 0)
-            Enemy::getInstance()->searchSet(enemy_attack, enemy_position[0]);
-        if (timer == 2)
-            Enemy::getInstance()->searchSet(enemy_attack, enemy_position[1]);
-        if (timer == 4)
-            Enemy::getInstance()->searchSet(enemy_attack, enemy_position[2]);
-        if (timer == 10)
-            Enemy::getInstance()->searchSet(enemy_attack, enemy_position[3]);
-        if (timer == 20)
-            Enemy::getInstance()->searchSet(enemy_attack, enemy_position[4]);
+
+        if (timer >= pEnemydata->timer&&pEnemydata->mover!=nullptr)
+        {
+            Enemy::getInstance()->searchSet(pEnemydata->mover, pEnemydata->pos);
+            pEnemydata++;
+        }
 
         ++timer;
         break;

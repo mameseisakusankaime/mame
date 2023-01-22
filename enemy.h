@@ -1,14 +1,11 @@
 #pragma once
 #include "OBJ2D.h"
 
-const VECTOR2 enemy_position[] =
+struct EnemySetdata
 {
-    // walk‚Íx‚ð100ŠJ‚¯‚éŽ–
-    {600,500},
-    {900,500},
-    {1200,500},
-    {2000,500},
-    {2500,500},
+    MOVER mover;
+    VECTOR2 pos;
+    int timer;
 };
 
 /// <summary>
@@ -46,3 +43,6 @@ void enemy_walk(OBJ2D* obj);
 void enemy_attack(OBJ2D* obj);
 
 void dist_len(OBJ2D* obj, OBJ2D* player);
+
+
+
