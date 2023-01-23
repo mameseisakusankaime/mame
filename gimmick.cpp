@@ -6,8 +6,8 @@
 
 void Gimmick::init()
 {
-    this->searchSet(gimmick_Blok, { 300,400 });
-    this->searchSet(gimmick_Button, { 300,600 });
+    this->searchSet(gimmick_Blok, { 900,GROUND });
+    this->searchSet(gimmick_Button, { 1000,GROUND });
 }
 
 bool gimmick_erase(OBJ2D* obj)
@@ -23,12 +23,11 @@ void gimmick_Blok(OBJ2D* obj)
     switch (obj->state)
     {
     case 0:
-        obj->data = GameLib::sprite_load(L"./Data/Images/enemy.png");//HACK:テクスチャ変更
-        obj->pos = { 900,GROUND };
-        obj->scale = { 1,1 };
+        obj->data = GameLib::sprite_load(L"./Data/Images/terrain.png");//HACK:テクスチャ変更
+        obj->scale = { 2,2 };
         obj->texPos = { 0,0 };
-        obj->texSize = { 256,256 };
-        obj->pivot = { 128,128 };
+        obj->texSize = { 64,64 };
+        obj->pivot = { 32,32 };
         obj->radius = 40;
         obj->hp = 1;
         obj->eraser = gimmick_erase;
@@ -36,6 +35,17 @@ void gimmick_Blok(OBJ2D* obj)
         obj->state++;
         //break;
     case 1:
+        //背景スクロールに合わせる
+    {
+        float dist = obj->holdPosX;
+        obj->holdPosX = player->pos.x;
+        if (dist != obj->holdPosX)
+        {
+            obj->pos.x += (dist - obj->holdPosX) * 3.0f;
+            obj->ReferencePosition += (dist - obj->holdPosX) * 3.0f;
+        }
+    }
+    //当たり判定
         if (hitCheck(player,obj,HITCHECK::PLAndENE))
         {
             //player->pos = obj->pos - vec2Normalize(player->pos - obj->pos) * (player->radius + obj->radius);
@@ -60,7 +70,6 @@ void gimmick_Button(OBJ2D* obj)
     {
     case 0:
         obj->data = GameLib::sprite_load(L"./Data/Images/enemy.png");//HACK:テクスチャ変更
-        obj->pos = { 1000,GROUND };
         obj->scale = { 1,1 };
         obj->texPos = { 0,0 };
         obj->texSize = { 256,256 };
@@ -72,6 +81,15 @@ void gimmick_Button(OBJ2D* obj)
         obj->state++;
         //break;
     case 1:
+    {
+        float dist = obj->holdPosX;
+        obj->holdPosX = player->pos.x;
+        if (dist != obj->holdPosX)
+        {
+            obj->pos.x += (dist - obj->holdPosX) * 3.0f;
+            obj->ReferencePosition += (dist - obj->holdPosX) * 3.0f;
+        }
+    }
         if (hitCheck(obj, player, HITCHECK::PLAndENE))
         {
             Enemy::getInstance()->searchSet(enemy_walk, obj->pos + VECTOR2(100,  -100));
@@ -92,12 +110,11 @@ void gimmick_door(OBJ2D* obj)
     switch (obj->state)
     {
     case 0:
-        obj->data = GameLib::sprite_load(L"./Data/Images/enemy.png");//HACK:テクスチャ変更
-        obj->pos = { 1000,GROUND };
+        obj->data = GameLib::sprite_load(L"./Data/Images/door.png");//HACK:テクスチャ変更
         obj->scale = { 1,1 };
         obj->texPos = { 0,0 };
-        obj->texSize = { 256,256 };
-        obj->pivot = { 128,128 };
+        obj->texSize = { 270,270 };
+        obj->pivot = { 135,135 };
         obj->radius = 40;
         obj->hp = 1;
         obj->eraser = gimmick_erase;
@@ -105,6 +122,16 @@ void gimmick_door(OBJ2D* obj)
         obj->state++;
         //break;
     case 1:
+    {
+        float dist = obj->holdPosX;
+        obj->holdPosX = player->pos.x;
+        if (dist != obj->holdPosX)
+        {
+            obj->pos.x += (dist - obj->holdPosX) * 3.0f;
+            obj->ReferencePosition += (dist - obj->holdPosX) * 3.0f;
+        }
+    }
+
         if (hitCheck(player, obj, HITCHECK::PLAndENE))
         {
             //player->pos = obj->pos - vec2Normalize(player->pos - obj->pos) * (player->radius + obj->radius);
@@ -114,8 +141,7 @@ void gimmick_door(OBJ2D* obj)
             }
             else
             {
-            dist_len(player, obj);
-
+                dist_len(player, obj);
             }
         }
         for (auto&& enemy : *Enemy::getInstance())
@@ -126,6 +152,8 @@ void gimmick_door(OBJ2D* obj)
                 dist_len(&enemy, obj);
             }
         }
+
+
         break;
     }
 

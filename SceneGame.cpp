@@ -6,7 +6,6 @@ EnemySetdata enemySetdata[] = {
     {enemy_attack,VECTOR2(1200,500), 4},
     {enemy_attack,VECTOR2(2000,500),10},
     {enemy_attack,VECTOR2(2500,500),20},
-
     //I—¹ƒtƒ‰ƒO
     {nullptr,VECTOR2(-1,-1),-1},
 };

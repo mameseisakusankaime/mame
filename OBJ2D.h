@@ -60,7 +60,7 @@ public:
     bool flag[1];               //使用済みか
 
     float holdPosX;             // 一個前のポジション
-    bool key;
+    bool key;                   // 鍵を持っているか
 
 public:
     OBJ2D() { init(); }

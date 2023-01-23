@@ -30,13 +30,7 @@ void Enemy::init()
 // ただ歩くだけの敵
 void enemy_walk(OBJ2D* obj)
 {
-    const int OBJ_MAX = 30;
-    OBJ2D* player = &Player::getInstance()->obj_w[0]; //プレイヤー
-    OBJ2D* find_obj[OBJ_MAX];
-    for (int i = 0; i < OBJ_MAX; ++i)
-    {
-        find_obj[i] = &Find::getInstance()->obj_w[i];
-    }
+    OBJ2D* player = Player::getInstance()->begin(); //プレイヤー
 
     float move = 0.5f;   // 移動速度
     float dist;
@@ -211,13 +205,7 @@ void enemy_walk(OBJ2D* obj)
 // 見つかると攻撃してくる敵
 void enemy_attack(OBJ2D* obj)
 {
-    const int OBJ_MAX = 30;
     OBJ2D* player = &Player::getInstance()->obj_w[0]; // プレイヤー
-    OBJ2D* find_obj[OBJ_MAX];
-    for (int i = 0; i < OBJ_MAX; ++i)
-    {
-        find_obj[i] = &Find::getInstance()->obj_w[i];
-    }
 
     float move = 0.5f;   // 移動速度
     float dist;
@@ -376,6 +364,8 @@ void enemy_attack(OBJ2D* obj)
             obj->pos.x += (dist - obj->holdPosX) * 3.0f;
             obj->ReferencePosition += (dist - obj->holdPosX) * 3.0f;
         }
+
+
 
         // 当たり判定で離す距離
         dist_len(obj, player);
