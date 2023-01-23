@@ -60,6 +60,7 @@ public:
     bool flag[1];               //使用済みか
 
     float holdPosX;             // 一個前のポジション
+    bool key;
 
 public:
     OBJ2D() { init(); }

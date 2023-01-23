@@ -86,3 +86,48 @@ void gimmick_Button(OBJ2D* obj)
     }
 }
 
+void gimmick_door(OBJ2D* obj)
+{
+    auto&& player = Player::getInstance()->begin();
+    switch (obj->state)
+    {
+    case 0:
+        obj->data = GameLib::sprite_load(L"./Data/Images/enemy.png");//HACK:テクスチャ変更
+        obj->pos = { 1000,GROUND };
+        obj->scale = { 1,1 };
+        obj->texPos = { 0,0 };
+        obj->texSize = { 256,256 };
+        obj->pivot = { 128,128 };
+        obj->radius = 40;
+        obj->hp = 1;
+        obj->eraser = gimmick_erase;
+
+        obj->state++;
+        //break;
+    case 1:
+        if (hitCheck(player, obj, HITCHECK::PLAndENE))
+        {
+            //player->pos = obj->pos - vec2Normalize(player->pos - obj->pos) * (player->radius + obj->radius);
+            if (player->key)
+            {
+                obj->clear();
+            }
+            else
+            {
+            dist_len(player, obj);
+
+            }
+        }
+        for (auto&& enemy : *Enemy::getInstance())
+        {
+            if (!enemy.mover)continue;
+            if (hitCheck(&enemy, obj, HITCHECK::PLAndENE))
+            {
+                dist_len(&enemy, obj);
+            }
+        }
+        break;
+    }
+
+}
+

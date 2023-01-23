@@ -33,3 +33,4 @@ bool gimmick_erase(OBJ2D* obj);
 
 void gimmick_Blok(OBJ2D* obj);
 void gimmick_Button(OBJ2D* obj);
+void gimmick_door(OBJ2D* obj);
