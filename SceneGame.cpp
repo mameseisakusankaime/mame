@@ -1,5 +1,4 @@
 #include "all.h"
-
 EnemySetdata enemySetdata[] = {
     {enemy_attack,VECTOR2(600,500), 0},
     {enemy_attack,VECTOR2(900,500), 2},
@@ -9,6 +8,7 @@ EnemySetdata enemySetdata[] = {
     //終了フラグ
     {nullptr,VECTOR2(-1,-1),-1},
 };
+
 
 void SceneGame::init()
 {
@@ -57,6 +57,16 @@ void SceneGame::update()
         Back::getInstance()->searchSet(back_update3, VECTOR2(0,0));
         Back::getInstance()->searchSet(back_update3, VECTOR2(5120,0));
         Back::getInstance()->searchSet(back_update3, VECTOR2(7680,0));
+        
+        //Back::getInstance()->searchSet(sea_update0, VECTOR2(0,0));
+        //Back::getInstance()->searchSet(sea_update0, VECTOR2(5120,0));
+        //Back::getInstance()->searchSet(sea_update1, VECTOR2(0,0));
+        //Back::getInstance()->searchSet(sea_update1, VECTOR2(5120,0));
+        //Back::getInstance()->searchSet(sea_update2, VECTOR2(0,0));
+        //Back::getInstance()->searchSet(sea_update2, VECTOR2(5120,0));
+        //Back::getInstance()->searchSet(sea_update3, VECTOR2(0,0));
+        //Back::getInstance()->searchSet(sea_update3, VECTOR2(5120,0));
+        //Back::getInstance()->searchSet(sea_update3, VECTOR2(7680,0));
 
         // プレイヤー初期設定
         Player::getInstance()->init();
@@ -95,11 +105,27 @@ void SceneGame::update()
 
         judge();
 
-        //攻撃
-        if (TRG(0) & PAD_R1)//Rボタン
         {
-            if(!Player::getInstance()->obj_w[0].attack)player_attack();
+            auto&& player = Player::getInstance()->begin();
+        //攻撃
+        if (TRG(0) & PAD_R3)//Rボタン
+        {
+            if (!player->attack &&
+                !player->attackPunch)
+            {
+                player_attack();
+            }
         }
+        if (TRG(0) & PAD_R1)//Lボタン
+        {
+            if (!player->attack &&
+                !player->attackPunch &&
+                 player->playerType == PLAYER_PUNCH)
+                player_attack1();
+        }
+        }
+
+
 
         //if (Player::getInstance()->obj_w[0].attack)
         //    anime(&Player::getInstance()->obj_w[0], 13, 2, false, 0);
@@ -181,6 +207,7 @@ void anime(OBJ2D* obj, int total, int flame, bool loop, int type)
     // type 0 player
     // type 1 enemy_attack
     // type 10 player_attack
+    // type 11 player_attack_punch
 
     switch (obj->animeState)
     {
@@ -207,7 +234,7 @@ void anime(OBJ2D* obj, int total, int flame, bool loop, int type)
         }
         else
         {
-            if (obj->attack)
+            if (obj->attack || obj->attackPunch)
             {
                 // 攻撃開始
                 if (!obj->one)
@@ -217,6 +244,9 @@ void anime(OBJ2D* obj, int total, int flame, bool loop, int type)
                     
                     if (type == 10)
                         obj->texPos.y = 2560.0f;
+
+                    if (type == 11)
+                        obj->texPos.y = 3584.0f;
                 }
 
                 // 攻撃アニメ
@@ -239,10 +269,10 @@ void anime(OBJ2D* obj, int total, int flame, bool loop, int type)
                     obj->one = false;
                     obj->half = true;
 
-                    if (type != 1)
-                        ++obj->animeState;
-                    else
+                    if (type == 1 || type == 11)
                         obj->end = true;
+                    else
+                        ++obj->animeState;
 
                     // 
                     //enemy->hp -= 1;
@@ -273,6 +303,8 @@ void anime(OBJ2D* obj, int total, int flame, bool loop, int type)
             obj->texPos.y = 512 * 2;
         if (type == 10)
             obj->texPos.y = 3072.0f;
+        if (type == 11)
+            obj->texPos.y = 4096.0f;
 
         // 引っ込めるアニメ
         obj->anime = obj->animeTimer / flame;
@@ -298,6 +330,7 @@ void anime(OBJ2D* obj, int total, int flame, bool loop, int type)
             obj->end = true;
             obj->one = false;
             obj->attack = false;
+            obj->attackPunch = false;
             obj->half = false;
             //obj->animeState = 0;
         }
@@ -444,6 +477,45 @@ void judge()
     }*/ 
 }
 
+void player_attack1()
+{
+    OBJ2D* player = Player::getInstance()->begin();
+
+    for (auto&& enemy : *Enemy::getInstance())
+    {
+        if (!enemy.mover)continue;
+
+        if (hitCheck(player, &enemy, HITCHECK::PLScopeAndENE))
+        {
+            // プレイヤーと敵の距離
+            float dist = player->pos.x - enemy.pos.x;
+            bool right;
+            if (dist < 0)right = true;
+            else right = false;
+
+            if (right && player->scale.x > 0 || !right && player->scale.x < 0)
+                enemy.half = true;
+
+
+            // ギミック
+            for (auto&& gimmick : *Gimmick::getInstance())
+            {
+                if (!gimmick.mover)continue;
+                if (gimmick.mover != gimmick_Blok)continue;
+
+                if (hitCheck(player, &gimmick, HITCHECK::PLScopeAndENE))
+                {
+                    gimmick.clear();
+                }
+            }
+
+        }
+    }
+    player->attackPunch = true;
+    sound::play(0, 1);
+}
+
+// 食べる
 void player_attack()
 {
     OBJ2D* player = Player::getInstance()->begin();
@@ -487,6 +559,7 @@ void player_attack()
     }
 
     player->attack = true;
+    sound::play(0, 0);
     //if(TRG(0)&PAD_START)player->animeState = 0;
 }
 

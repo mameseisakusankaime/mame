@@ -37,50 +37,53 @@ OBJ2D* OBJ2DManager::searchSet(MOVER mover, const VECTOR2& pos)
 
 void OBJ2D::init()
 {
-	state = 0;
-	type = 0;
+	state				= 0;
+	type				= 0;
 	
-	data = nullptr;
-	pos = {};
-	scale = {};
-	texPos = {};
-	texSize = {};
-	pivot = {};
-	angle = 0;
-	color = { 1.0f ,1.0f ,1.0f ,1.0f };
+	data				= nullptr;
+	pos					= {};
+	scale				= {};
+	texPos				= {};
+	texSize				= {};
+	pivot				= {};
+	angle				= 0;
+	color				= { 1.0f ,1.0f ,1.0f ,1.0f };
 
-	offset = {};
-	radius = 0;
+	offset				= {};
+	radius				= 0;
 
-	timer = 0;
-	mover = nullptr;
-	eraser = nullptr;
+	timer				= 0;
+	mover				= nullptr;
+	eraser				= nullptr;
 
-	hp = 0;
-	attackState = 0;
-	foundRadius = 0;
-	attackRadius = 0;
+	hp					= 0;
+	attackState			= 0;
+	foundRadius			= 0;
+	attackRadius		= 0;
 
 	dataNum = 0;
 
 	// 無敵時間
-	invincible = false;
-	invincibleTimer = 0;
-	flashingTimer = 0;
+	invincible			= false;
+	invincibleTimer		= 0;
+	flashingTimer		= 0;
 
 	// アニメーション関係
-	animeState = 0;
-	anime = 0;
-	animeTimer = 0;
-	one = false;
-	end = false;
-	attack = false;
-	half = false;
+	animeState			= 0;
+	anime				= 0;
+	animeTimer			= 0;
+	one					= false;
+	end					= false;
+	attack				= false;
+	attackPunch			= false;
+	half				= false;
+	hensin = false;
 
-	ReferencePosition = 0;
+	ReferencePosition	= 0;
 
-	size = {};
-	holdPosX = 0;
+	size				= {};
+	holdPosX			= 0;
+	playerType			= 0;
 }
 
 void OBJ2D::deinit()

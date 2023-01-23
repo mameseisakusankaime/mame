@@ -48,7 +48,7 @@ void player_attack(OBJ2D* obj)
     switch (obj->state)
     {
     case 0:
-        obj->data = sprite_load(L"./Data/Images/player.png");
+        //obj->data = sprite_load(L"./Data/Images/player.png");
         obj->pos = player->pos;
         obj->hp = player->hp;
 
@@ -58,17 +58,21 @@ void player_attack(OBJ2D* obj)
         obj->pivot = { 128,384 };
 
         obj->radius = 45;
-        obj->foundRadius = 170;
+        obj->foundRadius = 180;
 
         obj->animeState = 0;
 
         obj->eraser = enemy_erase;
 
+        obj->one = false;
+
+        obj->playerType = PLAYER_PUNCH;
+
         ++obj->state;
         //break;
     case 1:
         obj->texPos.y = 1536.0f;
-        anime(obj, 6, 5, false, 0);
+        anime(obj, 6, 10, false, 0);
 
         if (obj->one)
         {
@@ -79,6 +83,7 @@ void player_attack(OBJ2D* obj)
 
         break;
     case 2:
+        obj->texPos = { 0,2048.0f };
         switch (STATE(0) & (PAD_LEFT | PAD_RIGHT))
         {
         case PAD_LEFT:
@@ -98,6 +103,9 @@ void player_attack(OBJ2D* obj)
         // 吸い込み移動
         if (obj->attack)
             obj->state = 3;
+        // 攻撃（パンチに移動）
+        if (obj->attackPunch)
+            obj->state = 5;
 
         break;
     case 3:
@@ -108,7 +116,6 @@ void player_attack(OBJ2D* obj)
         break;
     case 4:
         // 吸い込み処理
-
         anime(obj, 13, 3, false, 10);
 
         if (obj->end)
@@ -120,9 +127,62 @@ void player_attack(OBJ2D* obj)
         }
 
         break;
+    case 5:
+        // パンチの初期化
+        obj->animeState = 0;
+
+        ++obj->state;
+        break;
+    case 6:
+        // パンチの処理
+        anime(obj, 11, 3, false, 11);
+
+        if (obj->end)
+        {
+            obj->texPos.x = 0;
+            obj->state = 2;
+            obj->end = false;
+            obj->animeState = 0;
+            obj->attackPunch = false;
+        }
+        break;
+    }
+    // 画面外チェック
+    if (obj->pos.x < obj->pivot.x / 2)obj->pos.x = obj->pivot.x / 2;
+    if (obj->pos.x > 1280 - obj->pivot.x / 2)obj->pos.x = 1280 - obj->pivot.x / 2;
+
+    // 無敵時間(発動中)
+    if (obj->invincible)
+    {
+        ++obj->invincibleTimer;
+        ++obj->flashingTimer;
+        if (obj->flashingTimer / 5 == 1)
+        {
+            obj->color.w = obj->color.w == 1 ? 0 : 1;
+            obj->flashingTimer = 0;
+        }
+    }
+    // 無敵時間終了
+    if (obj->invincibleTimer >= 60)
+    {
+        obj->invincible = false;
+        obj->invincibleTimer = 0;
+        obj->color.w = 1;
     }
 
+    if (!obj->invincible)
+        obj->color.w = 1;
+
+
     if (player->obj_w[0].hp <= 0)setScene(SCENE::OVER);
+
+#ifdef _DEBUG
+    debug::setString("pos%f,%f", obj->pos.x, obj->pos.y);
+    debug::setString("texpos%f:%f", obj->texPos.x, obj->texPos.y);
+    debug::setString("hp%d", obj->hp);
+    debug::setString("w%f", obj->color.w);
+    debug::setString("playerType%d", Player::getInstance()->begin()->playerType);
+#endif
 }
 
 void player(OBJ2D* obj)
@@ -135,19 +195,20 @@ void player(OBJ2D* obj)
         //obj->data = sprite_load(L"./Data/Images/player1.png");
         obj->data = sprite_load(L"./Data/Images/player.png");
         //obj->data = sprite_load(L"./Data/Images/data.png");
-        obj->pos = { 200,200 };
+        obj->pos = { 10,200 };
         obj->scale = { 0.5f,0.5f };
         obj->texPos = { 0,0 };  
         obj->texSize = { 512,512 };
         obj->pivot = { 128,384 };
         //obj->type = DATA::MARU;
         obj->radius = 45;
-        obj->foundRadius = 170;
+        obj->foundRadius = 180;
         obj->hp = 5;
         //obj->eraser = enemy_erase;
 
         obj->eraser = enemy_erase;
         
+        obj->playerType = PLAYER_WALK;
 
         ++obj->state;
         //break;
@@ -205,12 +266,14 @@ void player(OBJ2D* obj)
             player->pos = obj->pos;
             player->hp = obj->hp;
             obj->mover = player_attack;
+            obj->state = 0;
             return;
         }
         
-        // 攻撃フェーズに移動
+        // 攻撃フェーズに移動（飲み込み）
         if (obj->attack)
             obj->state = 2;
+
 
 #ifdef _DEBUG
         debug::setString("player.hp%d", obj->hp);
@@ -236,10 +299,6 @@ void player(OBJ2D* obj)
             obj->end = false;
             obj->animeState = 0;
         }
-
-
-
-
         break;
     }
 
@@ -266,6 +325,7 @@ void player(OBJ2D* obj)
     }
 #ifdef _DEBUG
     debug::setString("state%d", obj->state);
+    debug::setString("playerType%d", Player::getInstance()->begin()->playerType);
 #endif 
 
     if (player->obj_w[0].hp <= 0)setScene(SCENE::OVER);

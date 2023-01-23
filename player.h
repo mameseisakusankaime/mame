@@ -1,6 +1,12 @@
 #pragma once
 #include "OBJ2D.h"
 
+enum
+{
+    PLAYER_WALK,
+    PLAYER_PUNCH,
+};
+
 class Player :public OBJ2DManager
 {
 public:
@@ -10,6 +16,8 @@ public:
     VECTOR2 pos;
     VECTOR2 texPos;
     int hp;
+
+    
 
     //static GameLib::Sprite* maru;
     //static GameLib::Sprite* sikaku;
