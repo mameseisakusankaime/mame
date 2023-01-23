@@ -47,7 +47,7 @@ void gimmick_Blok(OBJ2D* obj)
         }
     }
     //“–‚½‚è”»’è
-        if (player->half&&hitCheck(player,obj,HITCHECK::PLAndENE))
+        if (hitCheck(player,obj,HITCHECK::PLAndENE))
         {
             //player->pos = obj->pos - vec2Normalize(player->pos - obj->pos) * (player->radius + obj->radius);
             dist_len(player, obj);
