@@ -135,7 +135,7 @@ void player_attack(OBJ2D* obj)
         break;
     case 6:
         // ƒpƒ“ƒ`‚Ìˆ—
-        anime(obj, 7, 3, false, 11);
+        anime(obj, 11, 3, false, 11);
 
         if (obj->end)
         {
@@ -143,6 +143,7 @@ void player_attack(OBJ2D* obj)
             obj->state = 2;
             obj->end = false;
             obj->animeState = 0;
+            obj->attackPunch = false;
         }
         break;
     }
@@ -194,7 +195,7 @@ void player(OBJ2D* obj)
         //obj->data = sprite_load(L"./Data/Images/player1.png");
         obj->data = sprite_load(L"./Data/Images/player.png");
         //obj->data = sprite_load(L"./Data/Images/data.png");
-        obj->pos = { 200,200 };
+        obj->pos = { 10,200 };
         obj->scale = { 0.5f,0.5f };
         obj->texPos = { 0,0 };  
         obj->texSize = { 512,512 };

@@ -10,6 +10,7 @@ void audio_init()
 
     // SE‚Ì“Ç‚İ‚İ
     //sound::load();
+    sound::load(ATTACK_XWB, L"./Data/Sounds/attack.xwb");
     
     //‰¹—Ê’²®
     //sound::setVolume();

@@ -49,25 +49,25 @@ void SceneGame::update()
         // 背景初期設定
         Back::getInstance()->init();
 
-        //Back::getInstance()->searchSet(back_update0, VECTOR2(0,0));
-        //Back::getInstance()->searchSet(back_update0, VECTOR2(5120,0));
-        //Back::getInstance()->searchSet(back_update1, VECTOR2(0,0));
-        //Back::getInstance()->searchSet(back_update1, VECTOR2(5120,0));
-        //Back::getInstance()->searchSet(back_update2, VECTOR2(0,0));
-        //Back::getInstance()->searchSet(back_update2, VECTOR2(5120,0));
-        //Back::getInstance()->searchSet(back_update3, VECTOR2(0,0));
-        //Back::getInstance()->searchSet(back_update3, VECTOR2(5120,0));
-        //Back::getInstance()->searchSet(back_update3, VECTOR2(7680,0));
+        Back::getInstance()->searchSet(back_update0, VECTOR2(0,0));
+        Back::getInstance()->searchSet(back_update0, VECTOR2(5120,0));
+        Back::getInstance()->searchSet(back_update1, VECTOR2(0,0));
+        Back::getInstance()->searchSet(back_update1, VECTOR2(5120,0));
+        Back::getInstance()->searchSet(back_update2, VECTOR2(0,0));
+        Back::getInstance()->searchSet(back_update2, VECTOR2(5120,0));
+        Back::getInstance()->searchSet(back_update3, VECTOR2(0,0));
+        Back::getInstance()->searchSet(back_update3, VECTOR2(5120,0));
+        Back::getInstance()->searchSet(back_update3, VECTOR2(7680,0));
         
-        Back::getInstance()->searchSet(sea_update0, VECTOR2(0,0));
-        Back::getInstance()->searchSet(sea_update0, VECTOR2(5120,0));
-        Back::getInstance()->searchSet(sea_update1, VECTOR2(0,0));
-        Back::getInstance()->searchSet(sea_update1, VECTOR2(5120,0));
-        Back::getInstance()->searchSet(sea_update2, VECTOR2(0,0));
-        Back::getInstance()->searchSet(sea_update2, VECTOR2(5120,0));
-        Back::getInstance()->searchSet(sea_update3, VECTOR2(0,0));
-        Back::getInstance()->searchSet(sea_update3, VECTOR2(5120,0));
-        Back::getInstance()->searchSet(sea_update3, VECTOR2(7680,0));
+        //Back::getInstance()->searchSet(sea_update0, VECTOR2(0,0));
+        //Back::getInstance()->searchSet(sea_update0, VECTOR2(5120,0));
+        //Back::getInstance()->searchSet(sea_update1, VECTOR2(0,0));
+        //Back::getInstance()->searchSet(sea_update1, VECTOR2(5120,0));
+        //Back::getInstance()->searchSet(sea_update2, VECTOR2(0,0));
+        //Back::getInstance()->searchSet(sea_update2, VECTOR2(5120,0));
+        //Back::getInstance()->searchSet(sea_update3, VECTOR2(0,0));
+        //Back::getInstance()->searchSet(sea_update3, VECTOR2(5120,0));
+        //Back::getInstance()->searchSet(sea_update3, VECTOR2(7680,0));
 
         // プレイヤー初期設定
         Player::getInstance()->init();
@@ -111,7 +111,10 @@ void SceneGame::update()
         {
             if (!Player::getInstance()->begin()->attack &&
                 !Player::getInstance()->begin()->attackPunch)
+            {
                 player_attack();
+                
+            }
         }
         if (TRG(0) & PAD_R1)//Lボタン
         {
@@ -119,6 +122,7 @@ void SceneGame::update()
                 !Player::getInstance()->begin()->attackPunch &&
                 Player::getInstance()->begin()->playerType == PLAYER_PUNCH)
                 player_attack1();
+                
         }
 
 
@@ -265,10 +269,10 @@ void anime(OBJ2D* obj, int total, int flame, bool loop, int type)
                     obj->one = false;
                     obj->half = true;
 
-                    if (type != 1)
-                        ++obj->animeState;
-                    else
+                    if (type == 1 || type == 11)
                         obj->end = true;
+                    else
+                        ++obj->animeState;
 
                     // 
                     //enemy->hp -= 1;
@@ -508,6 +512,7 @@ void player_attack1()
         }
     }
     player->attackPunch = true;
+    sound::play(0, 1);
 }
 
 // 食べる
@@ -554,6 +559,7 @@ void player_attack()
     }
 
     player->attack = true;
+    sound::play(0, 0);
     //if(TRG(0)&PAD_START)player->animeState = 0;
 }
 

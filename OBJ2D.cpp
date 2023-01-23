@@ -77,6 +77,7 @@ void OBJ2D::init()
 	attack				= false;
 	attackPunch			= false;
 	half				= false;
+	hensin = false;
 
 	ReferencePosition	= 0;
 

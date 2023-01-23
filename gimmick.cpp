@@ -25,10 +25,10 @@ void gimmick_Blok(OBJ2D* obj)
     case 0:
         obj->data = GameLib::sprite_load(L"./Data/Images/enemy.png");//HACK:テクスチャ変更
         obj->pos = { 900,GROUND };
-        obj->scale = { 1,1 };
+        obj->scale = { 0.5f,0.5f };
         obj->texPos = { 0,0 };
-        obj->texSize = { 256,256 };
-        obj->pivot = { 128,128 };
+        obj->texSize = { 512,512 };
+        obj->pivot = { 0,256 };
         obj->radius = 40;
         obj->hp = 1;
         obj->eraser = gimmick_erase;
