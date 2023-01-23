@@ -41,7 +41,8 @@ public:
         return &instance;
     }
 private:
-    Player() {};//マネージャーの複数生成禁止
+    Player() { };//マネージャーの複数生成禁止
 };
 
 void player(OBJ2D* obj);
+void invincibleupdate(OBJ2D* obj);
