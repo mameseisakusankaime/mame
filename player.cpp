@@ -135,7 +135,13 @@ void player_attack(OBJ2D* obj)
     }
     // 画面外チェック
     obj->pos.x = (std::max)(obj->pos.x, obj->pivot.x / 2);
+    float oldx = obj->pos.x;
     obj->pos.x = (std::min)(obj->pos.x, 1280 - obj->pivot.x / 2);
+    if ( oldx!=obj->pos.x ) 
+    {
+        //右端に付いたらクリア
+        setScene(SCENE::CLEAR);
+    }
 
     invincibleupdate(obj);
 

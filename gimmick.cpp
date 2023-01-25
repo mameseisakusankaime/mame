@@ -150,18 +150,29 @@ void gimmick_door(OBJ2D* obj)
         }
         break;
     case 2:
+    {
+        float dist = obj->holdPosX;
+        obj->holdPosX = player->pos.x;
+        if (dist != obj->holdPosX)
+        {
+            obj->pos.x += (dist - obj->holdPosX) * 3.0f;
+            obj->ReferencePosition += (dist - obj->holdPosX) * 3.0f;
+        }
+    }
+
         if (hitCheck(player, obj, HITCHECK::PLAndENE))
             dist_len(player, obj);
 
-        obj->texPos.x = (std::min)(obj->texPos.x, 256.0f * 5.0f);
+        obj->texPos.x = (std::min)(obj->texPos.x+obj->texSize.x, 256.0f * 5.0f);
         obj->pivot.x = (std::min)(obj->pivot.x, 256.0f * 5.0f - 128.0f);
         if (obj->texPos.x >= 256 * 4.9f)
         {
-            setScene(SCENE::TITLE);
+            setScene(SCENE::CLEAR);
         }
 
         break;
     }
+    obj->timer++;
 
 }
 

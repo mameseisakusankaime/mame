@@ -17,6 +17,7 @@
 #include "SceneTitle.h"
 #include "SceneGame.h"
 #include "SceneOver.h"
+#include "SceneClear.h"
 
 #include "back.h"
 #include "player.h"
@@ -28,3 +29,4 @@
 using namespace GameLib;
  
 void setScene(int scene);
+void setScene(Scene* scene);
