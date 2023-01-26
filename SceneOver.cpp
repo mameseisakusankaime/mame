@@ -17,6 +17,7 @@ void SceneOver::update()
     {
     case 0:
         GameLib::setBlendMode(Blender::BS_ALPHA);
+        data = sprite_load(L"./Data/Images/game_over.png");
 
         ++state;
         //break;
@@ -32,9 +33,8 @@ void SceneOver::update()
 void SceneOver::draw()
 {
     GameLib::clear(0, 0, 0);
-
-    debug::setString("gameover");
-
+    
+    sprite_render(this->data, 0, 0, 1.0f, 1.0f, (std::min)((this->timer / 10),8) * 1280, 0, 1280, 720);
 }
 
 

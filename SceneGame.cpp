@@ -1,21 +1,16 @@
 #include "all.h"
 EnemySetdata enemySetdata[] = {
-    //{enemy_attack,VECTOR2(600,500),     0},
-    //{enemy_attack,VECTOR2(800,500),     0},
-    //{enemy_attack,VECTOR2(900,500),     0},
-    //{enemy_attack,VECTOR2(1000,500),    0},
-    //{enemy_attack,VECTOR2(1200,500),    0},
-    //{enemy_attack,VECTOR2(1400,500),    0},
-    //{enemy_attack,VECTOR2(1100,500),    0},
-    //{enemy_attack,VECTOR2(1700,500),    0},
-    //{enemy_attack,VECTOR2(1900,500),    0},
-    //{enemy_attack,VECTOR2(2000,500),    0},
-    //{enemy_attack,VECTOR2(2200,500),    0},
-    //{enemy_attack,VECTOR2(2500,500),    0},
-    //{enemy_attack,VECTOR2(3200,500),    0},
-    //{enemy_attack,VECTOR2(3700,500),    0},
-    //{enemy_attack,VECTOR2(3800,500),    0},
-    //{enemy_attack,VECTOR2(4000,500),    0},
+    {enemy_attack,VECTOR2(600,500),     0},
+    {enemy_attack,VECTOR2(900,500),     0},
+    {enemy_attack1,VECTOR2(1000,500),    0},
+    {enemy_attack1,VECTOR2(1200,500),    0},
+    {enemy_attack1,VECTOR2(1100,500),    0},
+    {enemy_attack2,VECTOR2(1700,500),    0},
+    {enemy_attack2,VECTOR2(1900,500),    0},
+    {enemy_attack2,VECTOR2(2200,500),    0},
+    {enemy_attack,VECTOR2(2500,500),     0},
+    {enemy_attack1,VECTOR2(3200,500),    0},
+    {enemy_attack2,VECTOR2(4000,500),    0},
     //終了フラグ
     {nullptr,VECTOR2(-1,-1),-1},
 };
@@ -70,28 +65,31 @@ void SceneGame::update()
         switch (rand()%2)
         {
         case 0:
-        Back::getInstance()->searchSet(back_update0, VECTOR2(0,0));
-        Back::getInstance()->searchSet(back_update0, VECTOR2(5120,0));
-        Back::getInstance()->searchSet(back_update1, VECTOR2(0,0));
-        Back::getInstance()->searchSet(back_update1, VECTOR2(5120,0));
-        Back::getInstance()->searchSet(back_update2, VECTOR2(0,0));
-        Back::getInstance()->searchSet(back_update2, VECTOR2(5120,0));
-        Back::getInstance()->searchSet(back_update3, VECTOR2(0,0));
-        Back::getInstance()->searchSet(back_update3, VECTOR2(5120,0));
-        Back::getInstance()->searchSet(back_update3, VECTOR2(7680,0));
+
+            Back::getInstance()->searchSet(back_update0, VECTOR2(0, 0));
+            Back::getInstance()->searchSet(back_update0, VECTOR2(5120, 0));
+            Back::getInstance()->searchSet(back_update1, VECTOR2(0, 0));
+            Back::getInstance()->searchSet(back_update1, VECTOR2(5120, 0));
+            Back::getInstance()->searchSet(back_update2, VECTOR2(0, 0));
+            Back::getInstance()->searchSet(back_update2, VECTOR2(5120, 0));
+            Back::getInstance()->searchSet(back_update3, VECTOR2(0, 0));
+            Back::getInstance()->searchSet(back_update3, VECTOR2(5120, 0));
+            Back::getInstance()->searchSet(back_update3, VECTOR2(7680, 0));
+
             break;
         case 1:
-        Back::getInstance()->searchSet(sea_update0, VECTOR2(0,0));
-        Back::getInstance()->searchSet(sea_update0, VECTOR2(5120,0));
-        Back::getInstance()->searchSet(sea_update1, VECTOR2(0,0));
-        Back::getInstance()->searchSet(sea_update1, VECTOR2(5120,0));
-        Back::getInstance()->searchSet(sea_update2, VECTOR2(0,0));
-        Back::getInstance()->searchSet(sea_update2, VECTOR2(5120,0));
-        Back::getInstance()->searchSet(sea_update3, VECTOR2(0,0));
-        Back::getInstance()->searchSet(sea_update3, VECTOR2(5120,0));
-        Back::getInstance()->searchSet(sea_update3, VECTOR2(7680,0));
+            Back::getInstance()->searchSet(sea_update0, VECTOR2(0, 0));
+            Back::getInstance()->searchSet(sea_update0, VECTOR2(5120, 0));
+            Back::getInstance()->searchSet(sea_update1, VECTOR2(0, 0));
+            Back::getInstance()->searchSet(sea_update1, VECTOR2(5120, 0));
+            Back::getInstance()->searchSet(sea_update2, VECTOR2(0, 0));
+            Back::getInstance()->searchSet(sea_update2, VECTOR2(5120, 0));
+            Back::getInstance()->searchSet(sea_update3, VECTOR2(0, 0));
+            Back::getInstance()->searchSet(sea_update3, VECTOR2(5120, 0));
+            Back::getInstance()->searchSet(sea_update3, VECTOR2(7680, 0));
             break;
         }
+
 
         // プレイヤー初期設定
         Player::getInstance()->init();
@@ -151,22 +149,6 @@ void SceneGame::update()
         }
 
 
-
-        //if (Player::getInstance()->obj_w[0].attack)
-        //    anime(&Player::getInstance()->obj_w[0], 13, 2, false, 0);
-
-        if (TRG(0) & PAD_L1)
-        {
-            
-            if (!Enemy::getInstance()->obj_w[0].mover)
-            {
-                Enemy::getInstance()->searchSet(enemy_walk, enemySetdata[0].pos);
-            }
-            else
-            {
-                Enemy::getInstance()->obj_w[0].hp = Enemy::getInstance()->obj_w[0].hp <= 1 ? 2 : 0;
-            }
-        }
 
         if (timer >= pEnemydata->timer&&pEnemydata->mover!=nullptr)
         {
@@ -231,6 +213,7 @@ void anime(OBJ2D* obj, int total, int flame, bool loop, int type)
 {
     // type 0 player
     // type 1 enemy_attack
+    // type 2 enemy_attack1
     // type 10 player_attack
     // type 11 player_attack_punch
 
@@ -267,6 +250,12 @@ void anime(OBJ2D* obj, int total, int flame, bool loop, int type)
                     if (type == 0|| type == 1)
                         obj->texPos.y = 512;
                     
+                    if (type == 2)
+                        obj->texPos.y = 1536;
+
+                    if (type == 3)
+                        obj->texPos.y = 2560;
+
                     if (type == 10)
                         obj->texPos.y = 2560.0f;
 
@@ -294,7 +283,7 @@ void anime(OBJ2D* obj, int total, int flame, bool loop, int type)
                     obj->one = false;
                     obj->half = true;
 
-                    if (type == 1 || type == 11)
+                    if (type == 1 || type == 11 || type == 2 || type == 3)
                         obj->end = true;
                     else
                         ++obj->animeState;
@@ -453,7 +442,6 @@ void judge()
 
         if (hitCheck(player, &enemy, HITCHECK::PLAndENE))
         {
-            debug::setString("hit!!");
 
             if (player->invincible)continue;
 

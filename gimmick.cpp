@@ -9,7 +9,6 @@ void Gimmick::init()
     this->searchSet(gimmick_Blok, { 900,GROUND });
     this->searchSet(gimmick_Button, { 2000,GROUND });
     this->searchSet(gimmick_door, { 4500,GROUND });
-    this->searchSet(gimmick_door, { 500,GROUND });
 }
 
 bool gimmick_erase(OBJ2D* obj)
@@ -25,11 +24,11 @@ void gimmick_Blok(OBJ2D* obj)
     switch (obj->state)
     {
     case 0:
-        obj->data = GameLib::sprite_load(L"./Data/Images/terrain.png");//HACK:テクスチャ変更
-        obj->scale = { 2,2 };
+        obj->data = GameLib::sprite_load(L"./Data/Images/terrain.png");
+        obj->scale = { 0.7f,0.7f };
         obj->texPos = { 0,0 };
-        obj->texSize = { 64,64 };
-        obj->pivot = { 32,32 };
+        obj->texSize = { 256,256 };
+        obj->pivot = { 128,128 };
         obj->radius = 40;
         obj->hp = 1;
         obj->eraser = gimmick_erase;
@@ -71,8 +70,8 @@ void gimmick_Button(OBJ2D* obj)
     switch (obj->state)
     {
     case 0:
-        obj->data = GameLib::sprite_load(L"./Data/Images/enemy.png");//HACK:テクスチャ変更
-        obj->scale = { 1,1 };
+        obj->data = GameLib::sprite_load(L"./Data/Images/botton.png");
+        obj->scale = { 0.7,0.7 };
         obj->texPos = { 0,0 };
         obj->texSize = { 256,256 };
         obj->pivot = { 128,128 };

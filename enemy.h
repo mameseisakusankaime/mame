@@ -41,6 +41,8 @@ bool enemy_erase(OBJ2D* obj);
 
 void enemy_walk(OBJ2D* obj);
 void enemy_attack(OBJ2D* obj);
+void enemy_attack1(OBJ2D* obj);
+void enemy_attack2(OBJ2D* obj);
 
 void dist_len(OBJ2D* obj, OBJ2D* player);
 
