@@ -10,6 +10,8 @@ void SceneTitle::deinit()
 {
     safe_delete(data);
     safe_delete(sprData);
+
+    music::stop(0);
 }
 
 void SceneTitle::update()
@@ -24,6 +26,8 @@ void SceneTitle::update()
 
         data = sprite_load(L"./Data/Images/title.png");
         sprData = sprite_load(L"./Data/Images/title_w.png");
+        sprSura = sprite_load(L"./Data/Images/sura.png");
+        
 
         pos[0] = {400,100};
         pos[1] = {630,100};
@@ -32,10 +36,21 @@ void SceneTitle::update()
         pos[4] = {840,260};
         pos[5] = {940,260};
 
+        timer = 60;
+        texPos = {};
+
+        music::play(0, true);
         ++state;
         //break;
     case 1:
         if (TRG(0) & PAD_START)setScene(SCENE::GAME);
+
+        --timer;
+        if (timer == 0)
+        {
+            texPos.x = (texPos.x == 0) ? 512 : 0;
+            timer = 60;
+        }
 
         switch (moziState)
         {
@@ -81,4 +96,6 @@ void SceneTitle::draw()
     sprite_render(sprData, pos[3].x, pos[3].y, 1, 1, 105, 242, 100, 110); // ‚ç
     sprite_render(sprData, pos[4].x, pos[4].y, 1, 1, 210, 242, 110, 110); // ‚·
     sprite_render(sprData, pos[5].x, pos[5].y, 1, 1, 318, 242, 100, 110); // ‚ç
+
+    sprite_render(sprSura, 290, 200, 1, 1, texPos.x, texPos.y, 512, 512);
 }

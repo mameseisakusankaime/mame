@@ -46,6 +46,8 @@ void SceneGame::deinit()
     Find::getInstance()->deinit();
     // ƒMƒ~ƒbƒN
     Gimmick::getInstance()->deinit();
+
+    music::stop(1);
 }
 
 void SceneGame::update()
@@ -63,6 +65,7 @@ void SceneGame::update()
         // ‰æ‘œ“Ç‚İ‚İ
         sprLoad = sprite_load(L"./Data/Images/loading_back.png");
         sprWord = sprite_load(L"./Data/Images/loading_character.png");
+        
 
         // ”wŒi‰Šúİ’è
         Back::getInstance()->init();
@@ -92,7 +95,6 @@ void SceneGame::update()
         Back::getInstance()->searchSet(sea_update3, VECTOR2(7680,0));
             break;
         }
-        
 
         // ƒvƒŒƒCƒ„[‰Šúİ’è
         Player::getInstance()->init();
@@ -105,16 +107,13 @@ void SceneGame::update()
         //ƒMƒ~ƒbƒN
         Gimmick::getInstance()->init();
 
+        music::play(1, true);
         ++state;
         //break;
     case 1:
         //if (TRG(0) & PAD_START)setScene(SCENE::TITLE);
 
-#ifdef _DEBUG
-        debug::setString("0%d", Enemy::getInstance()->obj_w[0].state);
-        debug::setString("1%d", Enemy::getInstance()->obj_w[1].state);
-        debug::setString("2%d", Enemy::getInstance()->obj_w[2].state);
-#endif
+
 
         // ”wŒiXV
         Back::getInstance()->update();
