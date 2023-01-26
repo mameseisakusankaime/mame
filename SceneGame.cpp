@@ -1,27 +1,25 @@
 #include "all.h"
 EnemySetdata enemySetdata[] = {
-
-    {enemy_attack,VECTOR2(600,500),     0},
-    {enemy_attack,VECTOR2(800,500),     0},
-    {enemy_attack,VECTOR2(900,500),     0},
-    {enemy_attack,VECTOR2(1000,500),    0},
-    {enemy_attack,VECTOR2(1200,500),    0},
-    {enemy_attack,VECTOR2(1400,500),    0},
-    {enemy_attack,VECTOR2(1100,500),    0},
-    {enemy_attack,VECTOR2(1700,500),    0},
-    {enemy_attack,VECTOR2(1900,500),    0},
-    {enemy_attack,VECTOR2(2000,500),    0},
-    {enemy_attack,VECTOR2(2200,500),    0},
-    {enemy_attack,VECTOR2(2500,500),    0},
-    {enemy_attack,VECTOR2(3200,500),    0},
-    {enemy_attack,VECTOR2(3700,500),    0},
-    {enemy_attack,VECTOR2(3800,500),    0},
-    {enemy_attack,VECTOR2(4000,500),    0},
+    //{enemy_attack,VECTOR2(600,500),     0},
+    //{enemy_attack,VECTOR2(800,500),     0},
+    //{enemy_attack,VECTOR2(900,500),     0},
+    //{enemy_attack,VECTOR2(1000,500),    0},
+    //{enemy_attack,VECTOR2(1200,500),    0},
+    //{enemy_attack,VECTOR2(1400,500),    0},
+    //{enemy_attack,VECTOR2(1100,500),    0},
+    //{enemy_attack,VECTOR2(1700,500),    0},
+    //{enemy_attack,VECTOR2(1900,500),    0},
+    //{enemy_attack,VECTOR2(2000,500),    0},
+    //{enemy_attack,VECTOR2(2200,500),    0},
+    //{enemy_attack,VECTOR2(2500,500),    0},
+    //{enemy_attack,VECTOR2(3200,500),    0},
+    //{enemy_attack,VECTOR2(3700,500),    0},
+    //{enemy_attack,VECTOR2(3800,500),    0},
+    //{enemy_attack,VECTOR2(4000,500),    0},
     //終了フラグ
     {nullptr,VECTOR2(-1,-1),-1},
 };
 
-int SceneGame::stage = 0;
 
 
 void SceneGame::init()
@@ -58,7 +56,6 @@ void SceneGame::update()
     {
     case 0:
         GameLib::setBlendMode(Blender::BS_ALPHA);
-        stage = (stage <= 1 ? stage + 1 : 0);
 
         pEnemydata = enemySetdata;
 
@@ -70,7 +67,7 @@ void SceneGame::update()
         // 背景初期設定
         Back::getInstance()->init();
 
-        switch (stage)
+        switch (rand()%2)
         {
         case 0:
         Back::getInstance()->searchSet(back_update0, VECTOR2(0,0));
@@ -133,6 +130,7 @@ void SceneGame::update()
         {
             auto&& player = Player::getInstance()->begin();
         //攻撃
+
         if (TRG(0) & PAD_R3)//Rボタン
         {
             if (!player->attack &&
@@ -141,6 +139,7 @@ void SceneGame::update()
                 player_attack();
             }
         }
+
         if (TRG(0) & PAD_R1)//Lボタン
         {
             if (!player->attack &&
@@ -148,12 +147,7 @@ void SceneGame::update()
                  player->playerType == PLAYER_PUNCH)
                 player_attack1();
         }
-        }
 
-        if (this->stage >= 2)
-        {
-            setScene(SCENE::CLEAR);
-            break;
         }
 
 
