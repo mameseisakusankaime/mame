@@ -7,6 +7,8 @@ void audio_init()
 {
     // ‰¹Šy‚Ì“Ç‚İ‚İ  BGM
     //music::load();
+    music::load(0, L"./Data/Musics/title.wav");
+    music::load(1, L"./Data/Musics/game.wav");
 
     // SE‚Ì“Ç‚İ‚İ
     //sound::load();

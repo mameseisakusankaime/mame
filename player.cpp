@@ -148,13 +148,7 @@ void player_attack(OBJ2D* obj)
 
     if (player->obj_w[0].hp <= 0)setScene(SCENE::OVER);
 
-#ifdef _DEBUG
-    debug::setString("pos%f,%f", obj->pos.x, obj->pos.y);
-    debug::setString("texpos%f:%f", obj->texPos.x, obj->texPos.y);
-    debug::setString("hp%d", obj->hp);
-    debug::setString("w%f", obj->color.w);
-    debug::setString("playerType%d", Player::getInstance()->begin()->playerType);
-#endif
+
 }
 
 void player(OBJ2D* obj)
@@ -208,11 +202,7 @@ void player(OBJ2D* obj)
             }
         //}
 
-#ifdef _DEBUG
-        debug::setString("x%f", obj->texPos.x);
-        debug::setString("y%f", obj->texPos.y);
-        debug::setString("obj->type%f", obj->type);
-#endif
+
 
         // 画像データ
         //if (STATE(0) & PAD_UP)      setSpr(0);
@@ -247,10 +237,7 @@ void player(OBJ2D* obj)
             obj->state = 2;
 
 
-#ifdef _DEBUG
-        debug::setString("player.hp%d", obj->hp);
-        //debug::setString("obj->flashingTimer")
-#endif
+
 
         break;
     case 2:
@@ -281,10 +268,7 @@ void player(OBJ2D* obj)
     //無敵の更新
     invincibleupdate(obj);
 
-#ifdef _DEBUG
-    debug::setString("state%d", obj->state);
-    debug::setString("playerType%d", Player::getInstance()->begin()->playerType);
-#endif 
+
 
     if (player->obj_w[0].hp <= 0)setScene(SCENE::OVER);
 }

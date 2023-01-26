@@ -31,6 +31,8 @@ void SceneGame::deinit()
     Find::getInstance()->deinit();
     // ƒMƒ~ƒbƒN
     Gimmick::getInstance()->deinit();
+
+    music::stop(1);
 }
 
 void SceneGame::update()
@@ -49,25 +51,25 @@ void SceneGame::update()
         // ”wŒi‰Šúİ’è
         Back::getInstance()->init();
 
-        Back::getInstance()->searchSet(back_update0, VECTOR2(0,0));
-        Back::getInstance()->searchSet(back_update0, VECTOR2(5120,0));
-        Back::getInstance()->searchSet(back_update1, VECTOR2(0,0));
-        Back::getInstance()->searchSet(back_update1, VECTOR2(5120,0));
-        Back::getInstance()->searchSet(back_update2, VECTOR2(0,0));
-        Back::getInstance()->searchSet(back_update2, VECTOR2(5120,0));
-        Back::getInstance()->searchSet(back_update3, VECTOR2(0,0));
-        Back::getInstance()->searchSet(back_update3, VECTOR2(5120,0));
-        Back::getInstance()->searchSet(back_update3, VECTOR2(7680,0));
+        //Back::getInstance()->searchSet(back_update0, VECTOR2(0,0));
+        //Back::getInstance()->searchSet(back_update0, VECTOR2(5120,0));
+        //Back::getInstance()->searchSet(back_update1, VECTOR2(0,0));
+        //Back::getInstance()->searchSet(back_update1, VECTOR2(5120,0));
+        //Back::getInstance()->searchSet(back_update2, VECTOR2(0,0));
+        //Back::getInstance()->searchSet(back_update2, VECTOR2(5120,0));
+        //Back::getInstance()->searchSet(back_update3, VECTOR2(0,0));
+        //Back::getInstance()->searchSet(back_update3, VECTOR2(5120,0));
+        //Back::getInstance()->searchSet(back_update3, VECTOR2(7680,0));
         
-        //Back::getInstance()->searchSet(sea_update0, VECTOR2(0,0));
-        //Back::getInstance()->searchSet(sea_update0, VECTOR2(5120,0));
-        //Back::getInstance()->searchSet(sea_update1, VECTOR2(0,0));
-        //Back::getInstance()->searchSet(sea_update1, VECTOR2(5120,0));
-        //Back::getInstance()->searchSet(sea_update2, VECTOR2(0,0));
-        //Back::getInstance()->searchSet(sea_update2, VECTOR2(5120,0));
-        //Back::getInstance()->searchSet(sea_update3, VECTOR2(0,0));
-        //Back::getInstance()->searchSet(sea_update3, VECTOR2(5120,0));
-        //Back::getInstance()->searchSet(sea_update3, VECTOR2(7680,0));
+        Back::getInstance()->searchSet(sea_update0, VECTOR2(0,0));
+        Back::getInstance()->searchSet(sea_update0, VECTOR2(5120,0));
+        Back::getInstance()->searchSet(sea_update1, VECTOR2(0,0));
+        Back::getInstance()->searchSet(sea_update1, VECTOR2(5120,0));
+        Back::getInstance()->searchSet(sea_update2, VECTOR2(0,0));
+        Back::getInstance()->searchSet(sea_update2, VECTOR2(5120,0));
+        Back::getInstance()->searchSet(sea_update3, VECTOR2(0,0));
+        Back::getInstance()->searchSet(sea_update3, VECTOR2(5120,0));
+        Back::getInstance()->searchSet(sea_update3, VECTOR2(7680,0));
 
         // ƒvƒŒƒCƒ„[‰Šúİ’è
         Player::getInstance()->init();
@@ -80,16 +82,13 @@ void SceneGame::update()
         //ƒMƒ~ƒbƒN
         Gimmick::getInstance()->init();
 
+        music::play(1, true);
         ++state;
         //break;
     case 1:
         //if (TRG(0) & PAD_START)setScene(SCENE::TITLE);
 
-#ifdef _DEBUG
-        debug::setString("0%d", Enemy::getInstance()->obj_w[0].state);
-        debug::setString("1%d", Enemy::getInstance()->obj_w[1].state);
-        debug::setString("2%d", Enemy::getInstance()->obj_w[2].state);
-#endif
+
 
         // ”wŒiXV
         Back::getInstance()->update();

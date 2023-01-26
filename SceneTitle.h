@@ -9,10 +9,12 @@ public:
 
     GameLib::Sprite* sprData;
 
-    
+    GameLib::Sprite* sprSura;
 
     VECTOR2 pos[6];
+    VECTOR2 texPos;
 
+    int timer;
     int moziState;
 
 public:
