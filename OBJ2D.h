@@ -91,3 +91,4 @@ public:
 };
 
 void gravity(OBJ2D*);
+bool animeUpdate(OBJ2D* obj, int total, int frame, bool loop);

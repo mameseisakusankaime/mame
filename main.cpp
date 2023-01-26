@@ -12,11 +12,13 @@
 SceneTitle sceneTitle;
 SceneGame sceneGame;
 SceneOver sceneOver;
+SceneClear sceneClear;
 
 Scene* scene_tbl[] = {
     &sceneTitle,
     &sceneGame,
     &sceneOver,
+    &sceneClear,
 };
 
 Scene* pScene;
@@ -67,4 +69,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPWSTR, _In_ int)
 void setScene(int scene)
 {
     pNext = scene_tbl[scene];
+}
+void setScene(Scene* scene)
+{
+    pNext = scene;
 }

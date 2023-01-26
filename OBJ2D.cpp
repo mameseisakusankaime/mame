@@ -114,3 +114,28 @@ void gravity(OBJ2D* obj)
 {
 	obj->pos.y = (std::min)(obj->pos.y+GRAVITY, GROUND);
 }
+
+bool animeUpdate(OBJ2D* obj, int total, int frame, bool loop)
+{
+	obj->anime = obj->animeTimer / frame;
+	if (loop)
+	{
+		if (obj->anime >= total)
+		{
+			obj->anime = 0;
+			obj->animeTimer = 0;
+		}
+	}
+	else
+	{
+		if (obj->anime >= total)
+		{
+			obj->anime = total - 1;
+			return true;    // アニメの終端に達した
+		}
+	}
+	obj->texPos.x = obj->anime * obj->texSize.x;
+	++obj->animeTimer;
+
+	return false;           // アニメの終端ではない
+}

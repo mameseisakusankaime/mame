@@ -8,6 +8,7 @@ void Gimmick::init()
 {
     this->searchSet(gimmick_Blok, { 900,GROUND });
     this->searchSet(gimmick_Button, { 1000,GROUND });
+    this->searchSet(gimmick_door, { 1500,GROUND });
 }
 
 bool gimmick_erase(OBJ2D* obj)
@@ -92,10 +93,10 @@ void gimmick_Button(OBJ2D* obj)
     }
         if (hitCheck(obj, player, HITCHECK::PLAndENE))
         {
-            Enemy::getInstance()->searchSet(enemy_walk, obj->pos + VECTOR2(100,  -100));
             Enemy::getInstance()->searchSet(enemy_walk, obj->pos + VECTOR2(200,  -100));
-            Enemy::getInstance()->searchSet(enemy_walk, obj->pos + VECTOR2(-100, -100));
+            Enemy::getInstance()->searchSet(enemy_walk, obj->pos + VECTOR2(400,  -100));
             Enemy::getInstance()->searchSet(enemy_walk, obj->pos + VECTOR2(-200, -100));
+            Enemy::getInstance()->searchSet(enemy_walk, obj->pos + VECTOR2(-400, -100));
 
             obj->clear();
             break;
@@ -110,11 +111,11 @@ void gimmick_door(OBJ2D* obj)
     switch (obj->state)
     {
     case 0:
-        obj->data = GameLib::sprite_load(L"./Data/Images/door.png");//HACK:テクスチャ変更
+        obj->data = GameLib::sprite_load(L"./Data/Images/door.png");
         obj->scale = { 1,1 };
         obj->texPos = { 0,0 };
-        obj->texSize = { 270,270 };
-        obj->pivot = { 135,135 };
+        obj->texSize = { 270,256 };
+        obj->pivot = { 135,128 };
         obj->radius = 40;
         obj->hp = 1;
         obj->eraser = gimmick_erase;
@@ -135,14 +136,9 @@ void gimmick_door(OBJ2D* obj)
         if (hitCheck(player, obj, HITCHECK::PLAndENE))
         {
             //player->pos = obj->pos - vec2Normalize(player->pos - obj->pos) * (player->radius + obj->radius);
-            if (player->key)
-            {
-                obj->clear();
-            }
-            else
-            {
-                dist_len(player, obj);
-            }
+            dist_len(player, obj);
+            obj->state++;
+            break;
         }
         for (auto&& enemy : *Enemy::getInstance())
         {
@@ -152,10 +148,31 @@ void gimmick_door(OBJ2D* obj)
                 dist_len(&enemy, obj);
             }
         }
+        break;
+    case 2:
+    {
+        float dist = obj->holdPosX;
+        obj->holdPosX = player->pos.x;
+        if (dist != obj->holdPosX)
+        {
+            obj->pos.x += (dist - obj->holdPosX) * 3.0f;
+            obj->ReferencePosition += (dist - obj->holdPosX) * 3.0f;
+        }
+    }
 
+        if (hitCheck(player, obj, HITCHECK::PLAndENE))
+            dist_len(player, obj);
+
+        obj->texPos.x = (std::min)(obj->texPos.x+obj->texSize.x, 256.0f * 5.0f);
+        obj->pivot.x = (std::min)(obj->pivot.x, 256.0f * 5.0f - 128.0f);
+        if (obj->texPos.x >= 256 * 4.9f)
+        {
+            setScene(SCENE::CLEAR);
+        }
 
         break;
     }
+    obj->timer++;
 
 }
 

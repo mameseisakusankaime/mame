@@ -147,7 +147,7 @@ void SceneGame::update()
         if (timer >= pEnemydata->timer&&pEnemydata->mover!=nullptr)
         {
             Enemy::getInstance()->searchSet(pEnemydata->mover, pEnemydata->pos);
-            pEnemydata++;
+            ++pEnemydata;
         }
 
         ++timer;
@@ -405,7 +405,7 @@ bool hitCheck(OBJ2D* obj1, OBJ2D* obj2,int num)
             obj2->pos + obj2->offset, obj2->radius
         );
         break;
-    case 3:
+    case HITCHECK::PLAndENEAttack:
         // ƒvƒŒƒCƒ„[‚Æ“G‚ÌUŒ‚”ÍˆÍ
         return hitCheckCircle(
             obj1->pos + obj1->offset, obj1->radius,

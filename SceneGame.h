@@ -7,6 +7,7 @@ enum HITCHECK
     PLAndENE = 0,
     PLAndENEScope,
     PLScopeAndENE,
+    PLAndENEAttack,
 
 };
 

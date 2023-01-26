@@ -3,6 +3,7 @@
 void SceneOver::init()
 {
     state = 0;
+    timer = 0;
 }
 
 void SceneOver::deinit()
@@ -20,13 +21,20 @@ void SceneOver::update()
         ++state;
         //break;
     case 1:
+        if (TRG(0) & PAD_START)
+            setScene(SCENE::TITLE);
+
         break;
     }
+    this->timer++;
 }
 
 void SceneOver::draw()
 {
     GameLib::clear(0, 0, 0);
+
+    debug::setString("gameover");
+
 }
 
 

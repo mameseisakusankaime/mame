@@ -5,14 +5,6 @@
 #include "back.h"
 using namespace GameLib;
 
-// 画像データテーブル
-//GameLib::Sprite** data_tbl[] =
-//{
-//    &Player::maru,
-//    &Player::sikaku,
-//    &Player::hosi,
-//    &Player::sankaku,
-//};
 
 // 画像位置テーブル
 float data_pos[][2] =
@@ -22,12 +14,6 @@ float data_pos[][2] =
     {512,0},
     {768,0},
 };
-
-// 画像データ
-//GameLib::Sprite* Player::maru = nullptr;
-//GameLib::Sprite* Player::sikaku = nullptr;
-//GameLib::Sprite* Player::hosi = nullptr;
-//GameLib::Sprite* Player::sankaku = nullptr;
 
 void Player::init()
 {
@@ -148,30 +134,16 @@ void player_attack(OBJ2D* obj)
         break;
     }
     // 画面外チェック
-    if (obj->pos.x < obj->pivot.x / 2)obj->pos.x = obj->pivot.x / 2;
-    if (obj->pos.x > 1280 - obj->pivot.x / 2)obj->pos.x = 1280 - obj->pivot.x / 2;
-
-    // 無敵時間(発動中)
-    if (obj->invincible)
+    obj->pos.x = (std::max)(obj->pos.x, obj->pivot.x / 2);
+    float oldx = obj->pos.x;
+    obj->pos.x = (std::min)(obj->pos.x, 1280 - obj->pivot.x / 2);
+    if ( oldx!=obj->pos.x ) 
     {
-        ++obj->invincibleTimer;
-        ++obj->flashingTimer;
-        if (obj->flashingTimer / 5 == 1)
-        {
-            obj->color.w = obj->color.w == 1 ? 0 : 1;
-            obj->flashingTimer = 0;
-        }
-    }
-    // 無敵時間終了
-    if (obj->invincibleTimer >= 60)
-    {
-        obj->invincible = false;
-        obj->invincibleTimer = 0;
-        obj->color.w = 1;
+        //右端に付いたらクリア
+        setScene(SCENE::CLEAR);
     }
 
-    if (!obj->invincible)
-        obj->color.w = 1;
+    invincibleupdate(obj);
 
 
     if (player->obj_w[0].hp <= 0)setScene(SCENE::OVER);
@@ -187,7 +159,7 @@ void player_attack(OBJ2D* obj)
 
 void player(OBJ2D* obj)
 {
-    Player* player = Player::getInstance();
+    auto&& player = Player::getInstance();
 
     switch (obj->state)
     {
@@ -302,27 +274,13 @@ void player(OBJ2D* obj)
         break;
     }
 
-    if (obj->pos.x < obj->pivot.x / 2)obj->pos.x = obj->pivot.x / 2;
-    if (obj->pos.x > 1280 - obj->pivot.x / 2)obj->pos.x = 1280 - obj->pivot.x / 2;
+    //画面外チェック
+    obj->pos.x = (std::max)(obj->pos.x, obj->pivot.x / 2);
+    obj->pos.x = (std::min)(obj->pos.x, 1280 - obj->pivot.x / 2);
 
-    // 無敵時間(発動中)
-    if (obj->invincible)
-    {
-        ++obj->invincibleTimer;
-        ++obj->flashingTimer;
-        if (obj->flashingTimer / 5 == 1)
-        {
-            obj->color.w = obj->color.w == 1 ? 0 : 1;
-            obj->flashingTimer = 0;
-        }
-    }
-    // 無敵時間終了
-    if (obj->invincibleTimer >= 60)
-    {
-        obj->invincible = false;
-        obj->invincibleTimer = 0;
-        obj->color.w = 1;
-    }
+    //無敵の更新
+    invincibleupdate(obj);
+
 #ifdef _DEBUG
     debug::setString("state%d", obj->state);
     debug::setString("playerType%d", Player::getInstance()->begin()->playerType);
@@ -341,4 +299,26 @@ void Player::setData(int data)
 void Player::setSpr(int data)
 {
     //obj_w[0].data = *data_tbl[data];
+}
+
+void invincibleupdate(OBJ2D* obj)
+{
+    // 無敵時間(発動中)
+    if (obj->invincible)
+    {
+        ++obj->invincibleTimer;
+        ++obj->flashingTimer;
+        if (obj->flashingTimer / 5 == 1)
+        {
+            obj->color.w = obj->color.w == 1 ? 0 : 1;
+            obj->flashingTimer = 0;
+        }
+    }
+    // 無敵時間終了
+    if (obj->invincibleTimer >= 60)
+    {
+        obj->invincible = false;
+        obj->invincibleTimer = 0;
+        obj->color.w = 1;
+    }
 }
