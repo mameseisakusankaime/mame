@@ -70,47 +70,46 @@ void SceneGame::update()
         // ”wŒi‰ŠúÝ’è
         Back::getInstance()->init();
 
-<<<<<<< HEAD
-=======
+
         switch (stage)
         {
         case 0:
->>>>>>> 82f407c0d2024508dba04ccd1afdab317fd1f3d1
-        Back::getInstance()->searchSet(back_update0, VECTOR2(0,0));
-        Back::getInstance()->searchSet(back_update0, VECTOR2(5120,0));
-        Back::getInstance()->searchSet(back_update1, VECTOR2(0,0));
-        Back::getInstance()->searchSet(back_update1, VECTOR2(5120,0));
-        Back::getInstance()->searchSet(back_update2, VECTOR2(0,0));
-        Back::getInstance()->searchSet(back_update2, VECTOR2(5120,0));
-        Back::getInstance()->searchSet(back_update3, VECTOR2(0,0));
-        Back::getInstance()->searchSet(back_update3, VECTOR2(5120,0));
-        Back::getInstance()->searchSet(back_update3, VECTOR2(7680,0));
-<<<<<<< HEAD
-        
-        //Back::getInstance()->searchSet(sea_update0, VECTOR2(0,0));
-        //Back::getInstance()->searchSet(sea_update0, VECTOR2(5120,0));
-        //Back::getInstance()->searchSet(sea_update1, VECTOR2(0,0));
-        //Back::getInstance()->searchSet(sea_update1, VECTOR2(5120,0));
-        //Back::getInstance()->searchSet(sea_update2, VECTOR2(0,0));
-        //Back::getInstance()->searchSet(sea_update2, VECTOR2(5120,0));
-        //Back::getInstance()->searchSet(sea_update3, VECTOR2(0,0));
-        //Back::getInstance()->searchSet(sea_update3, VECTOR2(5120,0));
-        //Back::getInstance()->searchSet(sea_update3, VECTOR2(7680,0));
-=======
+
+            Back::getInstance()->searchSet(back_update0, VECTOR2(0, 0));
+            Back::getInstance()->searchSet(back_update0, VECTOR2(5120, 0));
+            Back::getInstance()->searchSet(back_update1, VECTOR2(0, 0));
+            Back::getInstance()->searchSet(back_update1, VECTOR2(5120, 0));
+            Back::getInstance()->searchSet(back_update2, VECTOR2(0, 0));
+            Back::getInstance()->searchSet(back_update2, VECTOR2(5120, 0));
+            Back::getInstance()->searchSet(back_update3, VECTOR2(0, 0));
+            Back::getInstance()->searchSet(back_update3, VECTOR2(5120, 0));
+            Back::getInstance()->searchSet(back_update3, VECTOR2(7680, 0));
+
+
+            //Back::getInstance()->searchSet(sea_update0, VECTOR2(0,0));
+            //Back::getInstance()->searchSet(sea_update0, VECTOR2(5120,0));
+            //Back::getInstance()->searchSet(sea_update1, VECTOR2(0,0));
+            //Back::getInstance()->searchSet(sea_update1, VECTOR2(5120,0));
+            //Back::getInstance()->searchSet(sea_update2, VECTOR2(0,0));
+            //Back::getInstance()->searchSet(sea_update2, VECTOR2(5120,0));
+            //Back::getInstance()->searchSet(sea_update3, VECTOR2(0,0));
+            //Back::getInstance()->searchSet(sea_update3, VECTOR2(5120,0));
+            //Back::getInstance()->searchSet(sea_update3, VECTOR2(7680,0));
+
             break;
         case 1:
-        Back::getInstance()->searchSet(sea_update0, VECTOR2(0,0));
-        Back::getInstance()->searchSet(sea_update0, VECTOR2(5120,0));
-        Back::getInstance()->searchSet(sea_update1, VECTOR2(0,0));
-        Back::getInstance()->searchSet(sea_update1, VECTOR2(5120,0));
-        Back::getInstance()->searchSet(sea_update2, VECTOR2(0,0));
-        Back::getInstance()->searchSet(sea_update2, VECTOR2(5120,0));
-        Back::getInstance()->searchSet(sea_update3, VECTOR2(0,0));
-        Back::getInstance()->searchSet(sea_update3, VECTOR2(5120,0));
-        Back::getInstance()->searchSet(sea_update3, VECTOR2(7680,0));
+            Back::getInstance()->searchSet(sea_update0, VECTOR2(0, 0));
+            Back::getInstance()->searchSet(sea_update0, VECTOR2(5120, 0));
+            Back::getInstance()->searchSet(sea_update1, VECTOR2(0, 0));
+            Back::getInstance()->searchSet(sea_update1, VECTOR2(5120, 0));
+            Back::getInstance()->searchSet(sea_update2, VECTOR2(0, 0));
+            Back::getInstance()->searchSet(sea_update2, VECTOR2(5120, 0));
+            Back::getInstance()->searchSet(sea_update3, VECTOR2(0, 0));
+            Back::getInstance()->searchSet(sea_update3, VECTOR2(5120, 0));
+            Back::getInstance()->searchSet(sea_update3, VECTOR2(7680, 0));
             break;
         }
->>>>>>> 82f407c0d2024508dba04ccd1afdab317fd1f3d1
+
 
         // ƒvƒŒƒCƒ„[‰ŠúÝ’è
         Player::getInstance()->init();
