@@ -19,7 +19,7 @@ public:
     GameLib::Sprite* sprWord;
 
     int timer;
-    int stage;
+    static int stage;
 public:
     void init()override;
     void deinit()override;

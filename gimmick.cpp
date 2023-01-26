@@ -167,7 +167,8 @@ void gimmick_door(OBJ2D* obj)
         obj->pivot.x = (std::min)(obj->pivot.x, 256.0f * 5.0f - 128.0f);
         if (obj->texPos.x >= 256 * 4.9f)
         {
-            setScene(SCENE::CLEAR);
+            SceneGame::stage++;
+
         }
 
         break;

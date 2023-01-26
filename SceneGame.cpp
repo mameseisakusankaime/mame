@@ -1,13 +1,27 @@
 #include "all.h"
 EnemySetdata enemySetdata[] = {
-    {enemy_attack,VECTOR2(600,500), 0},
-    {enemy_attack,VECTOR2(900,500), 2},
-    {enemy_attack,VECTOR2(1200,500), 4},
-    {enemy_attack,VECTOR2(2000,500),10},
-    {enemy_attack,VECTOR2(2500,500),20},
+
+    {enemy_attack,VECTOR2(600,500),     0},
+    {enemy_attack,VECTOR2(800,500),     0},
+    {enemy_attack,VECTOR2(900,500),     0},
+    {enemy_attack,VECTOR2(1000,500),    0},
+    {enemy_attack,VECTOR2(1200,500),    0},
+    {enemy_attack,VECTOR2(1400,500),    0},
+    {enemy_attack,VECTOR2(1100,500),    0},
+    {enemy_attack,VECTOR2(1700,500),    0},
+    {enemy_attack,VECTOR2(1900,500),    0},
+    {enemy_attack,VECTOR2(2000,500),    0},
+    {enemy_attack,VECTOR2(2200,500),    0},
+    {enemy_attack,VECTOR2(2500,500),    0},
+    {enemy_attack,VECTOR2(3200,500),    0},
+    {enemy_attack,VECTOR2(3700,500),    0},
+    {enemy_attack,VECTOR2(3800,500),    0},
+    {enemy_attack,VECTOR2(4000,500),    0},
     //終了フラグ
     {nullptr,VECTOR2(-1,-1),-1},
 };
+
+int SceneGame::stage = 0;
 
 
 void SceneGame::init()
@@ -37,10 +51,12 @@ void SceneGame::deinit()
 void SceneGame::update()
 {
     static EnemySetdata* pEnemydata = enemySetdata;
+
     switch (state)
     {
     case 0:
         GameLib::setBlendMode(Blender::BS_ALPHA);
+        stage = (stage <= 1 ? stage + 1 : 0);
 
         pEnemydata = enemySetdata;
 
@@ -51,6 +67,9 @@ void SceneGame::update()
         // 背景初期設定
         Back::getInstance()->init();
 
+        switch (stage)
+        {
+        case 0:
         Back::getInstance()->searchSet(back_update0, VECTOR2(0,0));
         Back::getInstance()->searchSet(back_update0, VECTOR2(5120,0));
         Back::getInstance()->searchSet(back_update1, VECTOR2(0,0));
@@ -60,16 +79,20 @@ void SceneGame::update()
         Back::getInstance()->searchSet(back_update3, VECTOR2(0,0));
         Back::getInstance()->searchSet(back_update3, VECTOR2(5120,0));
         Back::getInstance()->searchSet(back_update3, VECTOR2(7680,0));
+            break;
+        case 1:
+        Back::getInstance()->searchSet(sea_update0, VECTOR2(0,0));
+        Back::getInstance()->searchSet(sea_update0, VECTOR2(5120,0));
+        Back::getInstance()->searchSet(sea_update1, VECTOR2(0,0));
+        Back::getInstance()->searchSet(sea_update1, VECTOR2(5120,0));
+        Back::getInstance()->searchSet(sea_update2, VECTOR2(0,0));
+        Back::getInstance()->searchSet(sea_update2, VECTOR2(5120,0));
+        Back::getInstance()->searchSet(sea_update3, VECTOR2(0,0));
+        Back::getInstance()->searchSet(sea_update3, VECTOR2(5120,0));
+        Back::getInstance()->searchSet(sea_update3, VECTOR2(7680,0));
+            break;
+        }
         
-        //Back::getInstance()->searchSet(sea_update0, VECTOR2(0,0));
-        //Back::getInstance()->searchSet(sea_update0, VECTOR2(5120,0));
-        //Back::getInstance()->searchSet(sea_update1, VECTOR2(0,0));
-        //Back::getInstance()->searchSet(sea_update1, VECTOR2(5120,0));
-        //Back::getInstance()->searchSet(sea_update2, VECTOR2(0,0));
-        //Back::getInstance()->searchSet(sea_update2, VECTOR2(5120,0));
-        //Back::getInstance()->searchSet(sea_update3, VECTOR2(0,0));
-        //Back::getInstance()->searchSet(sea_update3, VECTOR2(5120,0));
-        //Back::getInstance()->searchSet(sea_update3, VECTOR2(7680,0));
 
         // プレイヤー初期設定
         Player::getInstance()->init();
@@ -126,6 +149,12 @@ void SceneGame::update()
                  player->playerType == PLAYER_PUNCH)
                 player_attack1();
         }
+        }
+
+        if (this->stage >= 2)
+        {
+            setScene(SCENE::CLEAR);
+            break;
         }
 
 
