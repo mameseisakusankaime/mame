@@ -25,6 +25,8 @@ void SceneTitle::update()
         data = sprite_load(L"./Data/Images/title.png");
         sprData = sprite_load(L"./Data/Images/title_w.png");
 
+        
+
         pos[0] = {400,100};
         pos[1] = {630,100};
         pos[2] = {640,260};
@@ -81,4 +83,6 @@ void SceneTitle::draw()
     sprite_render(sprData, pos[3].x, pos[3].y, 1, 1, 105, 242, 100, 110); // ‚ç
     sprite_render(sprData, pos[4].x, pos[4].y, 1, 1, 210, 242, 110, 110); // ‚·
     sprite_render(sprData, pos[5].x, pos[5].y, 1, 1, 318, 242, 100, 110); // ‚ç
+
+    
 }

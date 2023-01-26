@@ -44,6 +44,7 @@ void SceneGame::update()
         // ‰æ‘œ“Ç‚İ‚İ
         sprLoad = sprite_load(L"./Data/Images/loading_back.png");
         sprWord = sprite_load(L"./Data/Images/loading_character.png");
+        
 
         // ”wŒi‰Šúİ’è
         Back::getInstance()->init();

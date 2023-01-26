@@ -9,6 +9,8 @@ public:
 
     GameLib::Sprite* sprData;
 
+    
+
     VECTOR2 pos[6];
 
     int moziState;
