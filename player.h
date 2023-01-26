@@ -29,6 +29,8 @@ public:
     OBJ2D* end() { return obj_w + OBJ_MAX;}
 
     void init()override;
+    void deinit()override;
+    void draw()override;
 
     void reduceHp();
 

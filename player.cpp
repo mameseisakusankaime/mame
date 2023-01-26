@@ -5,6 +5,7 @@
 #include "back.h"
 using namespace GameLib;
 
+GameLib::Sprite* sprHP;
 
 // 画像位置テーブル
 float data_pos[][2] =
@@ -18,9 +19,29 @@ float data_pos[][2] =
 void Player::init()
 {
     OBJ2DManager::init();
+    sprHP = sprite_load(L"./Data/Images/HP.png");
 
     obj_w[0].mover = player;
 }
+
+void Player::deinit()
+{
+    safe_delete(sprHP);
+    OBJ2DManager::deinit();
+}
+
+void Player::draw()
+{
+    float x = 232.0f;
+    float y = 199.0f;
+    float sx = 0.3f;
+    for (int i = 0; i < this->begin()->hp; i++)
+    {
+        sprite_render(sprHP, x*sx*i, 0, sx, sx, 0.0f, 0.0f, x, y);
+    }
+    OBJ2DManager::draw();
+}
+
 
 void Player::reduceHp()
 {
