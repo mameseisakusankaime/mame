@@ -51,25 +51,25 @@ void SceneGame::update()
         // ”wŒi‰ŠúÝ’è
         Back::getInstance()->init();
 
-        //Back::getInstance()->searchSet(back_update0, VECTOR2(0,0));
-        //Back::getInstance()->searchSet(back_update0, VECTOR2(5120,0));
-        //Back::getInstance()->searchSet(back_update1, VECTOR2(0,0));
-        //Back::getInstance()->searchSet(back_update1, VECTOR2(5120,0));
-        //Back::getInstance()->searchSet(back_update2, VECTOR2(0,0));
-        //Back::getInstance()->searchSet(back_update2, VECTOR2(5120,0));
-        //Back::getInstance()->searchSet(back_update3, VECTOR2(0,0));
-        //Back::getInstance()->searchSet(back_update3, VECTOR2(5120,0));
-        //Back::getInstance()->searchSet(back_update3, VECTOR2(7680,0));
+        Back::getInstance()->searchSet(back_update0, VECTOR2(0,0));
+        Back::getInstance()->searchSet(back_update0, VECTOR2(5120,0));
+        Back::getInstance()->searchSet(back_update1, VECTOR2(0,0));
+        Back::getInstance()->searchSet(back_update1, VECTOR2(5120,0));
+        Back::getInstance()->searchSet(back_update2, VECTOR2(0,0));
+        Back::getInstance()->searchSet(back_update2, VECTOR2(5120,0));
+        Back::getInstance()->searchSet(back_update3, VECTOR2(0,0));
+        Back::getInstance()->searchSet(back_update3, VECTOR2(5120,0));
+        Back::getInstance()->searchSet(back_update3, VECTOR2(7680,0));
         
-        Back::getInstance()->searchSet(sea_update0, VECTOR2(0,0));
-        Back::getInstance()->searchSet(sea_update0, VECTOR2(5120,0));
-        Back::getInstance()->searchSet(sea_update1, VECTOR2(0,0));
-        Back::getInstance()->searchSet(sea_update1, VECTOR2(5120,0));
-        Back::getInstance()->searchSet(sea_update2, VECTOR2(0,0));
-        Back::getInstance()->searchSet(sea_update2, VECTOR2(5120,0));
-        Back::getInstance()->searchSet(sea_update3, VECTOR2(0,0));
-        Back::getInstance()->searchSet(sea_update3, VECTOR2(5120,0));
-        Back::getInstance()->searchSet(sea_update3, VECTOR2(7680,0));
+        //Back::getInstance()->searchSet(sea_update0, VECTOR2(0,0));
+        //Back::getInstance()->searchSet(sea_update0, VECTOR2(5120,0));
+        //Back::getInstance()->searchSet(sea_update1, VECTOR2(0,0));
+        //Back::getInstance()->searchSet(sea_update1, VECTOR2(5120,0));
+        //Back::getInstance()->searchSet(sea_update2, VECTOR2(0,0));
+        //Back::getInstance()->searchSet(sea_update2, VECTOR2(5120,0));
+        //Back::getInstance()->searchSet(sea_update3, VECTOR2(0,0));
+        //Back::getInstance()->searchSet(sea_update3, VECTOR2(5120,0));
+        //Back::getInstance()->searchSet(sea_update3, VECTOR2(7680,0));
 
         // ƒvƒŒƒCƒ„[‰ŠúÝ’è
         Player::getInstance()->init();
@@ -206,6 +206,7 @@ void anime(OBJ2D* obj, int total, int flame, bool loop, int type)
 {
     // type 0 player
     // type 1 enemy_attack
+    // type 2 enemy_attack1
     // type 10 player_attack
     // type 11 player_attack_punch
 
@@ -242,6 +243,12 @@ void anime(OBJ2D* obj, int total, int flame, bool loop, int type)
                     if (type == 0|| type == 1)
                         obj->texPos.y = 512;
                     
+                    if (type == 2)
+                        obj->texPos.y = 1536;
+
+                    if (type == 3)
+                        obj->texPos.y = 2560;
+
                     if (type == 10)
                         obj->texPos.y = 2560.0f;
 
@@ -269,7 +276,7 @@ void anime(OBJ2D* obj, int total, int flame, bool loop, int type)
                     obj->one = false;
                     obj->half = true;
 
-                    if (type == 1 || type == 11)
+                    if (type == 1 || type == 11 || type == 2 || type == 3)
                         obj->end = true;
                     else
                         ++obj->animeState;
