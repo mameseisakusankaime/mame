@@ -7,8 +7,8 @@
 void Gimmick::init()
 {
     this->searchSet(gimmick_Blok, { 900,GROUND });
-    this->searchSet(gimmick_Button, { 1000,GROUND });
-    this->searchSet(gimmick_door, { 1500,GROUND });
+    this->searchSet(gimmick_Button, { 2000,GROUND });
+    this->searchSet(gimmick_door, { 4500,GROUND });
 }
 
 bool gimmick_erase(OBJ2D* obj)
@@ -93,10 +93,10 @@ void gimmick_Button(OBJ2D* obj)
     }
         if (hitCheck(obj, player, HITCHECK::PLAndENE))
         {
-            Enemy::getInstance()->searchSet(enemy_walk, obj->pos + VECTOR2(200,  -100));
-            Enemy::getInstance()->searchSet(enemy_walk, obj->pos + VECTOR2(400,  -100));
-            Enemy::getInstance()->searchSet(enemy_walk, obj->pos + VECTOR2(-200, -100));
-            Enemy::getInstance()->searchSet(enemy_walk, obj->pos + VECTOR2(-400, -100));
+            Enemy::getInstance()->searchSet(enemy_walk, obj->pos + VECTOR2(300,  -200));
+            Enemy::getInstance()->searchSet(enemy_walk, obj->pos + VECTOR2(600,  -200));
+            Enemy::getInstance()->searchSet(enemy_walk, obj->pos + VECTOR2(-300, -200));
+            Enemy::getInstance()->searchSet(enemy_walk, obj->pos + VECTOR2(-600, -200));
 
             obj->clear();
             break;
@@ -167,7 +167,8 @@ void gimmick_door(OBJ2D* obj)
         obj->pivot.x = (std::min)(obj->pivot.x, 256.0f * 5.0f - 128.0f);
         if (obj->texPos.x >= 256 * 4.9f)
         {
-            setScene(SCENE::CLEAR);
+            SceneGame::stage++;
+
         }
 
         break;

@@ -20,6 +20,7 @@ public:
     
 
     int timer;
+    static int stage;
 public:
     void init()override;
     void deinit()override;
