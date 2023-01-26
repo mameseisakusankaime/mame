@@ -13,6 +13,7 @@ EnemySetdata enemySetdata[] = {
 void SceneGame::init()
 {
     state = 0;
+    timer = 0;
 }
 
 void SceneGame::deinit()
@@ -40,6 +41,8 @@ void SceneGame::update()
     {
     case 0:
         GameLib::setBlendMode(Blender::BS_ALPHA);
+
+        pEnemydata = enemySetdata;
 
         // ‰æ‘œ“Ç‚İ‚İ
         sprLoad = sprite_load(L"./Data/Images/loading_back.png");
