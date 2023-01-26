@@ -9,6 +9,7 @@ void Gimmick::init()
     this->searchSet(gimmick_Blok, { 900,GROUND });
     this->searchSet(gimmick_Button, { 2000,GROUND });
     this->searchSet(gimmick_door, { 4500,GROUND });
+    this->searchSet(gimmick_door, { 500,GROUND });
 }
 
 bool gimmick_erase(OBJ2D* obj)

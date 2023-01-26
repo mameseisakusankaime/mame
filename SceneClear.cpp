@@ -33,6 +33,6 @@ void SceneClear::draw()
 {
     GameLib::clear(0, 0, 0);
 
-    debug::setString("gameclear");
+    text_out(1, "GAME CLEAR", 1280/2, 720/2, 3.0f, 3.0f,1.0f,1.0f,1.0f,1.0f,GameLib::TEXT_ALIGN::MIDDLE);
 
 }
